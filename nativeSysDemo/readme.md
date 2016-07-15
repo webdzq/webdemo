@@ -64,7 +64,7 @@
 
 
 svn路径:<br/>
-http://svn2.yanxiu.com/yanxiu/yanxiu-fe/branches/nativeSysDemo<br/>
+http://>********/branches/nativeSysDemo<br/>
 项目运行：<br/>
 安装依赖包:<br/>
 
@@ -78,7 +78,7 @@ http://svn2.yanxiu.com/yanxiu/yanxiu-fe/branches/nativeSysDemo<br/>
 待优化:<br/>
 1 项目目录结构 (告别了函数式的js,迎来了面向对象的js),是否按照modules,router,redux,view,style结构设计.<br/>
 
-2 前后端交互 .ajax,promis,fetch<br/>
+2 前后端交互 .ajax,promise,fetch<br/>
 
 3 是否首页服务端渲染.koa或express<br/>
 4
