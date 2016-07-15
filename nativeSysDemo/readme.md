@@ -56,6 +56,7 @@
 九  git<br/>
 文献:http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/<br/>
 十  gitlab<br/><br/>
+说明:首先安装虚拟机（mac 下palallels ）安装centos7 ,然后按照教程安装docker
 文献:https://bbs.gitlab.cc<br/>
 
 十一:npm scripts<br/>
