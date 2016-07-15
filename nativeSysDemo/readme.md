@@ -1,13 +1,13 @@
 
 项目简介：
 
-组成：webpack+react+es6＋antd＋router＋redux+css-modules+less+git+gitlab+docker
+组成：webpack+react+es6＋antd＋router＋redux+css-modules+less+git+gitlab+docker<br/>
 
-实现内容：
-一 webpack使用到的Plugin组件:
-1 HtmlWebpackPlugin
-功能:html处理.包括压缩,去注释,hash,导入js/css,cdn路径替换等
-参考文献:http://www.cnblogs.com/haogj/p/5160821.html
+实现内容：<br/>
+一 webpack使用到的Plugin组件:<br/>
+1 HtmlWebpackPlugin<br/>
+功能:html处理.包括压缩,去注释,hash,导入js/css,cdn路径替换等<br/>
+参考文献:http://www.cnblogs.com/haogj/p/5160821.html<br/>
 
 2 CommonsChunkPlugin
 功能:公共模块的提取
