@@ -1,0 +1,33 @@
+@import '~antd/dist/antd.less';
+body{
+    padding: 0px;
+    margin: 0px;
+    background-color: #f5f5f5;
+    font-size: 20px;
+}
+
+#app{
+
+    height: 500px;
+
+    color: green;
+    margin: 50px;
+}
+.active {
+  color: green;
+}
+.home{
+  text-align: center;
+}
+.app{
+  float: left;
+}
+.boy,.warp{
+
+  //background-color: red;
+  margin-left: 300px;
+}
+
+.todos{
+    width:150px;
+}
