@@ -1,3 +1,8 @@
+操作指南:
+1, 切到目录下的命令行,执行:npm install,安装依赖包（请先安装nodejs）
+2,执行命令:gulp
+
+
 bref:<br/>
 1,gulp作为加载器,解析react.<br/>
 2,用到插件:browserify,browser-sync.最基本的搭建<br/>
