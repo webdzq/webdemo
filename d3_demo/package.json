@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --inline --hot --progress --colors",
+    "start": "webpack-dev-server --hot --progress --colors",
     "dev": "webpack-dev-server --hot --progress --colors --config webpack.production.config.js",
     "build": "webpack --progress --colors",
     "brower": "webpack-dev-server --inline --hot  --progress --colors&& node server",
