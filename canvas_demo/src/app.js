@@ -10,8 +10,6 @@ function CanvasDemo() {
     this.canvas = null;
     this.tempContext = null; // global variable 2d context
     this.started = false;
-    this.x = 0;
-    this.y = 0;
     this.nd = 1;//操作的类型
     this.$el = $('#my_painter');
     this.$button = $('.button-group button');//所有按钮
@@ -56,7 +54,6 @@ CanvasDemo.prototype = {
             scope.canvas.height = image.height;
             scope.drawX = 0;
             scope.drawY = 0;
-            console.log("width,,,,height..", image.width, image.height);
             scope.tempContext.drawImage(image, scope.drawX, scope.drawY, image.width, image.height);
         };
         // 设置src属性，浏览器会自动加载。
@@ -132,15 +129,19 @@ CanvasDemo.prototype = {
                 scope.changeArea(1);
                 break;
             case '7':
+                //缩小
                 scope.changeArea(2);
                 break;
             case '8':
+                //翻转
                 scope.imageRotate('rev');
                 break;
             case '9':
+                //左转
                 scope.imageRotate('left');
                 break;
             case '10':
+                //右转
                 scope.imageRotate('right');
             case '11':
                 //关闭保存
@@ -188,7 +189,6 @@ CanvasDemo.prototype = {
 
     },
     doMouseUp: function (event, scope) {
-        console.log("doMouseUp...");
         if (scope.started) {
             scope.doMouseMove(event, scope);
             scope.started = false;
@@ -206,7 +206,7 @@ CanvasDemo.prototype = {
         };
     },
     doKeyDown: function (e, scope) {
-        console.log("doKeyDown...");
+        //console.log("doKeyDown...");
         //var scope = this;
         //var keyID = e.keyCode ? e.keyCode : e.which;
         //if (keyID === 38 || keyID === 87) { // up arrow and W
@@ -257,7 +257,7 @@ CanvasDemo.prototype = {
     },
     fillInputText: function (posObj) {
         //将输入框的文本绘制到canvas上
-        console.log('fillInputText...');
+        //console.log('fillInputText...');
         var scope = this;
         var val = this.$input.val();
         if (!!val) {
@@ -274,7 +274,6 @@ CanvasDemo.prototype = {
             var imgUrl = scope.canvas.toDataURL("image/png");
             scope.historyArr.push(imgUrl);
             scope.historyStatus = 0;
-
             scope.historyImage(imgUrl);
         }
     },
@@ -324,6 +323,7 @@ CanvasDemo.prototype = {
     },
     imageRotate: function (angle) {
         //旋转 .遗留问题;翻转时,图片恢复了原来的大小.不是放大后的大小
+        //console.log( "imageRotate...");
         var scope = this;
         var img = this.image;
         var canvas = this.canvas;
@@ -473,7 +473,7 @@ CanvasDemo.prototype = {
             svg.on("click", function () {
                 //在这里添加交互内容
                 var evt = d3.event;
-                console.log(evt.pageX, evt.pageY);
+                //console.log(evt.pageX, evt.pageY);
                 //svg.remove('input');
 
             });
@@ -488,7 +488,7 @@ CanvasDemo.prototype = {
                 .attr("height", 300)
                 .style("background-color", '#ccc');    //设定高度
             var canvas = document.getElementById("d3_canvas");
-            console.log(canvas.getContext);
+            //console.log(canvas.getContext);
         };
         // demo6();
     },
@@ -530,8 +530,10 @@ CanvasDemo.prototype = {
     imageCloseAndSave: function () {
         //关闭和保存
         var scope = this;
-        var url = window.location.href;
+        var headerStr = "data:image/png;base64,";
+        var url = "http://localhost:8090/";
         var dataurl = scope.canvas.toDataURL("image/png");
+        dataurl = dataurl.split(headerStr)[1];
         var imagedata = encodeURIComponent(dataurl);
         var data = {
             imagename: "myImage.png",
@@ -557,15 +559,14 @@ CanvasDemo.prototype = {
                     return false;
                 }
 
-                var json = eval("(" + text + ")");
+                //var json = eval("(" + text + ")");
+                var json = text;
                 if (!json) {
                     $tip2.text('解析错误!');
                     return false;
                 } else {
                     $tip2.text(json.message);
                 }
-                //console.dir(json);
-                //console.log(xhr.responseText);
             }
         });
 
