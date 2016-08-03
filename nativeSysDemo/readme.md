@@ -75,6 +75,11 @@ http://>********/branches/nativeSysDemo<br/>
 生产环境:<br/>
 #>>npm deploy<br/>
 
+项目截图:<br/>
+首页:<br/>
+ ![image](https://github.com/webdzq/webdemo/raw/master/nativeSysDemo/nativeimg1.png)
+ todos页:<br/>
+ ![image](https://github.com/webdzq/webdemo/raw/master/nativeSysDemo/nativeimg3.png)
 待优化:<br/>
 1 项目目录结构 (告别了函数式的js,迎来了面向对象的js),是否按照modules,router,redux,view,style结构设计.<br/>
 
@@ -90,3 +95,6 @@ issues:(问题集锦)<br/>
 
 ps: 项目涉及新东西比较多.丰富到很多地方做取舍比较难.<br/>
 这个算是一个公共项目，有问题即时提出，有能力的贡献想法，代码。逐步完善成一个very nice项目。希望能给大家带了提升<br/>
+
+
+
