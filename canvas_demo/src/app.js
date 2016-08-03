@@ -43,10 +43,7 @@ CanvasDemo.prototype = {
         this.canvas.focus();
         this.events();
         this.initD3svg();
-
         this.initImage();
-
-
     },
     initImage: function () {
         //画一张图片在canvas上
@@ -72,18 +69,18 @@ CanvasDemo.prototype = {
         this.image = image;
         this.historyArr.push(image.src);
         scope.historyStatus = 0;
-        //scope.tempContext.save();
+
     },
     historyImage: function (imgUrl) {
         //撤销操作时候,更新当前canvas的图片
         var scope = this;
-        var image = new Image();
-        image.onload = function () {
-            //将坐标中心作为起启点
-            scope.tempContext.drawImage(image, scope.drawX, scope.drawY, image.width, image.height);
-        };
-        image.src = imgUrl;
-        this.image = image;
+        //var image = new Image();
+        //image.onload = function () {
+        //    //将坐标中心作为起启点
+        //    scope.tempContext.drawImage(image, scope.drawX, scope.drawY, image.width, image.height);
+        //};
+        scope.image.src = imgUrl;
+        //this.image = image;
     },
     addEventHandler: function (oTarget, sEventType, fnHandler) {
         var me = this;
@@ -282,20 +279,8 @@ CanvasDemo.prototype = {
             var imgUrl = scope.canvas.toDataURL("image/png");
             scope.historyArr.push(imgUrl);
             scope.historyStatus = 0;
-
             scope.historyImage(imgUrl);
-            //scope.tempContext.closePath();
-            //scope.tempContext.save();
         }
-    },
-    fillLine: function () {
-        console.log("fillLine...");
-    },
-    fillRect: function () {
-
-        this.x = this.canvas.width / 2;
-        this.y = this.canvas.height / 2;
-        this.tempContext.fillRect(x, y, 80, 40);
     },
     getPointOnCanvas: function (canvas, x, y) {
         var bbox = canvas.getBoundingClientRect();
@@ -388,6 +373,53 @@ CanvasDemo.prototype = {
         var width = 0;
         var height = 0;
         console.log("start..x,y,..", scope.drawX, scope.drawY);
+        //if (kind == 1) {
+        //    //放大
+        //    if (scope.changeAreaCount >= 3) {
+        //        return;
+        //    }
+        //    scope.canvas.width += 50;
+        //    scope.canvas.height += 50;
+        //    scope.changeAreaCount++;
+        //
+        //} else {
+        //    if (scope.changeAreaCount <= -3) {
+        //        return;
+        //    }
+        //    scope.canvas.width -= 50;
+        //    scope.canvas.height -= 50;
+        //    scope.changeAreaCount--;
+        //}
+        //height = scope.canvas.height;
+        //width = scope.canvas.width;
+        //console.log("end..x,y,..", scope.drawX, scope.drawY, width, height, this.image.width, this.image.height);
+        //if (this.degree != 0) {
+        //    //发生过翻转
+        //    if (kind == 1) {
+        //        if (scope.drawX != 0) {
+        //            scope.drawX -= 50;
+        //        }
+        //        if (scope.drawY != 0) {
+        //            scope.drawY -= 50;
+        //        }
+        //    } else {
+        //        if (scope.drawX != 0) {
+        //            scope.drawX += 50;
+        //        }
+        //        if (scope.drawY != 0) {
+        //            scope.drawY += 50;
+        //        }
+        //    }
+        //    if (this.step == '1' || this.step == '3') {
+        //        height = scope.canvas.width;
+        //        width = scope.canvas.height;
+        //    }
+        //    scope.tempContext.rotate(this.degree);
+        //    //scope.tempContext.rotate(this.degree);
+        //}
+        //scope.tempContext.drawImage(this.image, scope.drawX, scope.drawY, width, height);
+        scope.canvas.width = this.image.width;
+        scope.canvas.height = this.image.height;
         if (kind == 1) {
             //放大
             if (scope.changeAreaCount >= 3) {
@@ -407,35 +439,11 @@ CanvasDemo.prototype = {
         }
         height = scope.canvas.height;
         width = scope.canvas.width;
-        console.log("end..x,y,..", scope.drawX, scope.drawY, width, height, this.image.width, this.image.height);
-        if (this.degree != 0) {
-            //发生过翻转
-            if (kind == 1) {
-                if (scope.drawX != 0) {
-                    scope.drawX -= 50;
-                }
-                if (scope.drawY != 0) {
-                    scope.drawY -= 50;
-                }
-            } else {
-                if (scope.drawX != 0) {
-                    scope.drawX += 50;
-                }
-                if (scope.drawY != 0) {
-                    scope.drawY += 50;
-                }
-            }
-            if (this.step == '1' || this.step == '3') {
-                height = scope.canvas.width;
-                width = scope.canvas.height;
-            }
-            scope.tempContext.rotate(this.degree);
-            //scope.tempContext.rotate(this.degree);
-        }
         scope.tempContext.drawImage(this.image, scope.drawX, scope.drawY, width, height);
         var imgUrl = scope.canvas.toDataURL("image/png");
         scope.historyArr.push(imgUrl);
         scope.historyStatus = 0;
+        //this.image.src=imgUrl;
         scope.historyImage(imgUrl);
     },
     recoverCanvas: function () {
@@ -529,6 +537,7 @@ CanvasDemo.prototype = {
         var imgUrl = scope.canvas.toDataURL("image/png");
         scope.historyArr.push(imgUrl);
         scope.historyStatus = 0;
+
         scope.historyImage(imgUrl);
     },
     initD3svg: function () {
@@ -627,7 +636,7 @@ CanvasDemo.prototype = {
         //撤销上一步的操作
         var scope = this;
         console.log("reset_pre....", scope.historyStatus);
-        if (scope.historyArr.length < 2) {
+        if (scope.historyArr.length < 1) {
             return;
         }
         if (scope.historyStatus == 0) {
