@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>webpack react browserify browser-sync</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!--[if IE]><script type="text/javascript" src="./src/lib/excanvas.js"></script><![endif]-->
+</head>
+<body>
+
+<div id="my_painter">
+    <canvas id="event_canvas" tabindex="0"></canvas>
+    <input id="my_input" type="text" placeholder="请输入">
+
+</div>
+<div class="button-group">
+    <button class="fill_line" data-nd="1">画线</button>
+    <button class="fill_text" data-nd="2">写文本</button>
+    <button class="reset_pre" data-nd="3">撤销上一步操作</button>
+    <button class="resume" data-nd="4">恢复撤销的操作</button>
+    <button class="reset" data-nd="5">还原为原图</button>
+    <button class="zoomIn" data-nd="6">放大</button>
+    <button class="zoomOut" data-nd="7">缩小</button>
+    <button class="turn" data-nd="8">翻转</button>
+    <button class="turn_left" data-nd="9">左90度</button>
+    <button class="turn_right" data-nd="10">右90度</button>
+    <button class="save" data-nd="10">关闭保存</button>
+</div>
+<div id="d3_demo">
+    <p></p>
+</div>
+<div id="tip2" ></div>
+</body>
+</html>

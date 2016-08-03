@@ -64,6 +64,9 @@ module.exports = {
         new ExtractTextPlugin('[name].css', {
             allChunks: true
         }),
+        new webpack.ProvidePlugin({ //加载jq
+            $: 'jquery'
+        }),
         new webpack.NoErrorsPlugin(),
         new OpenBrowserPlugin({
             url: 'http://localhost:8080'

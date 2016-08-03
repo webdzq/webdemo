@@ -4,7 +4,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin'); //webpack插件
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 var p_url = "http://localhost:8080/";
-var config= {
+var config = {
     entry: [
         'webpack/hot/dev-server',
         'webpack-dev-server/client?' + p_url,
@@ -20,7 +20,7 @@ var config= {
         contentBase: './dist', //定义静态服务器的基路径
         hot: true,
         historyApiFallback: true,
-        publicPath: "",
+        publicPath: "http://localhost:8080/dist/",
         stats: {colors: true},
         plugins: [new webpack.HotModuleReplacementPlugin()]
     },
@@ -28,7 +28,10 @@ var config= {
     module: {
         loaders: [
 
-            {test: /\.(png|jpg|jpeg|gif)$/, loader: 'url?limit=10000&name=images/[name].[ext]'},
+            {
+                test: /\.(png|jpg|jpeg|gif)$/,
+                loader: 'url?limit=10000&name=./img/[name].[ext]'
+            },
 
             {
                 test: /\.(js|jsx)$/,
@@ -37,8 +40,12 @@ var config= {
 
             },
             //{test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-            {test: /\.css$/, loader: "style!css"},
-            {test: /\.less/, loader: 'style-loader!css-loader!less-loader'}]
+            //{test: /\.css$/, loader: "style!css"},
+            {
+                test: /\.(css|less)/,
+                loader: 'style-loader!css-loader!less-loader'
+            }
+        ]
     },
     resolve: {
         extensions: ['', '.js', '.json', 'jsx']
@@ -61,5 +68,5 @@ var config= {
 
     ]
 };
-module.exports= config;
+module.exports = config;
 

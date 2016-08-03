@@ -2,6 +2,7 @@ var config = require('./webpack.server.config');
 var WebpackDevServer = require('webpack-dev-server');
 var port = 8080;
 var ip = 'localhost';
+var webpack = require('webpack');
 
 new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
