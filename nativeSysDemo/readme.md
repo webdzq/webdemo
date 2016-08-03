@@ -77,9 +77,9 @@ http://>********/branches/nativeSysDemo<br/>
 
 项目截图:<br/>
 首页:<br/>
- ![image](https://github.com/webdzq/webdemo/raw/master/nativeSysDemo/nativeimg1.png)
+ ![image](https://github.com/webdzq/webdemo/raw/master/nativeSysDemo/nativeimg1.png)<br/>
  todos页:<br/>
- ![image](https://github.com/webdzq/webdemo/raw/master/nativeSysDemo/nativeimg3.png)
+ ![image](https://github.com/webdzq/webdemo/raw/master/nativeSysDemo/nativeimg3.png)<br/>
 待优化:<br/>
 1 项目目录结构 (告别了函数式的js,迎来了面向对象的js),是否按照modules,router,redux,view,style结构设计.<br/>
 
