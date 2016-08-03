@@ -4,7 +4,6 @@
  * @author:doing
  */
 require("./style/index.less");
-
 //var $=require("jquery");
 var d3 = require('d3');
 function CanvasDemo() {
@@ -15,9 +14,10 @@ function CanvasDemo() {
     this.y = 0;
     this.nd = 1;//操作的类型
     this.$el = $('#my_painter');
+    this.$button = $('.button-group button');//所有按钮
+    this.$input = $('#my_input');//输入框
     this.drawX = 0;//当前图片绘制起点,旋转的时候会改变
     this.drawY = 0;//当前图片绘制起点,旋转的时候会改变
-    this.diraction = "right";//旋转的时候会改变
     this.degree = 0;//旋转的时候会改变
     this.step = 0;//决定当前画布的宽高情况
     this.historyArr = [];//保存每次操作后的图片的url
@@ -29,9 +29,7 @@ function CanvasDemo() {
 CanvasDemo.prototype = {
     constructor: CanvasDemo,
     init: function () {
-        //console.log(canvas.parentNode.clientWidth);
         this.canvas = document.getElementById("event_canvas");
-        //this.canvas =d3.select('#my_painter').append('canvas').attr('id','event_canvas');
         if (!this.canvas.getContext) {
             console.log("Canvas not supported. Please install a HTML5 compatible browser.");
             return;
@@ -42,19 +40,16 @@ CanvasDemo.prototype = {
         this.tempContext.fillStyle = "blue";
         this.canvas.focus();
         this.events();
-        this.initD3svg();
+        //this.initD3svg();//d3示例
         this.initImage();
     },
     initImage: function () {
         //画一张图片在canvas上
         var image = this.image;
+        var scope = this;
         if (!image) {
             image = new Image();
         }
-
-        var scope = this;
-        var canvasX = this.canvas.width;
-        var canvasY = this.canvas.height;
         image.onload = function () {
             //将坐标中心作为起启点
             scope.canvas.width = image.width;
@@ -64,49 +59,42 @@ CanvasDemo.prototype = {
             console.log("width,,,,height..", image.width, image.height);
             scope.tempContext.drawImage(image, scope.drawX, scope.drawY, image.width, image.height);
         };
+        // 设置src属性，浏览器会自动加载。
+        // 记住必须先绑定事件，才能设置src属性，否则会出同步问题。
         image.src = './img/ff.jpg';
         image.id = "my_image";
         this.image = image;
         this.historyArr.push(image.src);
         scope.historyStatus = 0;
-
     },
     historyImage: function (imgUrl) {
-        //撤销操作时候,更新当前canvas的图片
+        //更新当前canvas的图片this.image
         var scope = this;
-        //var image = new Image();
-        //image.onload = function () {
-        //    //将坐标中心作为起启点
-        //    scope.tempContext.drawImage(image, scope.drawX, scope.drawY, image.width, image.height);
-        //};
         scope.image.src = imgUrl;
-        //this.image = image;
     },
     addEventHandler: function (oTarget, sEventType, fnHandler) {
-        var me = this;
+        //绑定事件工具函数
+        var scope = this;
         if (!oTarget) {
             return;
         }
         if (oTarget.addEventListener) {
             oTarget.addEventListener(sEventType, function (event) {
-                fnHandler(event, me);
+                fnHandler(event, scope);
             }, false);
         } else if (oTarget.attachEvent) {
             oTarget.attachEvent("on" + sEventType, function (event) {
-                fnHandler(event, me);
+                fnHandler(event, scope);
             });
         } else {
             oTarget["on" + sEventType] = function (event) {
-                fnHandler(event, me);
+                fnHandler(event, scope);
             };
         }
-
-
     },
     events: function () {
-
-        $('.button-group button').on('click', this.opationHandler.bind(this));
-        //this.addEventHandler($('.button-group button')[0], "click", this.opationHandler);
+        //绑定事件
+        this.$button.on('click', this.opationHandler.bind(this));
         this.addEventHandler(this.canvas, "mousedown", this.doMouseDown);
         this.addEventHandler(this.canvas, "keydown", this.doKeyDown);
         this.addEventHandler(this.canvas, "mousemove", this.doMouseMove);
@@ -117,12 +105,9 @@ CanvasDemo.prototype = {
         //确定操作的中央控制中心
         var scope = this;
         var $target = $(event.currentTarget);
-        console.log("opationHandler...", $target);
         var nd = $target.data('nd');
-        console.log("opationHandler...", nd);
         this.nd = nd;
-        $('#my_input').hide();
-        //this.canvas.focus();
+        this.$input.hide();
         switch (scope.nd + "") {
             case '1':
                 //画线
@@ -166,113 +151,44 @@ CanvasDemo.prototype = {
         }
     },
     doMouseDown: function (event, scope) {
-        console.log('doMouseDown...');
-        //var scope = this;
-        var x = event.pageX;
-        var y = event.pageY;
-        var canvas = event.target;
-        var loc = scope.getPointOnCanvas(canvas, x, y);
-        console.log("mouse down at point( x:" + loc.x + ", y:" + loc.y + ")");
-        //scope.tempContext.beginPath();
-        console.log("nd...", scope.nd);
-        switch (scope.nd + "") {
-            case '1':
-                //画线
-                scope.tempContext.moveTo(loc.x, loc.y);
-                //scope.historyArr.push({
-                //    x: loc.x,
-                //    y: loc.y
-                //});
-                scope.started = true;
-                break;
-            case '2':
-                //写文本
-                scope.writeTextOption(x, y);
-                break;
-            case '3':
-                break;
-            case '4':
-                break;
-            case '5':
-                //还原
-                //scope.recoverCanvas();
-                break;
-            case '6':
-                //放大
-                //scope.changeArea(1);
-                break;
-            case '7':
-                //scope.changeArea(2);
-                break;
-            case '8':
-                //scope.imageRotate(180);
-                break;
-            case '9':
-                //scope.imageRotate(-90);
-                break;
-            case '10':
-                //scope.imageRotate(90);
-                break;
-            case '11':
-                break;
-            default:
-                break;
-        }
-    },
-    doMouseMove: function (event, scope) {
-        //console.log('doMouseMove...');
         if (!scope) {
             return;
         }
-        //var scope = this;
         var x = event.pageX;
         var y = event.pageY;
         var canvas = event.target;
         var loc = scope.getPointOnCanvas(canvas, x, y);
-
-        // console.log("nd...", scope.nd);
-        switch (scope.nd + "") {
-            case '1':
-                console.log("nd..www.", scope.nd);
-                if (scope.started) {
-                    scope.tempContext.lineTo(loc.x, loc.y);
-
-                    scope.tempContext.strokeStyle = 'rgba(255,0,0,0.5)';
-                    scope.tempContext.stroke();
-                    //scope.historyArr.push({
-                    //    x: loc.x,
-                    //    y: loc.y
-                    //});
-                }
-                break;
-            case '2':
-
-                break;
-            case '3':
-                break;
-            case '4':
-                break;
-            case '5':
-                break;
-            case '6':
-                break;
-            case '7':
-                break;
-            case '8':
-                break;
-            case '9':
-                break;
-            case '10':
-                break;
-            case '11':
-                break;
-            default:
-                break;
+        if (scope.nd + "" == '1') {
+            //画线
+            scope.tempContext.moveTo(loc.x, loc.y);
+            scope.started = true;
+        } else if (scope.nd + "" == '2') {
+            //写文本
+            scope.writeTextOption(x, y);
+        } else {
+            //其他无鼠标事件
         }
+
+    },
+    doMouseMove: function (event, scope) {
+        if (!scope) {
+            return;
+        }
+        var x = event.pageX;
+        var y = event.pageY;
+        var canvas = event.target;
+        var loc = scope.getPointOnCanvas(canvas, x, y);
+        if (scope.nd + "" == '1') {
+            if (scope.started) {
+                scope.tempContext.lineTo(loc.x, loc.y);
+                scope.tempContext.strokeStyle = 'rgba(255,0,0,0.5)';
+                scope.tempContext.stroke();
+            }
+        }
+
     },
     doMouseUp: function (event, scope) {
         console.log("doMouseUp...");
-        //var scope = this;
         if (scope.started) {
             scope.doMouseMove(event, scope);
             scope.started = false;
@@ -318,22 +234,18 @@ CanvasDemo.prototype = {
         //    e.preventDefault();
         //}
     },
-    clearCanvas: function () {
-        this.tempContext.clearRect(0, 0, 500, 500);
-    },
     writeTextOption: function (x, y) {
         //单击显示输入框
         var scope = this;
-        $('#my_input').focus();
-        $('#my_input').unbind();
-        $('#my_input').val('');
-        $('#my_input').css({
+        this.$input.focus();
+        this.$input.unbind();
+        this.$input.val('');
+        this.$input.css({
             'left': x,
             'top': y
         });
-        $('#my_input').show();
-
-        $('#my_input').keydown(function (event) {
+        this.$input.show();
+        this.$input.keydown(function (event) {
             if (event.keyCode == 13) {
                 scope.fillInputText({
                     'x': x,
@@ -347,7 +259,7 @@ CanvasDemo.prototype = {
         //将输入框的文本绘制到canvas上
         console.log('fillInputText...');
         var scope = this;
-        var val = $('#my_input').val();
+        var val = this.$input.val();
         if (!!val) {
             scope.tempContext.shadowOffsetX = 2;
             scope.tempContext.shadowOffsetY = 2;
@@ -357,7 +269,8 @@ CanvasDemo.prototype = {
             scope.tempContext.font = "20px Times New Roman";
             scope.tempContext.fillStyle = "red";
             scope.tempContext.fillText(val, posObj.x, posObj.y);
-            $('#my_input').hide();
+            this.$input.hide();
+
             var imgUrl = scope.canvas.toDataURL("image/png");
             scope.historyArr.push(imgUrl);
             scope.historyStatus = 0;
@@ -367,72 +280,21 @@ CanvasDemo.prototype = {
     },
     changeArea: function (v_kind) {
         //放大,缩小
-        console.log('changeArea...');
         var scope = this;
         var kind = v_kind || 1;//1,放大,2,缩小
         var width = 0;
         var height = 0;
-        console.log("start..x,y,..", scope.drawX, scope.drawY);
-        //if (kind == 1) {
-        //    //放大
-        //    if (scope.changeAreaCount >= 3) {
-        //        return;
-        //    }
-        //    scope.canvas.width += 50;
-        //    scope.canvas.height += 50;
-        //    scope.changeAreaCount++;
-        //
-        //} else {
-        //    if (scope.changeAreaCount <= -3) {
-        //        return;
-        //    }
-        //    scope.canvas.width -= 50;
-        //    scope.canvas.height -= 50;
-        //    scope.changeAreaCount--;
-        //}
-        //height = scope.canvas.height;
-        //width = scope.canvas.width;
-        //console.log("end..x,y,..", scope.drawX, scope.drawY, width, height, this.image.width, this.image.height);
-        //if (this.degree != 0) {
-        //    //发生过翻转
-        //    if (kind == 1) {
-        //        if (scope.drawX != 0) {
-        //            scope.drawX -= 50;
-        //        }
-        //        if (scope.drawY != 0) {
-        //            scope.drawY -= 50;
-        //        }
-        //    } else {
-        //        if (scope.drawX != 0) {
-        //            scope.drawX += 50;
-        //        }
-        //        if (scope.drawY != 0) {
-        //            scope.drawY += 50;
-        //        }
-        //    }
-        //    if (this.step == '1' || this.step == '3') {
-        //        height = scope.canvas.width;
-        //        width = scope.canvas.height;
-        //    }
-        //    scope.tempContext.rotate(this.degree);
-        //    //scope.tempContext.rotate(this.degree);
-        //}
-        //scope.tempContext.drawImage(this.image, scope.drawX, scope.drawY, width, height);
+        if (kind == 1 && scope.changeAreaCount >= 3 || kind == 2 && scope.changeAreaCount <= -3) {
+            return;
+        }
         scope.canvas.width = this.image.width;
         scope.canvas.height = this.image.height;
         if (kind == 1) {
             //放大
-            if (scope.changeAreaCount >= 3) {
-                return;
-            }
             scope.canvas.width += 50;
             scope.canvas.height += 50;
             scope.changeAreaCount++;
-
         } else {
-            if (scope.changeAreaCount <= -3) {
-                return;
-            }
             scope.canvas.width -= 50;
             scope.canvas.height -= 50;
             scope.changeAreaCount--;
@@ -443,31 +305,34 @@ CanvasDemo.prototype = {
         var imgUrl = scope.canvas.toDataURL("image/png");
         scope.historyArr.push(imgUrl);
         scope.historyStatus = 0;
-        //this.image.src=imgUrl;
         scope.historyImage(imgUrl);
     },
     recoverCanvas: function () {
         //恢复原图
-        console.log('recoverCanvas...');
-        this.initImage();
+        var scope = this;
+        var imgUrl = './img/ff.jpg';
+        scope.historyArr.push(imgUrl);
+        scope.historyStatus = 0;
+        scope.historyImage(imgUrl);
+
+    },
+    clearCanvas: function () {
+        // canvas清屏
+        var scope = this;
+        var ctx = scope.tempContext;
+        ctx.clearRect(0, 0, scope.canvas.width, scope.canvas.height);
     },
     imageRotate: function (angle) {
         //旋转 .遗留问题;翻转时,图片恢复了原来的大小.不是放大后的大小
-        console.log('imageRotate...');
         var scope = this;
         var img = this.image;
         var canvas = this.canvas;
         var ctx = this.tempContext;
         var direction = angle || "right";
-        //rotateImg(angle);
-        this.diraction = direction;
-
-        // function rotateImg(direction) {
-        console.log("rotateImg....", direction);
         //最小与最大旋转方向，图片旋转4次后回到原方向
         var min_step = 0;
         var max_step = 3;
-        //var img = image;
+
         if (img == null)return;
         //img的高度和宽度不能在img元素隐藏后获取，否则会出错
         var height = img.height;
@@ -477,7 +342,6 @@ CanvasDemo.prototype = {
             step = min_step;
         }
         step = Number(step);
-        console.log("step..1..", step);
         if (direction == 'right') {
             step++;
             //旋转到原位置，即超过最大值
@@ -494,13 +358,10 @@ CanvasDemo.prototype = {
             step < min_step && (step = max_step);
         }
         img.setAttribute('step', step);
-        console.log("step...2..", step);
         //旋转角度以弧度值为参数
         var degree = step * 90 * Math.PI / 180;
         this.degree = degree;
-        //var ctx = canvas.getContext('2d');
         this.step = step;
-        console.log("step...4..", step);
         switch (step) {
             case 0:
                 scope.canvas.width = width;
@@ -537,7 +398,6 @@ CanvasDemo.prototype = {
         var imgUrl = scope.canvas.toDataURL("image/png");
         scope.historyArr.push(imgUrl);
         scope.historyStatus = 0;
-
         scope.historyImage(imgUrl);
     },
     initD3svg: function () {
@@ -635,8 +495,7 @@ CanvasDemo.prototype = {
     reset_pre: function () {
         //撤销上一步的操作
         var scope = this;
-        console.log("reset_pre....", scope.historyStatus);
-        if (scope.historyArr.length < 1) {
+        if (scope.historyArr.length < 2) {
             return;
         }
         if (scope.historyStatus == 0) {
@@ -646,18 +505,19 @@ CanvasDemo.prototype = {
         var imgUrl = scope.historyArr.pop();
         scope.recoverArr.push(imgUrl);
         scope.recoverStatus = 0;
-        console.log("reset_pre....", scope.historyArr);
         scope.historyImage(imgUrl);
+        if (scope.historyArr.length == 0) {
+            scope.historyArr.push(imgUrl);
+            scope.historyStatus = 0;
+        }
 
     },
     recover_next: function () {
         //恢复撤销的操作
         var scope = this;
-        console.log("recover_next....", scope.recoverArr);
         if (scope.recoverArr.length < 1) {
             return;
         }
-
         if (scope.recoverStatus == 0) {
             scope.historyArr.push(scope.recoverArr.pop());
             scope.recoverStatus = 1;
@@ -669,6 +529,7 @@ CanvasDemo.prototype = {
     },
     imageCloseAndSave: function () {
         //关闭和保存
+        var scope = this;
         var url = window.location.href;
         var dataurl = scope.canvas.toDataURL("image/png");
         var imagedata = encodeURIComponent(dataurl);
@@ -710,6 +571,8 @@ CanvasDemo.prototype = {
 
     }
 };
+
+//实例化
 var canvasDemo = new CanvasDemo();
 canvasDemo.init();
 
