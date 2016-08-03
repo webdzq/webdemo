@@ -26,3 +26,7 @@ MND:https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial<br/>
 图片上传:http://blog.csdn.net/renfufei/article/details/9836317<br/>
 
 d3学习:http://www.ourd3js.com/wordpress/100/<br/>
+
+项目截图:<br/>
+
+ ![image](https://github.com/webdzq/webdemo/raw/master/canvas_demo/canvasimg.png)
