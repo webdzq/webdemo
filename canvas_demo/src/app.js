@@ -507,7 +507,7 @@ CanvasDemo.prototype = {
         scope.recoverStatus = 0;
         scope.historyImage(imgUrl);
         if (scope.historyArr.length == 0) {
-            scope.historyArr.push(imgUrl);
+            scope.historyArr.push(scope.image.src);
             scope.historyStatus = 0;
         }
 
