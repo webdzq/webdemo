@@ -38,13 +38,9 @@ module.exports = {
             }, {
                 test: /\.(css|less)$/,
                 exclude: /node_modules/,
-               // exclude: [/node_modules/, path.resolve(__dirname, 'src/css/common')],
-                //loader:"style-loader!css-loader?modules&importLoaders=1&localIdentName=[local]!autoprefixer-loader!less-loader"
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
             }
-            //{test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-            //{test: /\.css$/, loader: "style!css"},
-            //{test: /\.less/, loader: 'style-loader!css-loader!less-loader'}
+
 
         ]
     },
@@ -53,7 +49,11 @@ module.exports = {
     },
 
     plugins: [
-
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify("production")
+            }
+        }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html'
