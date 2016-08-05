@@ -14,9 +14,13 @@
 项目运行:<br/>
 1,切换到命令行:npm install<br/>
 2,运行:npm start<br/>
-项目经验分享:
-1,遇到的问题
-2,设计思路及解决方案
+项目经验分享:<br/>
+1,遇到的问题<br/>
+2,设计思路及解决方案<br/>
+3,图片跨越问题:<br/>
+前端:<img src="" id="imgclcd" crossorigin="anonymous"><br/>
+
+服务端:响应头中就会附加上 Access-Control-Allow-Origin: * 字段，问题解决。<br/>
 项目计划:<br/>
 1,使用d3实现,d3的canvas和svg各一<br/>
 2,使用react,es6语法实现<br/>

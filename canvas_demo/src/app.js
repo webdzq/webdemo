@@ -143,6 +143,7 @@ CanvasDemo.prototype = {
             case '10':
                 //右转
                 scope.imageRotate('right');
+                break;
             case '11':
                 //关闭保存
                 scope.imageCloseAndSave();
@@ -534,6 +535,7 @@ CanvasDemo.prototype = {
         var url = "http://localhost:8090/";
         var dataurl = scope.canvas.toDataURL("image/png");
         dataurl = dataurl.split(headerStr)[1];
+        //dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
         var imagedata = encodeURIComponent(dataurl);
         var data = {
             imagename: "myImage.png",
