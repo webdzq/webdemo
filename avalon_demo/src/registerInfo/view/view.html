@@ -1,0 +1,7 @@
+<div ms-controller="registerInfo" class="registerInfo">
+    <input ms-duplex="@name">
+    <p>Hello,{{@name}}!</p>
+    <ul>
+        <li ms-for="($index,el) in @array">{{$index}}--{{el}}</li>
+    </ul>
+</div>

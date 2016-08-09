@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="./app.css">
+</head>
+
+<body>
+@@include('./src/login/view/view.html')
+@@include('./src/checkInfo/view/view.html')
+@@include('./src/registerInfo/view/view.html',{
+"name": "hello page3",
+"age": 12345,
+"socials": {
+"fb": "facebook.com/include",
+"tw": "twitter.com/include"
+}
+})
+@@include('./src/registerEnd/view/view.html')
+
+</body>
+
+<script src='./bundle.js'></script>
+
+
+</html>

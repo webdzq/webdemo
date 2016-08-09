@@ -1,0 +1,16 @@
+<div ms-controller="logIn" class="logIn">
+    <input ms-duplex="@name">
+    <p>Hello,{{@name}}!</p>
+    <ul>
+        <li ms-for="($index,el) in @array">{{$index}}--{{el}}</li>
+    </ul>
+
+    @@include('../tmpl/_view.tmpl',{
+    "name": "{{@name}}",
+    "age": 12345,
+    "socials": {
+    "fb": "facebook.com/include",
+    "tw": "twitter.com/include"
+    }
+    })
+</div>

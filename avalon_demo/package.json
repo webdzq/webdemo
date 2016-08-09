@@ -1,0 +1,41 @@
+{
+  "name": "avalon_demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ]
+    ]
+  },
+  "devDependencies": {
+    "avalon2": "^2.1.11",
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.13.0",
+    "browserify": "^13.0.1",
+    "del": "^2.2.1",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-file-include": "^0.14.0",
+    "gulp-less": "^3.1.0",
+    "gulp-react": "^3.1.0",
+    "gulp-rev": "^7.1.0",
+    "gulp-rev-collector": "^1.0.5",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "reactify": "^1.1.1",
+    "underscore": "^1.8.3",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
