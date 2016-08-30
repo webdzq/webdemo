@@ -1,0 +1,156 @@
+<div class="registerInfo-block ms-controller" ms-controller="registerInfo-block">
+    <p class="title" ms-if="!@topWindow">{{@titleMsg}}</p>
+    <div  class="form-block" ms-if="!@topWindow">
+
+      <form >
+        <div class="input-group">
+          <div class="msg-block">
+            <label>手机号</label>
+            <p >{{@mobile}}</p>
+          </div>
+          <div class="msg-block">
+            <label>身份证</label>
+            <p >{{@idcard}}</p>
+          </div>
+          <div class="msg-block">
+            <label>姓名</label>
+            <p >
+            <input class="registerInfo-cnname" ms-duplex="@cnname" placeholder="请输入姓名"
+                      ms-rules='{required:true}' >
+            </p>
+          </div>
+          <div class="msg-block">
+            <label>学科学段</label>
+            <p>
+              <select ms-duplex="@segment" class="grade">
+                  <option  ms-for="elem in @segmentArr" ms-attr="{value:elem.code}" >{{elem.name}}</option>
+              </select>
+              <select ms-duplex="@study" class="subject">
+                <option  ms-for="elem in @studyArr" ms-attr="{value:elem.code}" >{{elem.name}}</option>
+              </select>
+
+
+            </p>
+          </div>
+          <div class="msg-block">
+            <label>学校地区</label>-<span class="info">请选择学校所在地区</span>
+            <p >
+              <select ms-duplex="@areacode" class="area">
+                <option  ms-for="elem in @areacodeArr" ms-attr="{value:elem.areacode}" >{{elem.name}}</option>
+              </select>
+              <select ms-duplex="@areacodechild" class="school">
+                <option  ms-for="elem in @areacodechildArr" ms-attr="{value:elem.areacode}" >{{elem.name}}</option>
+              </select>
+            </p>
+          </div>
+          <div class="msg-block" >
+            <label>学校</label>-<span class="info">如果没有您的学校，请致电400-7799-010</span>
+
+            <div class="combo-select" >
+              <input type="text" placeholder="请输入关键字查找" class="combo-input" ms-duplex="@schoolName| debounce(1000)" ms-rules='{required:true}'>
+              <ul class="combo-dropdown" ms-if="@drapdownToggle" ms-click="@dropdownHander" >
+
+                <li  ms-for="elem in @schoolidArr" data-index="3"   ms-attr="{datavalue:elem.id,dataname:elem.name}" >{{elem.name}}</li>
+              </ul>
+            </div>
+
+
+          </div>
+          <div class="msg-block">
+            <label>继教编号</label>
+            <p >
+            <input ms-duplex="@jjcode" placeholder="选填" ms-rules='{required:true}' >
+            </p>
+          </div>
+          <div class="msg-block">
+            <label>{{@pwdLabel}}</label>
+            <p >
+            <input class="registerInfo-password" type="password" ms-duplex="@password" id="userpassword" placeholder="密码" ms-rules='{required:true}' >
+            </p>
+          </div>
+          <div class="msg-block">
+            <label>确认密码</label>
+            <p >
+            <input type="password" class="registerInfo-confirmpwd" ms-duplex="@confirmpwd" placeholder="确认密码"
+                      ms-rules="{required:true,equalto:'userpassword'}" >
+            </p>
+          </div>
+          </div>
+        <div class="button-group">
+            <p>
+              <input class="button goback" type="button" ms-click="@goback" value="返回首页"/>
+              <input class="button finish" type="button" ms-click="@finish" value="保存并完成"/>
+            </p>
+        </div>
+      </form>
+    </div>
+    <div class="pop-modal" ms-if="@popmodalFlag">
+      <div class="pop-content">
+        <p class="title">
+          请确认信息是否正确
+        </p>
+        <div class="msg-group">
+          <div class="msg-block">
+            <label>姓名</label>
+            <p>{{@cnname}}</p>
+          </div>
+          <div class="msg-block">
+            <label>手机号</label>
+            <p >{{@mobile}}</p>
+          </div>
+          <div class="msg-block">
+            <label>身份证</label>
+            <p >{{@idcard}}</p>
+          </div>
+          <div class="msg-block segmentName">
+            <label>学段/学科</label>
+            <p>{{@segmentName}}/{{@studyName}}</p>
+            <p class="segment-tips">
+              注：根据您选择的学段，保存后将进入{{@segmentName}}项目学习
+            </p>
+          </div>
+          <div class="msg-block">
+            <label>学校/地区</label>
+            <p>
+              {{@areacodeName}}/{{@areacodechildName}}
+            </p>
+          </div>
+          <div class="msg-block">
+            <label>学校名称</label>
+            <p>
+              {{@schoolName}}
+            </p>
+          </div>
+          <div class="msg-block">
+            <label>继教编号</label>
+            <p>
+              {{@jjcode}}&#12288;
+            </p>
+          </div>
+        </div>
+        <div class="button-group">
+        <input class="button refirmSmt" type="button" ms-click="@refirmSmt"ms-duplex="@btnText" ms-attr="{value:@btnText}"/>
+        <input class="button cannel" type="button" ms-click="@cannel" value="取消"/>
+        </div>
+      </div>
+    </div>
+
+
+    <div ms-if="@topWindow" class="topWindow">
+    <div class="top-content">
+    <p class="title">
+    注册成功，请牢记您的帐号和密码
+    </p>
+    <div class="text">
+      您可以使用手机号登录研修网进行学习
+    </div>
+    <div class="button-group">
+    <p>
+      <input class="button goback" type="button" ms-click="@goback" value="返回首页"/>
+      <input class="button golearn" type="button" ms-click="@golearn" value="去学习"/>
+    </p>
+    </div>
+    </div>
+
+    </div>
+</div>
