@@ -20,7 +20,11 @@
 3,图片跨越问题:<br/>
 前端:<img src="" id="imgclcd" crossorigin="anonymous"><br/>
 
+
 服务端:响应头中就会附加上 Access-Control-Allow-Origin: * 字段，问题解决。<br/>
+4,放大,缩小图片失真问题.
+5,图片旋转90度问题,旋转后放大后找不到图片问题.
+6,画线,文本偏移鼠标坐标问题,页面滚动后定位不准的问题.
 项目计划:<br/>
 1,使用d3实现,d3的canvas和svg各一<br/>
 2,使用react,es6语法实现<br/>
@@ -33,4 +37,8 @@ d3学习:http://www.ourd3js.com/wordpress/100/<br/>
 
 项目截图:<br/>
 
- ![image](https://github.com/webdzq/webdemo/raw/master/canvas_demo/canvasimg.png)
+ ![image](https://github.com/webdzq/webdemo/raw/master/canvas_demo/canvasimg.png)<br/>
+
+
+项目成品截图:<br/>
+![image](https://github.com/webdzq/webdemo/raw/master/canvas_demo/imges_canvas.png)<br/>

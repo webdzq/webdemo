@@ -27,6 +27,7 @@ function CanvasDemo() {
 CanvasDemo.prototype = {
     constructor: CanvasDemo,
     init: function () {
+
         this.canvas = document.getElementById("event_canvas");
         if (!this.canvas.getContext) {
             console.log("Canvas not supported. Please install a HTML5 compatible browser.");
@@ -201,9 +202,11 @@ CanvasDemo.prototype = {
     },
     getPointOnCanvas: function (canvas, x, y) {
         var bbox = canvas.getBoundingClientRect();
+        var sx = window.scrollX;
+        var sy = window.scrollY;
         return {
-            x: x - bbox.left * (canvas.width / bbox.width),
-            y: y - bbox.top * (canvas.height / bbox.height)
+            x: x - sx - bbox.left * (canvas.width / bbox.width),
+            y: y - sy - bbox.top * (canvas.height / bbox.height)
         };
     },
     doKeyDown: function (e, scope) {
