@@ -42,3 +42,6 @@ d3学习:http://www.ourd3js.com/wordpress/100/<br/>
 
 项目成品截图:<br/>
 ![image](https://github.com/webdzq/webdemo/raw/master/canvas_demo/imges_canvas.png)<br/>
+改版后，<br/>
+
+![image](https://github.com/webdzq/webdemo/raw/master/canvas_demo/canvas_newversion.png)

@@ -1,26 +1,35 @@
 <!--[if IE]><script type="text/javascript" src="lib/excanvas.js"></script><![endif]-->
 
 <div class="uptoolbar button-group">
+    <button class="fill_rect cur_rect" data-nd="1" title="矩形"></button>
+    <button class="fill_ellipse" data-nd="2" title="椭圆"></button>
+    <button class="fill_line" data-nd="3" title="画线"></button>
+    <button class="fill_text" data-nd="4" title="写文本"></button>
 
-    <button class="zoomIn" data-nd="6" title="放大"></button>
-    <button class="zoomOut" data-nd="7" title="缩小"></button>
-    <button class="turn" data-nd="8" title="还原"></button>
-    <button class="turn_left" data-nd="9" title="左90度"></button>
-    <button class="turn_right" data-nd="10" title="右90度"></button>
-    <button class="close" data-nd="12" title="关闭"></button>
-
-</div>
-<div class="canvas_my_painter">
-    <canvas id="event_canvas<%=this.cid%>" class="event_canvas" tabindex="0" height="600px" width="1000px"></canvas>
-    <input class="canvas_my_input" type="text" placeholder="请输入">
+    <button class="reset_pre" data-optnd="1" title="撤销上一步操作"></button>
+    <button class="resume" data-optnd="2" title="恢复撤销的操作"></button>
+    <button class="reset" data-optnd="3" title="还原为原图"></button>
+    <button class="close" data-optnd="4" title="关闭"></button>
 
 </div>
-<div class="bottomtoolbar button-group">
-    <button class="fill_line cur_line" data-nd="1" title="画线"></button>
-    <button class="fill_text" data-nd="2" title="写文本"></button>
-    <button class="reset_pre" data-nd="3" title="撤销上一步操作"></button>
-    <button class="resume" data-nd="4" title="恢复撤销的操作"></button>
-    <button class="reset" data-nd="5" title="还原为原图"></button>
-    <button class="save" data-nd="11" title="保存">保存并关闭</button>
+<div class="layoutcenter">
+    <div class="lefttoolbar button-group">
+        <button class="zoomIn" data-optnd="5" title="放大"></button>
+        <button class="zoomOut" data-optnd="6" title="缩小"></button>
+        <button class="turn" data-optnd="7" title="还原"></button>
+        <button class="turn_left" data-optnd="8" title="左90度"></button>
+        <button class="turn_right" data-optnd="9" title="右90度"></button>
+    </div>
+    <div class="canvas_my_painter">
 
+        <canvas id="event_canvas<%=this.cid%>" class="event_canvas" tabindex="0" height="600px" width="1000px"></canvas>
+        <input class="canvas_my_input" type="text" placeholder="请输入">
+
+    </div>
+</div>
+
+<div class="bottomtoolbar ">
+    <div class="bottomwaper button-group ">
+        <button class="save" data-optnd="10" title="保存">保存</button>
+    </div>
 </div>

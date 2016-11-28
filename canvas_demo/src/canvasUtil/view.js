@@ -27,9 +27,12 @@ canvas  核心逻辑代码 ,需要依赖具体环境.本项目建立在backbone+
      $curEl.show();
  }
 **/
+/**
+canvas
+**/
 var $ = require("common:components/jquery/jquery.js");
 var Tip = require("/widget/plugins/tip/tip.js");
-
+var AbsView = require("common:widget/base/absview/absview.js");
 require('./simpleToolTip/simpletooltip.css');
 var SimpleToolTip = require('./simpleToolTip/simpletooltip.js');
 var Alert = require("/widget/plugins/alert/alert.js");
@@ -41,22 +44,22 @@ var canvasView = GroupView.extend({
         GroupView.prototype.initialize.apply(this, arguments);
         var imgsrc = args.imgsrc;
         //imgsrc = "http://scc.jsyxw.cn/answer/images/2016/0905/file_57ccd9b798553.jpg";
-        //console.log("args.....", args);
         this.g_params = args;
         this.$el = args.el;
+        this.index = args.index;
         this.$parentModel = args.$parents;
         this.$target = args.$target; //当前图片
         this.initAttr(imgsrc);
-        this.bindEvents();
+        //this.bindEvents();
         $(args.el).css({
             //'height': document.body.clientHeight,
-            'minHeight': document.body.offsetHeight
+            'minHeight': document.body.clientHeight
         });
         $('body').addClass('bodybg');
         this.model.set('ptid', this.g_params.ptid);
-        $('html, body').animate({
-            scrollTop: 0
 
+        $("html,body").animate({
+            scrollTop: 0
         }, 'slow');
     },
     initAttr: function(imgsrc) {
@@ -67,7 +70,7 @@ var canvasView = GroupView.extend({
         this.started = false;
         this.constH = 900; //工作区最大高度
         this.constW = 1000; //工作区最大宽度
-        this.nd = 1; //操作的类型
+
         //this.$el = $('#my_painter');
         //this.$parentModel = this.$el.find(".answer-bigimags"); //图片弹窗model
         this.$button = this.$el.find('.button-group button'); //所有按钮
@@ -77,17 +80,39 @@ var canvasView = GroupView.extend({
         this.degree = 0; //旋转的时候会改变
         this.step = 0; //决定当前画布的宽高情况
         this.historyArr = []; //保存每次操作后的图片的url
-        this.historyStatus = 0; //首次撤销是0;historyArr的push过程中始终是0
-        this.recoverArr = []; //保存每次撤销操作后的图片的url
-        this.recoverStatus = 0; //撤销操作后首次点击是0
+        this.historyStatus = 0; //0-可撤销；1-不可撤销，如放大之类
+        this.recoverArr = []; //保存每次撤销操作后的图片的url，如果做过图片修改，就清空
+        this.recoverStatus = 0; //撤销操作后首次点击是0，push是0，pop是1
         this.changeAreaCount = 0; //放大缩小的次数.原图的基础上,最多放大3次.原图的基础上,最多缩小3次.
+        this.rectStartX = 0;
+        this.rectStartY = 0;
+        this.rectEndX = 0;
+        this.rectEndY = 0;
+        this.rectIndex = 0;
+        this.rectWid = 'rect_';
+        this.startX = 0;
+        this.startY = 0;
+        this.retcLeft = "0px";
+        this.retcTop = "0px";
+        this.retcHeight = "0px";
+        this.retcWidth = "0px";
+        this.ellipseStartX = 0;
+        this.ellipseStartY = 0;
+        this.ellipseStartpX = 0;
+        this.ellipseStartpY = 0;
+        this.nd = 1; //操作的类型 ,默认矩形，主要是鼠标事件
+        this.optnd = 0; //功能按钮操作的类型
+        this.focusObj = {
+            dom: '.fill_rect',
+            css: 'cur_rect'
+        };
         this.initComponents(imgsrc);
     },
     initComponents: function(imgsrc) {
         this.$button.simpletooltip();
-        var id = "event_canvas" + this.cid;
+        this.id = "event_canvas" + this.cid;
         //console.log(id);
-        this.canvas = document.getElementById(id);
+        this.canvas = document.getElementById(this.id);
         if (!this.canvas.getContext) {
             console.log("Canvas not supported. Please install a HTML5 compatible browser.");
             return;
@@ -100,13 +125,6 @@ var canvasView = GroupView.extend({
         this.canvas.focus();
         this.events();
         this.initImage(imgsrc);
-    },
-    bindEvents: function() {
-        //this.model.on("change:id", this.changeHandler, this);
-    },
-    changeHandler: function() {
-        //this.rerender();
-        //this.initComponents();
     },
     initImage: function(imgsrc) {
         //画一张图片在canvas上
@@ -124,10 +142,7 @@ var canvasView = GroupView.extend({
             //console.log("width...", scope.canvas.width, scope.canvas.height, image.width, image.height);
             scope.drawX = 0;
             scope.drawY = 0;
-            //setTimeout(function() {
             scope.tempContext.drawImage(image, scope.drawX, scope.drawY, image.width, image.height);
-            //}, 1000);
-
         };
         // 设置src属性，浏览器会自动加载。
         // 记住必须先绑定事件，才能设置src属性，否则会出同步问题。
@@ -135,7 +150,7 @@ var canvasView = GroupView.extend({
         image.id = "my_image_" + Math.random();
         this.image = image;
         this.historyArr.push(image.src);
-        scope.historyStatus = 0;
+        //scope.historyStatus = 0;
         return imgsrc;
     },
 
@@ -165,89 +180,131 @@ var canvasView = GroupView.extend({
         }
     },
     events: function() {
+        var $canvas = $('.canvas_my_painter').find('canvas');
         this.$button.unbind();
+        $canvas.off();
         //绑定事件
         this.$button.on('click', this.opationHandler.bind(this));
+        $canvas.on('click', this.doclick.bind(this));
+      this.addEventHandler(this.canvas, "mouseout", this.doMouseOut);
         this.addEventHandler(this.canvas, "mousedown", this.doMouseDown);
         this.addEventHandler(this.canvas, "keydown", this.doKeyDown);
         this.addEventHandler(this.canvas, "mousemove", this.doMouseMove);
         this.addEventHandler(this.canvas, "mouseup", this.doMouseUp);
 
     },
+    focusCtrl: function(curdom, foucscss) {
+        var scope = this;
+        var obj = scope.focusObj;
+        $(obj.dom).removeClass(obj.css);
+
+        scope.focusObj.dom = curdom;
+        scope.focusObj.css = foucscss;
+        $(obj.dom).addClass(obj.css);
+    },
+    changeHandler: function() {
+        //this.rerender();
+        //this.initComponents();
+    },
+    doclick: function(event) {
+        var scope = this;
+
+        if (this.focusObj) {
+            scope.nd = $(this.focusObj.dom).data('nd');
+        }
+        //console.log("doclick..");
+    },
     opationHandler: function(event) {
         //确定操作的中央控制中心
+
         var scope = this;
         var $target = $(event.currentTarget);
         var nd = $target.data('nd');
-        this.nd = nd;
+        var optnd = $target.data('optnd');
         this.$input.hide();
-        if ((scope.nd + "") == '1') {
-            //铅笔
-            this.$button.filter('.fill_line').addClass('cur_line');
-            this.$button.filter('.fill_text').removeClass('cur_text');
-        } else {
-            this.$button.filter('.fill_line').removeClass('cur_line');
-            //this.$button.filter('.fill_text').removeClass('cur_text');
+        if (!!nd) {
+            scope.nd = nd;
         }
-        if ((scope.nd + "") == '2') {
-            //文本
-            this.$button.filter('.fill_line').removeClass('cur_line');
-            this.$button.filter('.fill_text').addClass('cur_text');
-        } else {
-            this.$button.filter('.fill_text').removeClass('cur_text');
-            //this.$button.filter('.fill_text').removeClass('cur_text');
+        if (!optnd) {
+            optnd = scope.optnd;
         }
+        //console.log("scope.nd...optnd..", scope.nd, scope.optnd);
         switch (scope.nd + "") {
             case '1':
-                //画线
+                //矩形
+                scope.focusCtrl('.fill_rect', 'cur_rect');
                 break;
             case '2':
-                //写文本
+                //椭圆
+                scope.focusCtrl('.fill_ellipse', 'cur_ellipse');
                 break;
             case '3':
-                //撤销上一步操作
-                scope.reset_pre();
+                //画线
+                scope.focusCtrl('.fill_line', 'cur_line');
                 break;
             case '4':
+                //写文本
+                scope.focusCtrl('.fill_text', 'cur_text');
+                break;
+
+            default:
+                break;
+        }
+        //console.log("optnd...", optnd);
+        switch (optnd + "") {
+            case '1':
+                //撤销上一步操作
+
+                scope.reset_pre();
+                break;
+            case '2':
                 //恢复撤销的操作
+                scope.historyStatus = 0;
                 scope.recover_next();
                 break;
-            case '5':
+            case '3':
                 //还原--最初学生作业的图
+                scope.historyStatus = 0;
                 scope.recoverCanvas();
                 break;
-            case '6':
+            case '4':
+                //关闭
+                scope.imageClose();
+                break;
+            case '5':
                 //放大
+                scope.historyStatus = 1;
                 scope.changeArea(1);
                 break;
-            case '7':
+            case '6':
                 //缩小
+                scope.historyStatus = 1;
                 scope.changeArea(2);
                 break;
-            case '8':
+            case '7':
                 //还原放大，缩小，旋转的图片
                 //scope.imageRotate('rev');
                 scope.revert();
+                scope.historyStatus = 1;
                 break;
-            case '9':
+            case '8':
                 //左转
                 scope.imageRotate('left');
+                scope.historyStatus = 1;
                 break;
-            case '10':
+            case '9':
                 //右转
+                scope.historyStatus = 1;
                 scope.imageRotate('right');
                 break;
-            case '11':
+            case '10':
                 //保存
                 scope.imageCloseAndSave();
-                break;
-            case '12':
-                //关闭
-                scope.imageClose();
                 break;
             default:
                 break;
         }
+
     },
     revert: function() {
         //还原到放大操作，旋转操作前的图片
@@ -257,6 +314,16 @@ var canvasView = GroupView.extend({
         scope.historyImage(imgUrl);
         scope.changeAreaCount = 0;
     },
+    doMouseOut: function(event, scope) {
+      //console.log('doMouseOut。。。',scope.nd + "");
+        if (!scope) {
+            return;
+        }
+        if(scope.nd + ""=='3'){
+            scope.started = false;
+        }
+
+    },
     doMouseDown: function(event, scope) {
         if (!scope) {
             return;
@@ -265,46 +332,194 @@ var canvasView = GroupView.extend({
         var y = event.pageY;
         var canvas = event.target;
         var loc = scope.getPointOnCanvas(canvas, x, y);
-        if (scope.nd + "" == '1') {
-            //画线
-            scope.tempContext.moveTo(loc.x, loc.y);
-            scope.started = true;
-        } else if (scope.nd + "" == '2') {
-            //写文本
-            scope.writeTextOption(x, y);
-        } else {
-            //其他无鼠标事件
+        scope.recoverArr = []; //有画线操作就清空
+        scope.historyStatus = 0;
+        switch (scope.nd + "") {
+            case "1":
+                //矩形
+                scope.tempContext.moveTo(loc.x, loc.y);
+                scope.started = true;
+                scope.rectStartX = loc.x;
+                scope.rectStartY = loc.y;
+
+                scope.startX = x;
+                scope.startY = y;
+
+                scope.rectIndex++;
+                var div = document.createElement("div");
+                div.id = scope.rectWid + scope.rectIndex;
+                div.className = "rect";
+                div.style.left = x + "px";
+                div.style.top = y + "px";
+
+                $('.canvas_my_painter').append(div);
+                $('#' + div.id).on({
+                    'mousemove': function(evt) {
+                        scope.doMouseMove(evt, scope);
+                    },
+                    'mouseup': function(evt) {
+                        scope.doMouseUp(evt, scope);
+                    }
+                });
+                break;
+            case "2":
+                //椭圆
+                //scope.tempContext.moveTo(loc.x, loc.y);
+                scope.started = true;
+                scope.ellipseStartX = loc.x;
+                scope.ellipseStartY = loc.y;
+                scope.ellipseStartpX = x;
+                scope.ellipseStartyY = y;
+                break;
+            case "3":
+                //画线
+                scope.tempContext.moveTo(loc.x, loc.y);
+                scope.started = true;
+                break;
+            case "4":
+                //写文本
+                scope.writeTextOption(x, y);
+                break;
+            default:
+                break;
         }
+
 
     },
     doMouseMove: function(event, scope) {
         if (!scope) {
             return;
         }
+        if (!scope.started) {
+            return;
+        }
         var x = event.pageX;
         var y = event.pageY;
         var canvas = event.target;
-        var loc = scope.getPointOnCanvas(canvas, x, y);
-        if (scope.nd + "" == '1') {
-            if (scope.started) {
-                scope.tempContext.lineTo(loc.x, loc.y);
-                scope.tempContext.strokeStyle = 'rgba(255,0,0,0.5)';
-                scope.tempContext.stroke();
-            }
-        }
+        var tcx = scope.tempContext;
 
+        var loc = scope.getPointOnCanvas(canvas, x, y);
+        switch (scope.nd + "") {
+            case "1":
+                //矩形
+                scope.rectEndX = loc.x;
+                scope.rectEndY = loc.Y;
+
+                scope.retcLeft = (scope.startX - x > 0 ? x : scope.startX) + "px";
+                scope.retcTop = (scope.startY - y > 0 ? y : scope.startY) + "px";
+                scope.retcHeight = Math.abs(scope.startY - y) + "px";
+                scope.retcWidth = Math.abs(scope.startX - x) + "px";
+
+                scope.getId(scope.rectWid + scope.rectIndex).style.left = scope.retcLeft;
+                scope.getId(scope.rectWid + scope.rectIndex).style.top = scope.retcTop;
+                scope.getId(scope.rectWid + scope.rectIndex).style.width = scope.retcWidth;
+                scope.getId(scope.rectWid + scope.rectIndex).style.height = scope.retcHeight;
+                break;
+            case "2":
+                //椭圆 有问题，没有固定的起点
+                //var x=300,y=300,a=200,b=100,du=360;
+                $('.abellipse').remove();
+                $('.canvas_my_painter').off();
+                var a = Math.abs(scope.ellipseStartX - loc.x) * 1.2;
+                var b = Math.abs(scope.ellipseStartY - loc.y) * 1.2;
+                //console.log("a..%s,b...%s", a, b);
+                for (var i = 0; i < 360; i++) {
+                    var divs = document.createElement("div"),
+                        hudu = (Math.PI / 180) * i,
+                        x1 = a * Math.sin(hudu) + x,
+                        y1 = y - (b * Math.cos(hudu));
+
+                    divs.className = "abellipse";
+                    divs.style.left = x1 + "px";
+                    divs.style.top = y1 + "px";
+                    //divs.style.cssText = "left:" + x1 + "px;top:" + y1 + "px;";
+
+                    $('.canvas_my_painter').append(divs);
+                }
+                $('.canvas_my_painter').on({
+                    'mousemove': function(evt) {
+                        scope.doMouseMove(evt, scope);
+                    },
+                    'mouseup': function(evt) {
+                        scope.doMouseUp(evt, scope);
+                    }
+                });
+                break;
+            case "3":
+                //铅笔
+                tcx.lineTo(loc.x, loc.y);
+                tcx.strokeStyle = 'rgba(255,0,0,0.5)';
+                tcx.stroke();
+                break;
+            case "4":
+                break;
+            default:
+                break;
+        }
     },
     doMouseUp: function(event, scope) {
+        var x = event.pageX;
+        var y = event.pageY;
+        var loc = scope.getPointOnCanvas(scope.canvas, x, y);
+
         if (scope.started) {
-            scope.doMouseMove(event, scope);
+            if (scope.nd + "" == '1') {
+                //绘制矩形
+                scope.drawRect(loc);
+                //移除动态添加的dom
+                for (var i = 0; i <= scope.rectIndex; i++) {
+                    var $dom = $("#" + scope.rectWid + i);
+                    if ($dom) {
+                        $dom.off();
+                        $dom.remove();
+                    }
+
+                }
+
+            } else if (scope.nd + "" == '2') {
+                //绘制椭圆
+                $('.abellipse').remove();
+                $('.canvas_my_painter').off();
+                //console.log(loc.x,scope.ellipseStartX);
+                var width = Math.abs(loc.x - scope.ellipseStartX);
+                var height = Math.abs(loc.y - scope.ellipseStartY);
+                scope.drawEllipse(scope.ellipseStartX + width, scope.ellipseStartY + height, width, height);
+            }
+            //scope.doMouseMove(event, scope);
+
             scope.started = false;
-            //console.log("scope.canvas...", scope.canvas);
-            //var img = $("#my_images");
             var imgUrl = scope.canvas.toDataURL("image/png");
             scope.historyArr.push(imgUrl);
-            scope.historyStatus = 0;
+            //scope.historyStatus = 0;
             scope.historyImage(imgUrl);
         }
+    },
+    drawRect: function(loc) {
+        //绘制矩形
+        var scope = this;
+        var tcxt = scope.tempContext;
+        tcxt.lineTo(scope.rectStartX, loc.y);
+        tcxt.lineTo(loc.x, loc.y);
+        tcxt.lineTo(loc.x, scope.rectStartY);
+        tcxt.lineTo(scope.rectStartX, scope.rectStartY);
+        tcxt.strokeStyle = 'rgba(255,0,0,0.5)';
+        tcxt.lineWidth = 3; /*边框的宽度*/
+        tcxt.stroke();
+    },
+    drawEllipse: function(x, y, width, height) {
+        //绘制椭圆  ---正方向绘制。反方向有问题
+        var scope = this;
+        //console.log("drawEllipse...",scope);
+        var tcxt = scope.tempContext;
+        var k = (width / 0.3) / 2, //贝塞尔控制点x=(椭圆宽度/0.75)/2
+            w = width * 5,
+            h = height * 1.2;
+        tcxt.moveTo(x, y - h);
+        tcxt.bezierCurveTo(x + k, y - h, x + k, y + h, x, y + h);
+        tcxt.bezierCurveTo(x - k, y + h, x - k, y - h, x, y - h);
+        tcxt.strokeStyle = 'rgba(255,0,0,0.5)';
+        tcxt.lineWidth = 3; /*边框的宽度*/
+        tcxt.stroke();
     },
     getPointOnCanvas: function(canvas, x, y) {
         var bbox = canvas.getBoundingClientRect();
@@ -319,8 +534,7 @@ var canvasView = GroupView.extend({
         //单击显示输入框
         var scope = this;
         var loc = scope.getPointOnCanvas(scope.canvas, x, y);
-        //console.log('fillInputText...', posObj.x, posObj.y, loc.x, loc.y);
-        //scope.tempContext.fillText(val, loc.x, loc.y);
+
         this.$input.focus();
         this.$input.unbind();
         this.$input.val('');
@@ -345,11 +559,6 @@ var canvasView = GroupView.extend({
         var scope = this;
         var val = this.$input.val();
         if (!!val) {
-            // scope.tempContext.shadowOffsetX = 2;
-            // scope.tempContext.shadowOffsetY = 2;
-            // scope.tempContext.shadowBlur = 2;
-            // scope.tempContext.shadowColor = "rgba(0, 0, 0, 0.5)";
-
             scope.tempContext.font = "20px Times New Roman";
             scope.tempContext.fillStyle = "red";
             var loc = scope.getPointOnCanvas(scope.canvas, posObj.x, posObj.y);
@@ -359,7 +568,7 @@ var canvasView = GroupView.extend({
 
             var imgUrl = scope.canvas.toDataURL("image/png");
             scope.historyArr.push(imgUrl);
-            scope.historyStatus = 0;
+            //scope.historyStatus = 0;
             scope.historyImage(imgUrl);
         }
     },
@@ -465,8 +674,6 @@ var canvasView = GroupView.extend({
         //旋转 .遗留问题;翻转时,图片恢复了原来的大小.不是放大后的大小
         //console.log( "imageRotate...");
         var scope = this;
-
-
         var img = this.image;
         var canvas = this.canvas;
         var ctx = this.tempContext;
@@ -474,7 +681,6 @@ var canvasView = GroupView.extend({
         //最小与最大旋转方向，图片旋转4次后回到原方向
         var min_step = 0;
         var max_step = 3;
-
         if (img == null) return;
         //img的高度和宽度不能在img元素隐藏后获取，否则会出错
         var height = img.height;
@@ -543,40 +749,33 @@ var canvasView = GroupView.extend({
 
     },
     reset_pre: function() {
-        //撤销上一步的操作
+        //撤销上一步的操作：矩形，圆形，铅笔，文本，清除。
         var scope = this;
-        //console.log("historyArr=", scope.historyArr);
-        if (scope.historyArr.length < 1) {
+        var imgUrl = "";
+        var len = 0;
+        //console.log("reset_pre...scope.historyStatus..=", scope.historyStatus)
+        if (scope.historyStatus == 1) {
             return;
         }
-        if (scope.historyStatus == 0 && scope.historyArr.length > 2) {
+        if (scope.historyArr.length < 2) {
+            return;
+        } else {
             scope.recoverArr.push(scope.historyArr.pop());
-            scope.historyStatus = 1;
+            //scope.historyStatus = 1;
+            len = scope.historyArr.length;
+            imgUrl = scope.historyArr[len - 1];
         }
-        //console.log("recoverArr=", scope.recoverArr);
-        var imgUrl = scope.historyArr.pop();
-        scope.recoverArr.push(imgUrl);
-        scope.recoverStatus = 0;
         scope.historyImage(imgUrl);
-        if (scope.historyArr.length == 0) {
-            scope.historyArr.push(scope.image.src);
-            scope.historyStatus = 0;
-        }
-
     },
     recover_next: function() {
-        //恢复撤销的操作
+        //恢复撤销的操作：只针对撤销操作。
         var scope = this;
         if (scope.recoverArr.length < 1) {
             return;
         }
-        if (scope.recoverStatus == 0) {
-            scope.historyArr.push(scope.recoverArr.pop());
-            scope.recoverStatus = 1;
-        }
         var imgUrl = scope.recoverArr.pop();
         scope.historyArr.push(imgUrl);
-        scope.historyStatus = 0;
+        //scope.historyStatus = 0;
         scope.historyImage(imgUrl);
     },
     imageClose: function() {
@@ -584,10 +783,12 @@ var canvasView = GroupView.extend({
         this.$el.hide();
         $('body').removeClass('bodybg');
     },
+    getId: function(id) {
+        return document.getElementById(id);
+    },
     imageCloseAndSave: function() {
         //关闭和保存
         //console.log("imageCloseAndSave...");
-
         var scope = this;
         var imgid = scope.g_params.imgid;
         var headerStr = "data:image/png;base64,";
@@ -610,9 +811,6 @@ var canvasView = GroupView.extend({
             requeststr: JSON.stringify(requeststr)
         };
 
-        //test 用
-        // this.$parentModel.hide();
-        // $('[data-imgid=' + imgid + ']').attr('src', dataurl_p);
         $.post(url, vdata).then(function(pdata) {
             var data = pdata || {};
             if (typeof data == "string") {
@@ -625,10 +823,13 @@ var canvasView = GroupView.extend({
                     return;
                 }
                 var curUrl = data.data[0].newUrl;
-                //console.log("img..", scope.$target);
-                //scope.$parentModel.find('#answersimgs_' + imgid).attr('src', curUrl);
                 scope.$target.attr('src', curUrl);
                 scope.g_params.imgsrc = curUrl;
+                scope.trigger('change:image', {
+                    index: scope.index,
+                    url: curUrl
+                });
+
                 scope.$el.hide();
                 $('body').removeClass('bodybg');
             } else {
