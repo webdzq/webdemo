@@ -1,33 +1,4 @@
 /**
-canvas  核心逻辑代码 ,需要依赖具体环境.本项目建立在backbone+jello的基础之上
- 支持浏览器:chrome,ff,edge等,不支持所有ie浏览器（8-11）
-
- 调用逻辑:
- var CanvasView = require('../canvasUtil/view.js');
-
-
- function test(evt){
-     var $target = $(evt.currentTarget);
-     var imgsrc = $target.attr('src');
-     var ptid = $target.data('ptid');
-     var uid = $target.data('uid');
-     var imgid = $target.data('imgid');
-     var $curEl = $target.parents('.answers').find(".answer-bigimags");
-     //console.log("$curEl", $curEl);
-     var canvasView = new CanvasView({
-
-                    el: $curEl,
-                    $target: $target,
-                    $parents: $target.parents('.answers'),
-                    'imgsrc': imgsrc,
-                    'ptid': ptid,
-                    'uid': uid,
-                    'imgid': imgid
-                });
-     $curEl.show();
- }
-**/
-/**
 canvas
 **/
 var $ = require("common:components/jquery/jquery.js");
@@ -49,6 +20,7 @@ var canvasView = GroupView.extend({
         this.index = args.index;
         this.$parentModel = args.$parents;
         this.$target = args.$target; //当前图片
+
         this.initAttr(imgsrc);
         //this.bindEvents();
         $(args.el).css({
@@ -70,7 +42,7 @@ var canvasView = GroupView.extend({
         this.started = false;
         this.constH = 900; //工作区最大高度
         this.constW = 1000; //工作区最大宽度
-
+        this.domid = this.cid;
         //this.$el = $('#my_painter');
         //this.$parentModel = this.$el.find(".answer-bigimags"); //图片弹窗model
         this.$button = this.$el.find('.button-group button'); //所有按钮
@@ -180,13 +152,13 @@ var canvasView = GroupView.extend({
         }
     },
     events: function() {
-        var $canvas = $('.canvas_my_painter').find('canvas');
+        var $canvas = $('#canvas_my_painter' + this.domid).find('canvas');
         this.$button.unbind();
         $canvas.off();
         //绑定事件
         this.$button.on('click', this.opationHandler.bind(this));
         $canvas.on('click', this.doclick.bind(this));
-      this.addEventHandler(this.canvas, "mouseout", this.doMouseOut);
+        this.addEventHandler(this.canvas, "mouseout", this.doMouseOut);
         this.addEventHandler(this.canvas, "mousedown", this.doMouseDown);
         this.addEventHandler(this.canvas, "keydown", this.doKeyDown);
         this.addEventHandler(this.canvas, "mousemove", this.doMouseMove);
@@ -315,11 +287,11 @@ var canvasView = GroupView.extend({
         scope.changeAreaCount = 0;
     },
     doMouseOut: function(event, scope) {
-      //console.log('doMouseOut。。。',scope.nd + "");
+        //console.log('doMouseOut。。。',scope.nd + "");
         if (!scope) {
             return;
         }
-        if(scope.nd + ""=='3'){
+        if (scope.nd + "" == '3') {
             scope.started = false;
         }
 
@@ -344,15 +316,15 @@ var canvasView = GroupView.extend({
 
                 scope.startX = x;
                 scope.startY = y;
-
+                //scope.rectIndex = 0;
                 scope.rectIndex++;
                 var div = document.createElement("div");
                 div.id = scope.rectWid + scope.rectIndex;
                 div.className = "rect";
                 div.style.left = x + "px";
                 div.style.top = y + "px";
-
-                $('.canvas_my_painter').append(div);
+                //console.log($('#canvas_my_painter' + scope.domid));
+                $('#canvas_my_painter' + scope.domid).append(div);
                 $('#' + div.id).on({
                     'mousemove': function(evt) {
                         scope.doMouseMove(evt, scope);
@@ -419,7 +391,7 @@ var canvasView = GroupView.extend({
                 //椭圆 有问题，没有固定的起点
                 //var x=300,y=300,a=200,b=100,du=360;
                 $('.abellipse').remove();
-                $('.canvas_my_painter').off();
+                $('#canvas_my_painter' + scope.domid).off();
                 var a = Math.abs(scope.ellipseStartX - loc.x) * 1.2;
                 var b = Math.abs(scope.ellipseStartY - loc.y) * 1.2;
                 //console.log("a..%s,b...%s", a, b);
@@ -434,9 +406,9 @@ var canvasView = GroupView.extend({
                     divs.style.top = y1 + "px";
                     //divs.style.cssText = "left:" + x1 + "px;top:" + y1 + "px;";
 
-                    $('.canvas_my_painter').append(divs);
+                    $('#canvas_my_painter' + scope.domid).append(divs);
                 }
-                $('.canvas_my_painter').on({
+                $('#canvas_my_painter' + scope.domid).on({
                     'mousemove': function(evt) {
                         scope.doMouseMove(evt, scope);
                     },
@@ -467,19 +439,14 @@ var canvasView = GroupView.extend({
                 //绘制矩形
                 scope.drawRect(loc);
                 //移除动态添加的dom
-                for (var i = 0; i <= scope.rectIndex; i++) {
-                    var $dom = $("#" + scope.rectWid + i);
-                    if ($dom) {
-                        $dom.off();
-                        $dom.remove();
-                    }
 
-                }
+                $('.rect').off();
+                $('.rect').remove();
 
             } else if (scope.nd + "" == '2') {
                 //绘制椭圆
                 $('.abellipse').remove();
-                $('.canvas_my_painter').off();
+                $('#canvas_my_painter' + scope.domid).off();
                 //console.log(loc.x,scope.ellipseStartX);
                 var width = Math.abs(loc.x - scope.ellipseStartX);
                 var height = Math.abs(loc.y - scope.ellipseStartY);
