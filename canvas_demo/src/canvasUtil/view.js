@@ -97,6 +97,8 @@ var canvasView = GroupView.extend({
         this.canvas.focus();
         this.events();
         this.initImage(imgsrc);
+        //console.log("width..height..",this.canvas.width,this.canvas.height);
+        //console.log("offsetLeft...",this.canvas.width,this.canvas.left,this.canvas.offsetLeft,this.canvas.offsetHeight);
     },
     initImage: function(imgsrc) {
         //画一张图片在canvas上
@@ -123,6 +125,7 @@ var canvasView = GroupView.extend({
         this.image = image;
         this.historyArr.push(image.src);
         //scope.historyStatus = 0;
+
         return imgsrc;
     },
 
@@ -392,19 +395,35 @@ var canvasView = GroupView.extend({
                 //var x=300,y=300,a=200,b=100,du=360;
                 $('.abellipse').remove();
                 $('#canvas_my_painter' + scope.domid).off();
-                var a = Math.abs(scope.ellipseStartX - loc.x) * 1.2;
-                var b = Math.abs(scope.ellipseStartY - loc.y) * 1.2;
-                //console.log("a..%s,b...%s", a, b);
+                var a = (scope.ellipseStartX - loc.x) * 1.2;
+                var b = (scope.ellipseStartY - loc.y) * 1.2;
+
+                var width = scope.canvas.width;
+                var height = scope.canvas.height;
+
                 for (var i = 0; i < 360; i++) {
                     var divs = document.createElement("div"),
                         hudu = (Math.PI / 180) * i,
                         x1 = a * Math.sin(hudu) + x,
                         y1 = y - (b * Math.cos(hudu));
-
+                    //console.log(a,b,x1,y1);
+                    //console.log((loc.x + a * Math.sin(hudu)) < width && (loc.y + (b * Math.cos(hudu))) < height);
                     divs.className = "abellipse";
-                    divs.style.left = x1 + "px";
-                    divs.style.top = y1 + "px";
-                    //divs.style.cssText = "left:" + x1 + "px;top:" + y1 + "px;";
+                    var lx = (loc.x + (a * Math.sin(hudu))); //x坐标边界
+                    var ly = (loc.y - (b * Math.cos(hudu))); //y轴边界
+
+                    if (lx < 0 || lx > width) {
+                        //边界就是透明的背景
+                        //console.log("lx...", a * Math.sin(hudu), loc.x, width, x1);
+                        divs.className = "abellipse_1";
+                    }
+                    if (ly < 0 || ly > height) {
+                        //边界就是透明的背景
+                        //console.log("ly...", b * Math.cos(hudu), loc.y, height, y1);
+                        divs.className = "abellipse_1";
+                    }
+
+                    divs.style = "left:" + x1 + "px;" + "top:" + y1 + "px;";
 
                     $('#canvas_my_painter' + scope.domid).append(divs);
                 }
@@ -420,7 +439,7 @@ var canvasView = GroupView.extend({
             case "3":
                 //铅笔
                 tcx.lineTo(loc.x, loc.y);
-                tcx.strokeStyle = 'rgba(255,0,0,0.5)';
+                tcx.strokeStyle = 'rgba(255,0,0,1)';
                 tcx.stroke();
                 break;
             case "4":
@@ -447,9 +466,9 @@ var canvasView = GroupView.extend({
                 //绘制椭圆
                 $('.abellipse').remove();
                 $('#canvas_my_painter' + scope.domid).off();
-                //console.log(loc.x,scope.ellipseStartX);
-                var width = Math.abs(loc.x - scope.ellipseStartX);
-                var height = Math.abs(loc.y - scope.ellipseStartY);
+
+                var width = (loc.x - scope.ellipseStartX);
+                var height = (loc.y - scope.ellipseStartY);
                 scope.drawEllipse(scope.ellipseStartX + width, scope.ellipseStartY + height, width, height);
             }
             //scope.doMouseMove(event, scope);
@@ -469,8 +488,8 @@ var canvasView = GroupView.extend({
         tcxt.lineTo(loc.x, loc.y);
         tcxt.lineTo(loc.x, scope.rectStartY);
         tcxt.lineTo(scope.rectStartX, scope.rectStartY);
-        tcxt.strokeStyle = 'rgba(255,0,0,0.5)';
-        tcxt.lineWidth = 3; /*边框的宽度*/
+        tcxt.strokeStyle = 'rgba(255,0,0,1)';
+        tcxt.lineWidth = 2; /*边框的宽度*/
         tcxt.stroke();
     },
     drawEllipse: function(x, y, width, height) {
@@ -484,14 +503,15 @@ var canvasView = GroupView.extend({
         tcxt.moveTo(x, y - h);
         tcxt.bezierCurveTo(x + k, y - h, x + k, y + h, x, y + h);
         tcxt.bezierCurveTo(x - k, y + h, x - k, y - h, x, y - h);
-        tcxt.strokeStyle = 'rgba(255,0,0,0.5)';
-        tcxt.lineWidth = 3; /*边框的宽度*/
+        tcxt.strokeStyle = 'rgba(255,0,0,1)';
+        tcxt.lineWidth = 2; /*边框的宽度*/
         tcxt.stroke();
     },
     getPointOnCanvas: function(canvas, x, y) {
         var bbox = canvas.getBoundingClientRect();
         var sx = window.scrollX;
         var sy = window.scrollY;
+
         return {
             x: x - sx - bbox.left * (canvas.width / bbox.width),
             y: y - sy - bbox.top * (canvas.height / bbox.height)
