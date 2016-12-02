@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js将网页转换为word文档</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+
+<body class="mkeBody">
+    <div class="mkeHeadBox">将网页内容导出Word文档jQuery插件</div>
+    <div class="mkeContentBox">
+        <!--效果html开始-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9" id="pagecontent">
+                    <h3>创建一个Cordova项目</h3>
+
+
+                    <p>1、确保你已经将Node.js的最新版本安装到你的系统上。</p>
+                    <p>2、打开终端（Mac）或命令窗口（Windows），键入以下命令来安装Cordova CLI： npm install -g cordova <br/>如果在Mac上： sudo npm install -g cordova <br/>如果你已经将Cordova安装到你的电脑上，请确保你已经将其升级到最新版本。 npm update -g cordova </p>
+                    <p>3、确定你在你的文件系统中存储项目的路径。 </p>
+                    <p>4、打开Cordova CLI，在命名为workshop的目录中创建一个命名为Workshop的Cordova项目：<br/> cordova create workshop com.yourname.workshop Workshop </p>
+                    <p>5、导航到项目目录： cd workshop </p>
+                    <p>6、增加对iOS平台的支持（可选项） 为了能够为iOS平台创建项目，那么必须在你的电脑上安装iOS软件开发工具包。<br/>如果不需要支持iOS平台，那么你可以跳过这一步，并增加对其他平台的支持或只是简单地在浏览器中运行本教程的应用。 <br/>1、确保你的系统中iOS SDK是可用的。 <br/>2、在命令行，确保你处在workshop目录，并键入： cordova platforms add ios </p>
+                    <p>7、增加对安卓平台的支持（可选项） 为了能够在安卓平台上创建项目，那么必须将安卓软件开发工具包安装到你的系统中。<br/>如果你不需要支持安卓平台，那么你可以跳过这一步，并增加对其他平台的支持或只是简单地在浏览器中运行本教程的应用。<br/> 确保你的系统中安卓软件开发工具包和蚂蚁构建工具（ant build tool）是可用的。<br/>在这里，安卓软件开发工具包是可用的。在你的路径中，安卓和蚂蚁工具必须是可用的。</p>
+                    <p> 8、确保你处在workshop目录，并添加基本插件到你的项目中：<br/> cordova plugin add org.apache.cordova.device cordova plugin add org.apache.cordova.console</p>
+                    <p>9、在workshop下测试目录结构。 www文件夹是你将要编码你的HTML / JavaScript应用的位置。<br/>在一个浏览器中打开index.html文件，以查看由Cordova CLI创建的默认应用。 <br/>Platforms文件夹是Cordova将要为 不同的平台（iOS、安卓等等）创建你的应用的位置。这个文件夹的内容将由Cordova CLI自动生成，而且你千万不要在该目录中进行编辑代码。 <br/>在plugins目录中安装插件。 应用参数（姓名、作者等等）都存储在config.xml文件中。
+                    </p>
+                    <p>
+                        <img src="http://e.jikexueyuan.com/headerandfooter/images/logo.png" class="jklogo" alt="极客学院" data-bd-imgshare-binded="1">
+                    </p>
+                    <p>适用浏览器：360、FireFox、Chrome、Opera、傲游、搜狗、世界之窗. 不支持Safari、IE8及以下浏览器。</p>
+
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-default jquery-word-export" href="javascript:void(0)">
+                        <span class="word-icon">W</span> 导出为.doc文档
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!--效果html结束-->
+    </div>
+
+</body>
+<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="FileSaver.js"></script>
+<script type="text/javascript" src="jquery.wordexport.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $("a.jquery-word-export").click(function(event) {
+            $("#pagecontent").wordExport('jsToWord');
+        });
+    });
+</script>
+
+</html>

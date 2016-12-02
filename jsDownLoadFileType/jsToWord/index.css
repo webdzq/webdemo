@@ -1,0 +1,67 @@
+@charset "utf-8";
+/*框架预览 CSS*/
+.mkeBody{ background:#121212;}
+.mkeHeadBox{ padding: 30px 10px; text-overflow: ellipsis; white-space: nowrap; margin: 0; color: #fff; text-align: center; overflow: hidden; border-bottom: 3px solid #666; box-shadow: inset 0 -2px 3px #000000; letter-spacing: 1px; font: 26px/26px "微软雅黑"; }
+.mkeFooterBox{ padding: 25px 10px; text-overflow: ellipsis; margin: 0; color: #fff; font-size: 14px; line-height: 24px; text-align: center; overflow: hidden; border-top: 3px solid #666; box-shadow: inset 0 2px 3px #000000; }
+.mkeContentBox{ background:#494A5F; padding:50px}
+.mkeContentBox:after{height:0; clear:both;}
+.mkeFooterBox p,.mkeFooterBox div{padding:0; margin:0; line-height:26px; font-size:14px;}
+.mkeFooterBox a{color:#fff; white-space:nowrap}
+.mkeButton{background:#F36; display:inline-block; text-decoration:none; width:102px; border-radius:0.3em; transition:all 0.3s ease}
+.mkeButton:hover{ background: #FF1550; }
+.mkeURL{font-size:24px;}
+.mkeFooterBox .mKeBannerAD{ width: 728px; height: 90px; margin: 18px auto 0; }
+.mkeFooterBox .mSmallKeBannerAD{display:none;}
+@media only screen and (max-width:900px){
+.mkeButton {display:block; margin:8px auto 0;}
+}
+@media only screen and (max-width:767px){
+.mkeHeadBox{font-size:18px; padding:15px 10px;}
+.mkeFooterBox p,.mkeFooterBox div{ line-height:24px; font-size:12px;}
+.mkeURL{font-size:22px;}
+.mkeFooterBox .mKeBannerAD{display:none;}
+.mkeFooterBox .mSmallKeBannerAD{width:300px; height:250px; margin:18px auto 0; display:block;}
+}
+/*End*/
+
+/*主要CSS*/
+body, html { font-size: 100%; 	padding: 0; margin: 0;}
+
+/* Reset */
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+body{
+	background: #494A5F;
+	color: #D5D6E2;
+	font-weight: 500;
+	font-size: 1.05em;
+	font-family: "Microsoft YaHei","宋体","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif, FreeSans, Arimo;
+}
+a{ color: rgba(255, 255, 255, 0.6);outline: none;text-decoration: none;-webkit-transition: 0.2s;transition: 0.2s;}
+a:hover,a:focus{color:#74777b;text-decoration: none;}
+.word-icon{
+	font-family: "Helvetica", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #0054a6;
+    color: white;
+    padding: 2px 5px;
+    vertical-align: middle;
+}
