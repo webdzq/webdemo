@@ -1,0 +1,21 @@
+#extends("common-simple:page/layout/base_new.vm")
+	#block("body")
+		#block("header")
+		#end
+		<div class="body-content">
+		<div class="wrap">
+		<div class="wrap-body">
+			#block("main")
+				here is main area
+			#end
+			#block("extra")
+				here is extra area
+			#end
+		</div>
+		</div>
+		</div>
+		#block("footer")
+		#end
+	#end
+	#require("./layout.vm")
+#end

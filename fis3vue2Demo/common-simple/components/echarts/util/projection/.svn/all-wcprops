@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/echarts/util/projection
+END
+albers.js
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/echarts/util/projection/albers.js
+END
+normal.js
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/echarts/util/projection/normal.js
+END
+mercator.js
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/echarts/util/projection/mercator.js
+END
+svg.js
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/echarts/util/projection/svg.js
+END

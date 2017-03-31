@@ -1,0 +1,23 @@
+#extends("./layout.vm")
+		#block("header")
+			
+		#end
+	#block("content")
+
+		
+			<input id="datetimepicker" type="text" placeholder="日期" >
+
+	#end
+		#block("footer")
+		
+		#end
+	#script()
+
+	
+		require("./demo.js");
+
+
+
+	#end
+	#require("./demo.vm")
+#end

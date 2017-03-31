@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple
+END
+fis-conf.js
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/fis-conf.js
+END
+package.json
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/package.json
+END
+build.sh
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/build.sh
+END
+build_log.sh
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/build_log.sh
+END
+server.conf
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/server.conf
+END

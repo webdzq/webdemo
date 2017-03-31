@@ -1,0 +1,142 @@
+#extends("./layout.vm")
+	#block("content")
+
+		#style()
+			#yanxiu-player{
+				width:600px;
+				height:400px;
+			}
+
+		#end
+		<div id="filters"></div>
+		<div id="paging"></div>
+		<div id="yanxiu-player"></div>
+
+		<div id="files-container"></div>
+<!--
+		<div id="pick-a-file">选择文件</div>
+		-->
+		<button id="reset-uploader">重置Uploader</button>
+
+
+		<script type="text/plain" id="myEditor" style="width:1000px;height:240px;">
+		    <p>这里我可以写一些输入提示</p>
+		</script>
+
+
+		#macro(fromNumToChar $num)
+			#set($string="ABCDEFGHIJKLMNOPQRSTUVWXYZ")	
+			$string.charAt($num)
+		#end
+		#fromNumToChar(0)
+		#fromNumToChar(1)
+		#fromNumToChar(2)
+		#fromNumToChar(3)
+
+
+
+	#end
+	#require("./yanxiu.vm")
+	#script()
+		/*
+
+		var Player = require("/widget/player/player.js");
+
+		var player = new Player();
+		player.init({
+			id: "yanxiu-player",
+			debug: true,
+			src: 'http://118.144.77.201/vod/mp4/mp4_test.m3u8',
+			poster: 'http://pic.pptstore.net/pptpic/59/50/baf4b05ea6248bc0.jpg'
+		});
+		
+
+		var Confirm = require("/widget/plugins/confirm/confirm.js");
+		var confirm = new Confirm();
+		confirm.insert();
+		confirm.center();
+		confirm.confirm({
+			title: "提交提示",
+			msg: "确认提交吗?",
+			accept: function(){
+				console.log("accpet", arguments);
+			},
+			reject: function(c){
+				c.close();
+				console.log("reject", arguments);
+			}
+		});
+
+		var Editor = require("/widget/editor/editor.js");
+		var editor = new Editor({el: "#yanxiu-player"});
+		editor.ready(function(editor){
+			window.editor = editor;
+			console.log("============");
+			editor.instance.setContent("写作业吧");
+			var content = editor.instance.getContent();
+			console.log(content);
+		});
+
+
+		var FilterGroup = require("/widget/base/filtergroup/filtergroup.js");
+
+		var filterGroup = new FilterGroup({el: "#filters"});
+		filterGroup.init({
+			"grade": {
+				"label":"年级",
+				"filters": {
+					0 : "学前",
+					1: "五年级",
+					2: "三年级"
+				}
+			},
+			"step": {
+				"label":"阶段",
+				"filters": {
+					0 : "第一阶段",
+					1: "第五阶段",
+					3: "结束了"
+				}
+			}
+		});
+
+		filterGroup.on("children.switch", function(){
+			console.log(arguments);
+			console.log(filterGroup.getValues());
+		});
+
+		filterGroup.setValues({
+			grade: 1
+		});
+
+		var Paging = require("/widget/base/paging/paging.js");
+
+		var paging = new Paging({ config:{
+                                                       			"page":2,
+                                                       			"totalPage":15
+                                                       		}});
+		paging.appendToElement("#paging");
+		paging.on("switch", function(){
+			console.log(arguments);
+			console.log(paging.getPage());
+		});
+
+		var Router = require("/widget/base/hashrouter/hashrouter.js");
+		var router = new Router();
+		var Backbone = require("backbone");
+
+
+		Backbone.history.start();
+
+		router.navigateByArgs({
+			courseid : 1
+		});
+
+		*/
+	
+		require("./uploaddemo.js")
+
+
+
+	#end
+#end

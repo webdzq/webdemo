@@ -1,0 +1,168 @@
+.upload-hidden {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.upload-popup {
+  background: #ffffff;
+  .title{
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid #ebebeb;
+    padding: 0 20px;
+    .close{
+      width: 20px;
+      height: 20px;
+      // background: url(./img/close-btn.png) no-repeat center center;
+      background-position: 0px 6px;
+      margin-top: 20px;
+      cursor: pointer;
+      float: right;
+    }
+    .tip{
+      font-size: 16px;
+      color: #666666;
+      float: left;
+    }
+  }
+
+  .upload-area {
+    text-align: center;
+    background: #fcfcfc;
+    border: dashed 1px #ebebeb;
+    margin: 0px auto;
+    margin-top: 30px;
+    width: 420px;
+    padding: 35px 0;
+  }
+  .text {
+    width: 420px;
+    margin: 15px auto;
+    h6, p {
+      line-height: 20px;
+      font-size: 12px;
+    }
+    h6 {
+      color: #333333;
+    }
+    p {
+      color: #333333;
+    }
+  }
+  .btn-area {
+    text-align: center;
+    margin-top: 30px;
+    a {
+
+      height: 32px;
+      display: inline-block;
+      text-align: center;
+      line-height: 32px;
+      font-size: 14px;
+      border-radius: 5px;
+      padding: 0 20px;
+      color: #fff;
+
+    }
+    a:hover {
+      text-decoration: none;
+      opacity: 0.9;
+    }
+    a.cancel-btn {
+      background: #ccc;
+      text-decoration: none;
+    }
+    a.release-btn, a.reup-btn {
+      background: #458a9f;
+      text-decoration: none;
+    }
+  }
+
+  .upload-status-msg {
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .upload-progress-bar {
+    width: 210px;
+    margin: 10px auto;
+    height: 20px;
+    background: #ccc;
+    border-radius: 3px;
+    position: relative;
+  }
+  .upload-progress-inner {
+    background: #458a9f;
+    border-radius: 3px;
+    height: 20px;
+    position: relative;
+    .number {
+      position: relative;
+      left: 100%;
+      height: 20px;
+      padding-left: 5px;
+      line-height: 20px;
+    }
+  }
+  .large-msg {
+    text-align: center;
+    font-size: 18px;
+  }
+  .small-msg {
+    text-align: center;
+    font-size: 12px;
+    color: #9a9a9a;
+  }
+  .form-item {
+    width: 420px;
+    margin: 10px auto;
+    color: #333;
+  }
+  .area-group {
+    display: inline-block;
+  }
+  .form-file-name-str, .form-file-type-select, .form-file-chapter-select {
+    width: 228px;
+    height: 30px;
+    line-height: 30px;
+    border: solid #ebebeb 1px;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 14px;
+    font-family: "\5FAE\8F6F\96C5\9ED1", "SimSun", "Arial", "san-serif";
+    padding-left: 10px;
+  }
+  .form-file-type-select:focus, .form-file-chapter-select:focus {
+    outline: none;
+  }
+  .form-file-name-dot {
+    margin-left: 5px;
+    display: inline-block;
+    line-height: 30px;
+    font-size: 14px;
+  }
+  .form-label {
+    width: 100px;
+    text-align: right;
+    display: inline-block;
+    line-height: 30px;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+}
+
+#upload-picker .webuploader-pick {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  // background: url('./img/upload.png') no-repeat 30px center #458a9f;
+  padding: 10px 30px 10px 50px;
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  overflow: hidden;
+  font-size: 18px;
+
+}

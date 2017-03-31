@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets
+END
+queue.js
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/queue.js
+END
+upload.js
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/upload.js
+END
+filednd.js
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/filednd.js
+END
+md5.js
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/md5.js
+END
+validator.js
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/validator.js
+END
+filepaste.js
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/filepaste.js
+END
+filepicker.js
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/filepicker.js
+END
+log.js
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/log.js
+END
+image.js
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/image.js
+END
+runtime.js
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/runtime.js
+END
+widget.js
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/widgets/widget.js
+END

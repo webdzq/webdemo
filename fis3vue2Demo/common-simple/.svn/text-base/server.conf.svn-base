@@ -1,0 +1,10 @@
+rewrite ^\/ueditor\/config.vm\?action=uploadimage /test/common/image.json
+rewrite ^\/ueditor\/config.vm /test/common/ueditor.json
+
+rewrite ^\/common\/widget\/ueditor\/kityformula-plugin\/kityformula\/resource\/KF_AMS_MAIN.woff /WEB-INF/views/common/widget/ueditor/kityformula-plugin/kityformula/resource/KF_AMS_MAIN.woff 
+rewrite ^\/common\/widget\/ueditor\/kityformula-plugin\/kityformula\/resource\/KF_AMS_BB.woff /WEB-INF/views/common/widget/ueditor/kityformula-plugin/kityformula/resource/KF_AMS_BB.woff 
+rewrite ^\/common\/widget\/ueditor\/kityformula-plugin\/kityformula\/resource\/KF_AMS_ROMAN.woff /WEB-INF/views/common/widget/ueditor/kityformula-plugin/kityformula/resource/KF_AMS_ROMAN.woff 
+rewrite ^\/common\/widget\/ueditor\/kityformula-plugin\/kityformula\/resource\/KF_AMS_CAL.woff /WEB-INF/views/common/widget/ueditor/kityformula-plugin/kityformula/resource/KF_AMS_CAL.woff 
+rewrite ^\/common\/widget\/ueditor\/kityformula-plugin\/kityformula\/resource\/KF_AMS_FRAK.woff /WEB-INF/views/common/widget/ueditor/kityformula-plugin/kityformula/resource/KF_AMS_FRAK.woff 
+
+

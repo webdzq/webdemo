@@ -1,0 +1,36 @@
+#extends("./layout.vm")
+		#block("header")
+			
+		#end
+	#block("content")
+
+		<div class="login-form">
+			账号<input type="text" class="passport" value="18510623956"/>
+			密码<input type="password" class="password"/>
+			记住我<input type="checkbox" class="keepCookie"/>
+			<button class="submit-btn">登录</button>
+		</div>
+
+		<div class="logout-form">
+			<button class="logout-btn">退出</button>
+		</div>
+
+
+		<button class="popup-btn">弹出登录</button>
+
+
+
+	#end
+		#block("footer")
+		
+		#end
+	#script()
+
+	
+		require("./passportdemo.js");
+
+
+
+	#end
+	#require("./passporttest.vm")
+#end

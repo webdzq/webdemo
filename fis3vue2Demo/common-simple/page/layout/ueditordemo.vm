@@ -1,0 +1,26 @@
+#extends("./layout.vm")
+		#block("header")
+			
+		#end
+	#block("content")
+
+		<h2>Ueditor test</h2>
+		<div class="ueditor" id="ueditor">
+
+		</div>
+
+
+	#end
+		#block("footer")
+		
+		#end
+	#script()
+
+	
+		require("./ueditordemo.js");
+
+
+
+	#end
+	#require("./ueditordemo.vm")
+#end

@@ -1,0 +1,18 @@
+#extends("./base.vm")
+	#block("body")
+
+		#block("header")
+			#widget("/widget/fragments/header/header.vm")
+		#end
+		
+		#block("content")
+			from layout.vm
+		#end
+
+		#block("footer")
+			#widget("/widget/fragments/footer/footer.vm")
+		#end
+	#end
+
+	#require("./layout.vm")
+#end

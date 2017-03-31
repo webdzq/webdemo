@@ -1,0 +1,16 @@
+#extends("../layout/layout.vm")
+
+	#block("body")
+    $tplData
+  	#block("main")
+      #widget("/widget/home/index.vm")
+  	#end ## end main
+  #end ## end body
+
+  #script()
+    require("/widget/home/src/main.js");
+    require("/widget/home/src/demo.js");
+  #end ##script
+
+  #require("./index.vm")
+#end

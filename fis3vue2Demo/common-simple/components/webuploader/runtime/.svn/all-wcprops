@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/runtime
+END
+compbase.js
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/runtime/compbase.js
+END
+client.js
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/runtime/client.js
+END
+runtime.js
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/webuploader/runtime/runtime.js
+END

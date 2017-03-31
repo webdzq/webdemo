@@ -1,0 +1,10 @@
+{
+    "version": "2.1.1",
+    "protocol": "github",
+    "github": {
+        "author": "fis-components"
+    },
+    "repos": "https://github.com/ecomfe/zrender.git",
+    "name": "zrender",
+    "main": "zrender.js"
+}

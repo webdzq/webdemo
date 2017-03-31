@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape
+END
+Rectangle.js
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Rectangle.js
+END
+Rose.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Rose.js
+END
+Droplet.js
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Droplet.js
+END
+Star.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Star.js
+END
+Base.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Base.js
+END
+Trochoid.js
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Trochoid.js
+END
+Image.js
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Image.js
+END
+Text.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Text.js
+END
+BezierCurve.js
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/BezierCurve.js
+END
+Polygon.js
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Polygon.js
+END
+Line.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Line.js
+END
+BrokenLine.js
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/BrokenLine.js
+END
+ShapeBundle.js
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/ShapeBundle.js
+END
+Polyline.js
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Polyline.js
+END
+Path.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Path.js
+END
+Ellipse.js
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Ellipse.js
+END
+Isogon.js
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Isogon.js
+END
+Ring.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Ring.js
+END
+Sector.js
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Sector.js
+END
+Circle.js
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Circle.js
+END
+Heart.js
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/43972/yanxiu/yanxiu-fe/trunk/jello/common-simple/components/zrender/shape/Heart.js
+END

@@ -1,0 +1,41 @@
+{
+  "name": "yanxiu2.0",
+  "version": "1.0.1",
+  "description": "",
+  "main": "null",
+  "scripts": {
+    "start": "fis3 server start && fis3 release -c",
+    "dev": "fis3 release",
+    "build-release": "fis3 release production -c",
+    "build": "fis3 release production -cd output"
+  },
+  "author": "fanxinqi",
+  "license": "ISC",
+  "dependencies": {
+    "element-ui": "^1.2.5",
+    "fis3-parser-vueify": "^0.1.3",
+    "vue": "^2.1.4",
+    "vueify-insert-css": "^1.0.0",
+    "vuex": "^2.2.1"
+  },
+  "devDependencies": {
+    "babel-helper-vue-jsx-merge-props": "^2.0.2",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-vue-jsx": "^3.2.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2015-loose": "^7.0.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-3": "^6.17.0",
+    "babel-plugin-component": "^0.9.1",
+    "fis-parser-babel-6.x": "^1.0.0",
+    "fis-parser-jade": "0.0.12",
+    "fis3-hook-commonjs": "^0.1.22",
+    "fis3-hook-node_modules": "^2.2.3",
+    "fis3-packager-deps-pack": "^0.1.2",
+    "fis3-parser-less-2.x": "^0.1.4",
+    "fis3-parser-node-sass": "^0.1.9",
+    "fis3-parser-translate-es3ify": "0.0.2",
+    "fis3-postpackager-loader": "^2.1.4",
+    "fis3-postprocessor-autoprefixer": "^1.0.0"
+  }
+}

@@ -1,0 +1,58 @@
+#extends("/page/layout/layout.vm")
+		#block("header")
+
+		#end
+	#block("content")
+
+
+			<div data-log-event="hover" data-log-args="eventID=14&button=Hover-button">Hover event</div>
+			<div data-log-event="tap" data-log-args="eventID=14&button=tap-button">Tap event</div>
+			<div data-log-event="click" data-log-args="eventID=14&button=click-button">Click event</div>
+			<div data-log-args="eventID=14&button=click-button">Click event default</div>
+
+			<div>click event tree
+				<div>will not fire</div>
+				<div data-log-args="eventID=199&event=click">fire</div>
+
+			</div>
+			<div style="padding: 20px;background: #f5f5f5;">
+			<h2>tips:</h2>
+			<pre style="background: #eee;padding: 20px;">
+			var log = require("/widget/log/log.js");
+
+				log.init({
+					serverUrl: "http://statistics.yixueyilian.com/logup",
+					globalData: {
+						appkey: "10001",
+						namespace: "10"
+					},
+					parseDomEvents: true
+				});
+
+				var count = 0;
+
+				setInterval(function(){
+					log.log({
+						eventid: "timeinterval",
+						data: count ++
+					});
+				}, 30 * 1000);
+			</pre>
+			<p>执行  sh build_log.sh ，可以得到将mod.js编入的版本，在旧系统使用</p>
+			</div>
+
+
+	#end
+		#block("footer")
+
+		#end
+	#script()
+
+
+		require("./log.js");
+
+
+
+	#end
+	#require("./log.vm")
+#end
