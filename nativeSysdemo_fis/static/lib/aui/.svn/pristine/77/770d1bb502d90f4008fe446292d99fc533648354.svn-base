@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>AUI快速完成布局</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <style type="text/css">
+    .aui-btn {
+        margin: 20px 0;
+    }
+    p {
+        margin-top: 25px;
+    }
+    </style>
+</head>
+<body>
+    <p class="aui-text-center">TOAST</p>
+    <div class="aui-content-padded">
+        <div class="aui-btn aui-btn-block aui-btn-info" tapmode onclick="showDefault('success')">默认样式（toast）</div>
+        <div class="aui-btn aui-btn-block aui-btn-success" tapmode onclick="showDefault('fail')">失败（toast）</div>
+        <div class="aui-btn aui-btn-block aui-btn-success" tapmode onclick="showDefault('custom')">自定义</div>
+        <div class="aui-btn aui-btn-block aui-btn-warning" tapmode onclick="showDefault('loading')">弹出loading样式（toast）</div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js" ></script>
+<script type="text/javascript" src="../../script/2.0/aui-toast.js" ></script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+    }
+    var toast = new auiToast();
+    function showDefault(type){
+        switch (type) {
+            case "success":
+                toast.success({
+                    title:"提交成功",
+                    duration:2000
+                });
+                break;
+            case "fail":
+                toast.fail({
+                    title:"提交失败",
+                    duration:2000
+                });
+                break;
+            case "custom":
+                toast.custom({
+                    title:"提交成功",
+                    html:'<i class="aui-iconfont aui-icon-laud"></i>',
+                    duration:2000
+                });
+                break;
+            case "loading":
+                toast.loading({
+                    title:"加载中",
+                    duration:2000
+                },function(ret){
+                    console.log(ret);
+                    setTimeout(function(){
+                        toast.hide();
+                    }, 3000)
+                });
+                break;
+            default:
+                // statements_def
+                break;
+        }
+    }
+
+</script>
+</html>

@@ -1,17 +1,17 @@
-1¡¢Ê¹ÓÃgulp¡¢connectÊµÏÖÁËÐÞ¸Ähtmlºó£¬Ò³ÃæµÄ×Ô¶¯Ë¢ÐÂ¹¦ÄÜ
+1ï¿½ï¿½Ê¹ï¿½ï¿½gulpï¿½ï¿½connectÊµï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½htmlï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½Ë¢ï¿½Â¹ï¿½ï¿½ï¿½
 
 /**
-//ÒýÈë²å¼þ
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 var gulp = require('gulp');
 var connect = require('gulp-connect');
 var livereload = require('gulp-livereload');
 
-//´´½¨watchÈÎÎñÈ¥¼ì²âhtmlÎÄ¼þ,Æä¶¨ÒåÁËµ±html¸Ä¶¯Ö®ºó£¬È¥µ÷ÓÃÒ»¸öGulpµÄTask
+//ï¿½ï¿½ï¿½ï¿½watchï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½htmlï¿½Ä¼ï¿½,ï¿½ä¶¨ï¿½ï¿½ï¿½Ëµï¿½htmlï¿½Ä¶ï¿½Ö®ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Gulpï¿½ï¿½Task
 gulp.task('watch', function () {
   gulp.watch(['./*.html'], ['html']);
 });
 
-//Ê¹ÓÃconnectÆô¶¯Ò»¸öWeb·þÎñÆ÷
+//Ê¹ï¿½ï¿½connectï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Webï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 gulp.task('connect', function () {
   connect.server({
     root: './',
@@ -26,19 +26,19 @@ gulp.task('html', function () {
     .pipe(connect.reload());
 });
 
-//ÔËÐÐGulpÊ±£¬Ä¬ÈÏµÄTask
+//ï¿½ï¿½ï¿½ï¿½GulpÊ±ï¿½ï¿½Ä¬ï¿½Ïµï¿½Task
 gulp.task('default', ['connect', 'watch']);
 
 **/
 
 
 
-2¡¢Ê¹ÓÃgulp¡¢browser-syncÊµÏÖÁËÐÞ¸Ähtmlºó£¬´ò¿ªä¯ÀÀÆ÷´°¿Ú£¬Ò³ÃæµÄ×Ô¶¯Ë¢ÐÂ¹¦ÄÜ
-//ÊµÏÖÁË×Ô¶¯´ò¿ª´°¿ÚºÍ×Ô¶¯Ë¢ÐÂ
+2ï¿½ï¿½Ê¹ï¿½ï¿½gulpï¿½ï¿½browser-syncÊµï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½htmlï¿½ó£¬´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½Ò³ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½Ë¢ï¿½Â¹ï¿½ï¿½ï¿½
+//Êµï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ò¿ª´ï¿½ï¿½Úºï¿½ï¿½Ô¶ï¿½Ë¢ï¿½ï¿½
 var gulp        = require('gulp');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
-// ¾²Ì¬·þÎñÆ÷
+// ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 gulp.task('browser-sync', function() {
     browserSync.init({
         server: {
@@ -58,10 +58,10 @@ gulp.task('watch', function () {
 gulp.task('default', ["browser-sync","watch"]);
 
 
-3¡¢ÔÚ2µÄ»ù´¡ÉÏ£¬Ê¹ÓÃÁËbrowserify£¨ÎÄ¼þÁ÷£©¡¢uglify£¨Ñ¹Ëõ£©À´´¦ÀíjsÎÄ¼þÑ¹ËõºÍ¶¨ÏòÊä³ö¡£ÒÅÁôÎÊÌâ£º1¡¢watchify°²×°²»³É¹¦£¬ÎÞ·¨Ìæ´úbrowserify¡£2¡¢ browserifyÈÎÎñÖÐ£¬ÎÞ·¨Ê¹ÓÃ.pipe(uglify())    //Ñ¹Ëõ
+3ï¿½ï¿½ï¿½ï¿½2ï¿½Ä»ï¿½ï¿½ï¿½ï¿½Ï£ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½browserifyï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½uglifyï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jsï¿½Ä¼ï¿½Ñ¹ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£º1ï¿½ï¿½watchifyï¿½ï¿½×°ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½ï¿½browserifyï¿½ï¿½2ï¿½ï¿½ browserifyï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½Þ·ï¿½Ê¹ï¿½ï¿½.pipe(uglify())    //Ñ¹ï¿½ï¿½
 
-//ÊµÏÖÁË×Ô¶¯´ò¿ª´°¿ÚºÍ×Ô¶¯Ë¢ÐÂ
-//ÒÅÁôÎÊÌâ:watchify°²×°²»³É¹¦£¬ÎÞ·¨Ìæ´úbrowserify¡£
+//Êµï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ò¿ª´ï¿½ï¿½Úºï¿½ï¿½Ô¶ï¿½Ë¢ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:watchifyï¿½ï¿½×°ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½ï¿½browserifyï¿½ï¿½
 var gulp        = require('gulp');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
@@ -75,7 +75,7 @@ var sourcemaps = require("gulp-sourcemaps");
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 //var path = require("path");
-// ¾²Ì¬·þÎñÆ÷
+// ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 gulp.task('browser-sync', function() {
    
 		browserSync.init({
@@ -91,19 +91,19 @@ gulp.task('html', function () {
   gulp.src('./*.html')
 	.pipe(reload({stream:true}));
 });
-// ´¦ÀíÍêJSÎÄ¼þºó·µ»ØÁ÷  .browserify('src/*.js').bundle()
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½JSï¿½Ä¼ï¿½ï¿½ó·µ»ï¿½ï¿½ï¿½  .browserify('src/*.js').bundle()
 
 gulp.task('js', function() {
     return gulp.src('src/*.js')
 		
 			//.pipe(jshint('.jshintrc'))
 			//.pipe(jshint.reporter('default'))
-        .pipe(concat('main.js'))    //ºÏ²¢ËùÓÐjsµ½main.js
+        .pipe(concat('main.js'))    //ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½jsï¿½ï¿½main.js
 				
-        .pipe(gulp.dest('dist/js'))    //Êä³ömain.jsµ½ÎÄ¼þ¼Ð
-        .pipe(rename({suffix: '.min'}))   //renameÑ¹ËõºóµÄÎÄ¼þÃû
-        .pipe(uglify())    //Ñ¹Ëõ
-        .pipe(gulp.dest('dist/js'))//Êä³ö
+        .pipe(gulp.dest('dist/js'))    //ï¿½ï¿½ï¿½main.jsï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+        .pipe(rename({suffix: '.min'}))   //renameÑ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+        .pipe(uglify())    //Ñ¹ï¿½ï¿½
+        .pipe(gulp.dest('dist/js'))//ï¿½ï¿½ï¿½
 				//.pipe(reload({stream:true}))
 				;				
 });
@@ -126,8 +126,8 @@ gulp.task('default', ['clean'], function() {
 	});
 	
 	
-//½«jsÎÄ¼þ¹¹Ôì³ÉamdÄ£Ê½£ºrequireºÍmodule.exports.
-//browserifyÖÐÎÄ¼þ²»ÄÜÑ¹Ëõuglify
+//ï¿½ï¿½jsï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½amdÄ£Ê½ï¿½ï¿½requireï¿½ï¿½module.exports.
+//browserifyï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½uglify
 gulp.task("browserify", function () {
     var b = browserify({
         entries: "./dist/js/main.js",
@@ -136,14 +136,14 @@ gulp.task("browserify", function () {
 
     return b.bundle()
         .pipe(source("bundle.js"))
-				.pipe(rename({suffix: '.min'}))   //renameÑ¹ËõºóµÄÎÄ¼þÃû
+				.pipe(rename({suffix: '.min'}))   //renameÑ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
 				
         .pipe(sourcemaps.write("."))
 				
-        .pipe(gulp.dest('dist/js'))//Êä³ö;
+        .pipe(gulp.dest('dist/js'))//ï¿½ï¿½ï¿½;
 });
 
 

@@ -1,3 +1,4 @@
+//引入项目中用到的js
 require('avalon2');
 require('./login/view/view.js');
 require('./checkInfo/view/view.js');

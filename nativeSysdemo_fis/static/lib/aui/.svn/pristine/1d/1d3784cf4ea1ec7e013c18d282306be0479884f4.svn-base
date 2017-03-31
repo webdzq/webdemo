@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>AUI快速完成布局</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+</head>
+<body>
+    <secton class="aui-grid">
+        <div class="row aui-text-center">
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-menu"></i>
+                <p>menu</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-paper"></i>
+                <p>paper</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-info"></i>
+                <p>info</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-question"></i>
+                <p>question</p>
+            </div>
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-left"></i>
+                <p>left</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-top"></i>
+                <p>right</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-right"></i>
+                <p>top</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-down"></i>
+                <p>down</p>
+            </div>
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-correct"></i>
+                <p>correct</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-close"></i>
+                <p>close</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-plus"></i>
+                <p>plus</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-minus"></i>
+                <p>minus</p>
+            </div>
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-my"></i>
+                <p>my</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-home"></i>
+                <p>home</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-phone"></i>
+                <p>phone</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-mobile"></i>
+                <p>mobile</p>
+            </div>
+
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-laud"></i>
+                <p>laud</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-like"></i>
+                <p>like</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-star"></i>
+                <p>star</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-comment"></i>
+                <p>comment</p>
+            </div>
+
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-share"></i>
+                <p>share</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-pencil"></i>
+                <p>pencil</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-edit"></i>
+                <p>edit</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-search"></i>
+                <p>search</p>
+            </div>
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-image"></i>
+                <p>image</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-camera"></i>
+                <p>camera</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-video"></i>
+                <p>video</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-mail"></i>
+                <p>mail</p>
+            </div>
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-more"></i>
+                <p>more</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-trash"></i>
+                <p>trash</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-recovery"></i>
+                <p>recovery</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-refresh"></i>
+                <p>refresh</p>
+            </div>
+
+
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-cart"></i>
+                <p>cart</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-gear"></i>
+                <p>gear</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-map"></i>
+                <p>map</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-location"></i>
+                <p>location</p>
+            </div>
+
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-forward"></i>
+                <p>forward</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-back"></i>
+                <p>back</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-lock"></i>
+                <p>lock</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-unlock"></i>
+                <p>unlock</p>
+            </div>
+
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-calendar"></i>
+                <p>calendar</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-date"></i>
+                <p>date</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-display"></i>
+                <p>display</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-hide"></i>
+                <p>hide</p>
+            </div>
+
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-flag"></i>
+                <p>flag</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-cert"></i>
+                <p>cert</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-qq"></i>
+                <p>qq</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-wechat"></i>
+                <p>wechat</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-wechat-circle"></i>
+                <p>wechat-circle</p>
+            </div>
+            <div class="aui-col-xs-3">
+                <i class="aui-iconfont aui-icon-weibo"></i>
+                <p>weibo</p>
+            </div>
+        </div>
+    </section>
+</body>
+<script type="text/javascript" src="../../script/api.js" ></script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+    }
+
+</script>
+</html>

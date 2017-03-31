@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>AUI快速完成布局</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.2.0.css" />
+    <style type="text/css">
+    .aui-content-padded {
+        padding: 0.75rem;
+        background-color: #ffffff;
+        margin-top: 0.75rem;
+    }
+    </style>
+</head>
+<body>
+    <div class="aui-content-padded">
+        <label><input class="aui-radio" type="radio" name="demo" checked=""> 选项一</label>
+        <label><input class="aui-radio" type="radio" name="demo"> 选项二</label>
+        <label><input class="aui-radio" type="radio" name="demo" disabled=""> 禁止</label>
+    </div>
+    <div class="aui-content-padded">
+        <label><input class="aui-checkbox" type="checkbox" name="demo1" checked=""> 选项一</label>
+        <label><input class="aui-checkbox" type="checkbox" name="demo1"> 选项二</label>
+        <label><input class="aui-checkbox" type="checkbox" name="demo1" disabled=""> 禁止</label>
+    </div>
+    <div class="aui-content-padded">
+        <input class="aui-switch" type="checkbox" name="demo2" checked=""> 开
+        <input class="aui-switch" type="checkbox" name="demo2"> 关
+        <input class="aui-switch" type="checkbox" name="demo2" disabled=""> 禁止
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+    }
+    var tab = document.querySelectorAll(".aui-tab-item");
+    for(var i in tab){
+        tab[i].onclick = function(e){
+            document.querySelector(".aui-tab-item.aui-active").classList.remove("aui-active");
+            e.target.classList.add("aui-active");
+        }
+    }
+</script>
+</html>

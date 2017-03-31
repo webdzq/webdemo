@@ -1,0 +1,21 @@
+#set($title="山西报名系统")
+
+#extends("/page/layout/newsingle.vm")
+	#block("breadcrumb")
+
+	#end
+	#block("main")
+		#widget("/widget/registerInfo/view/view.vm")
+	#end
+
+	#require("./registerInfo.vm")
+
+
+	#script()
+		//console.log('tplData',$jello.jsonEncode($tplData));
+		var app = require("/widget/registerInfo/view/view.js");
+		app.init($jello.jsonEncode($tplData));
+		window.app = app;
+	#end
+
+#end

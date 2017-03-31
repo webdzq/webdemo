@@ -1,0 +1,35 @@
+.sign-guide {
+    padding: 20% 0;
+    text-align: center;
+    .guide-group {
+        display: inline-block;
+        width: 280px;
+        height: 180px;
+        background: #fff;
+        margin: 0 18px;
+        cursor: pointer;
+        broder-radius: 3px;
+        .title {
+            text-align: center;
+            margin: 15px 0 30px;
+            font-size: 16px;
+            color: #fff;
+        }
+        p {
+            padding: 0 20px;
+            color: #222;
+        }
+    }
+    .num1{
+        background: url("/static/image/guidp1.png");
+    }
+    .num2{
+        background: url("/static/image/guidp2.png");
+    }
+    .num3{
+        background: url("/static/image/guidp3.png");
+    }
+    .red {
+        color: #999;
+    }
+}

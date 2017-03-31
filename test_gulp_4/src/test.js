@@ -1,5 +1,5 @@
 var $= require("jquery");
-$("#testjs").html("test js压缩...browserify....258....");
+$("#testjs").html("test js压缩.asdfasdf..browserify....258....");
 console.log("test ...111s.js");
 
 module.exports =function(){

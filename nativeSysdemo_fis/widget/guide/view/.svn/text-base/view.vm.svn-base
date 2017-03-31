@@ -1,0 +1,14 @@
+<div class="sign-guide .ms-controller"  ms-controller="sign-guide">
+  <span class="guide-group num1" ms-click="@sxsignGuide">
+    <p class="title">培训报名登录</p>
+    <p>2016年度首次登录请先点此处进行注册</p>
+  </span>
+  <span class="guide-group num2" ms-click="@sxsignzxschool">
+    <p class="title">中小学培训项目登录</p>
+    <p>已完成注册的中小学教师，点此进入中小学项目首页</p>
+  </span>
+  <span class="guide-group num3" ms-click="@sxsignyeyschool">
+    <p class="title">幼儿园培训项目登录</p>
+    <p>已完成注册的幼儿园教师，点此进入幼儿园项目首页</p>
+  </span>
+</div>

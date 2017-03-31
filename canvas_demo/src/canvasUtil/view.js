@@ -1,4 +1,25 @@
 /**
+父级样式
+.answer-bigimags {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        min-height: 1000px;
+        min-width: 800px;
+        left: 0;
+        top: 0;
+        text-align: center;
+        z-index: 1000;
+        background: #000;
+    }
+
+    
+**/
+
+
+
+/**
 canvas
 **/
 var $ = require("common:components/jquery/jquery.js");
@@ -22,17 +43,79 @@ var canvasView = GroupView.extend({
         this.$target = args.$target; //当前图片
 
         this.initAttr(imgsrc);
-        //this.bindEvents();
-        $(args.el).css({
-            //'height': document.body.clientHeight,
-            'minHeight': document.body.clientHeight
-        });
+
         $('body').addClass('bodybg');
         this.model.set('ptid', this.g_params.ptid);
 
-        $("html,body").animate({
-            scrollTop: 0
-        }, 'slow');
+        this.scrollHandle();
+        window.scrollHanlder.disableScroll();
+
+
+    },
+    scrollHandle: function() {
+
+        var keys = {
+            37: 1,
+            38: 1,
+            39: 1,
+            40: 1
+        };
+        var oldonwheel, oldonmousewheel1,
+            oldonmousewheel2, oldontouchmove, oldonkeydown, isDisabled;
+
+        function preventDefault(e) {
+            e = e || window.event;
+            if (e.preventDefault)
+                e.preventDefault();
+            e.returnValue = false;
+        }
+
+        function preventDefaultForScrollKeys(e) {
+            if (keys[e.keyCode]) {
+                preventDefault(e);
+                return false;
+            }
+        }
+
+        function disableScroll() {
+            if (window.addEventListener) // older FF
+                window.addEventListener('DOMMouseScroll', preventDefault, false);
+            oldonwheel = window.onwheel;
+            window.onwheel = preventDefault; // modern standard
+
+            oldonmousewheel1 = window.onmousewheel;
+            window.onmousewheel = preventDefault; // older browsers, IE
+            oldonmousewheel2 = document.onmousewheel;
+            document.onmousewheel = preventDefault; // older browsers, IE
+
+            oldontouchmove = window.ontouchmove;
+            window.ontouchmove = preventDefault; // mobile
+
+            oldonkeydown = document.onkeydown;
+            document.onkeydown = preventDefaultForScrollKeys;
+            isDisabled = true;
+        }
+
+        function enableScroll() {
+            if (!isDisabled) return;
+            if (window.removeEventListener)
+                window.removeEventListener('DOMMouseScroll', preventDefault, false);
+
+            window.onwheel = oldonwheel; // modern standard
+
+            window.onmousewheel = oldonmousewheel1; // older browsers, IE
+            document.onmousewheel = oldonmousewheel2; // older browsers, IE
+
+            window.ontouchmove = oldontouchmove; // mobile
+
+            document.onkeydown = oldonkeydown;
+            isDisabled = false;
+        }
+        window.scrollHanlder = {
+            disableScroll: disableScroll,
+            enableScroll: enableScroll
+        };
+
     },
     initAttr: function(imgsrc) {
         //初始化属性
@@ -78,6 +161,15 @@ var canvasView = GroupView.extend({
             dom: '.fill_rect',
             css: 'cur_rect'
         };
+        this.scollTop = document.body.scrollTop;
+        this.scollLeft = document.body.scrollLeft;
+        this.availH = window.screen.availHeight;
+        $('.lefttoolbar').css({
+            'height': (this.availH - 211) + 'px'
+        });
+        $('.canvas_my_painter').css({
+            'height': (this.availH - 211) + 'px'
+        });
         this.initComponents(imgsrc);
     },
     initComponents: function(imgsrc) {
@@ -324,9 +416,9 @@ var canvasView = GroupView.extend({
                 var div = document.createElement("div");
                 div.id = scope.rectWid + scope.rectIndex;
                 div.className = "rect";
-                div.style.left = x + "px";
-                div.style.top = y + "px";
-                //console.log($('#canvas_my_painter' + scope.domid));
+                div.style.left = (x - scope.scollLeft) + "px";
+                div.style.top = (y - scope.scollTop) + "px";
+
                 $('#canvas_my_painter' + scope.domid).append(div);
                 $('#' + div.id).on({
                     'mousemove': function(evt) {
@@ -344,7 +436,7 @@ var canvasView = GroupView.extend({
                 scope.ellipseStartX = loc.x;
                 scope.ellipseStartY = loc.y;
                 scope.ellipseStartpX = x;
-                scope.ellipseStartyY = y;
+                scope.ellipseStartpY = y;
                 break;
             case "3":
                 //画线
@@ -353,7 +445,10 @@ var canvasView = GroupView.extend({
                 break;
             case "4":
                 //写文本
-                scope.writeTextOption(x, y);
+                if (!scope.$input.val()) {
+                    scope.writeTextOption(x, y);
+                }
+
                 break;
             default:
                 break;
@@ -380,8 +475,8 @@ var canvasView = GroupView.extend({
                 scope.rectEndX = loc.x;
                 scope.rectEndY = loc.Y;
 
-                scope.retcLeft = (scope.startX - x > 0 ? x : scope.startX) + "px";
-                scope.retcTop = (scope.startY - y > 0 ? y : scope.startY) + "px";
+                scope.retcLeft = (scope.startX - x > 0 ? (x - scope.scollLeft) : (scope.startX - scope.scollLeft)) + "px";
+                scope.retcTop = (scope.startY - y > 0 ? (y - scope.scollTop) : (scope.startY - scope.scollTop)) + "px";
                 scope.retcHeight = Math.abs(scope.startY - y) + "px";
                 scope.retcWidth = Math.abs(scope.startX - x) + "px";
 
@@ -397,15 +492,16 @@ var canvasView = GroupView.extend({
                 $('#canvas_my_painter' + scope.domid).off();
                 var a = (scope.ellipseStartX - loc.x) * 1.2;
                 var b = (scope.ellipseStartY - loc.y) * 1.2;
-
+                // var a = (loc.x-scope.ellipseStartX) * 0.5;
+                // var b = (loc.y-scope.ellipseStartY) * 0.5;
                 var width = scope.canvas.width;
                 var height = scope.canvas.height;
 
-                for (var i = 0; i < 360; i++) {
+                for (var i = 360; i > 0; i--) {
                     var divs = document.createElement("div"),
                         hudu = (Math.PI / 180) * i,
-                        x1 = a * Math.sin(hudu) + x,
-                        y1 = y - (b * Math.cos(hudu));
+                        x1 = a * Math.sin(hudu) + x - scope.scollLeft,
+                        y1 = y - scope.scollTop - (b * Math.cos(hudu));
                     //console.log(a,b,x1,y1);
                     //console.log((loc.x + a * Math.sin(hudu)) < width && (loc.y + (b * Math.cos(hudu))) < height);
                     divs.className = "abellipse";
@@ -521,13 +617,14 @@ var canvasView = GroupView.extend({
         //单击显示输入框
         var scope = this;
         var loc = scope.getPointOnCanvas(scope.canvas, x, y);
-
+        //console.log(scope.scollTop);x-scope.scollLeft, y-scope.scollTop
         this.$input.focus();
         this.$input.unbind();
-        this.$input.val('');
+
+
         this.$input.css({
-            'left': x,
-            'top': y
+            'left': x - scope.scollLeft,
+            'top': y - scope.scollTop
         });
         this.$input.show();
         this.$input.keydown(function(event) {
@@ -536,7 +633,16 @@ var canvasView = GroupView.extend({
                     'x': x,
                     'y': y
                 });
+                scope.$input.val('');
             }
+        });
+        this.$input.on('blur', function(event) {
+            //console.log('blur...');
+            scope.fillInputText({
+                'x': x,
+                'y': y
+            });
+            scope.$input.val('');
         });
 
     },
@@ -572,6 +678,9 @@ var canvasView = GroupView.extend({
         //console.log("kind...", kind, scope.canvas.width, scope.canvas.height);
         if (kind == 1) {
             //放大
+            if (scope.canvas.height > 500 || scope.canvas.width > 900) {
+                return;
+            }
             scope.canvas.height += 1 * 50;
             scope.canvas.width += 1 * 50;
             scope.changeAreaCount++;
@@ -584,6 +693,7 @@ var canvasView = GroupView.extend({
             scope.changeAreaCount--;
 
         }
+
         switch (this.step) {
             case 0:
                 height = scope.canvas.height;
@@ -614,6 +724,7 @@ var canvasView = GroupView.extend({
                 scope.drawY = 0;
                 break;
         }
+
         //绘制图片
         scope.tempContext.drawImage(scope.image, scope.drawX, scope.drawY, width, height);
 
@@ -741,6 +852,9 @@ var canvasView = GroupView.extend({
         var imgUrl = "";
         var len = 0;
         //console.log("reset_pre...scope.historyStatus..=", scope.historyStatus)
+        if (scope.historyArr.length > 1) {
+            scope.historyStatus = 0;
+        }
         if (scope.historyStatus == 1) {
             return;
         }
@@ -769,6 +883,8 @@ var canvasView = GroupView.extend({
         //关闭
         this.$el.hide();
         $('body').removeClass('bodybg');
+
+        window.scrollHanlder.enableScroll();
     },
     getId: function(id) {
         return document.getElementById(id);
@@ -797,7 +913,7 @@ var canvasView = GroupView.extend({
         var vdata = {
             requeststr: JSON.stringify(requeststr)
         };
-
+        window.scrollHanlder.enableScroll();
         $.post(url, vdata).then(function(pdata) {
             var data = pdata || {};
             if (typeof data == "string") {

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>AUI快速完成布局</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.2.0.css" />
+</head>
+<body>
+    <p class="aui-padded-10 aui-text-center">Dialog样式</p>
+    <div class="aui-content-padded">
+        <div class="aui-btn aui-btn-block aui-btn-info" tapmode onclick="openDialog('text')">基本dialog</div>
+    </div>
+    <div class="aui-content-padded">
+        <div class="aui-btn aui-btn-block aui-btn-primary" tapmode onclick="openDialog('callback')">带有回调的dialog</div>
+    </div>
+    <div class="aui-content-padded">
+        <div class="aui-btn aui-btn-block aui-btn-warning" tapmode onclick="openDialog('input')">带有输入框的dialog</div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript" src="../script/aui-dialog.js" ></script>
+<script type="text/javascript">
+
+    apiready = function () {
+        api.parseTapmode();
+    }
+    var dialog = new auiDialog();
+    function openDialog(type){
+        switch (type) {
+            case "text":
+                dialog.alert({
+                    title:"弹出提示",
+                    msg:'这里是内容',
+                    buttons:['取消','确定']
+                },function(ret){
+                    console.log(ret)
+                })
+                break;
+            case "callback":
+                dialog.alert({
+                        title:"弹出提示",
+                        msg:'这里是内容',
+                        buttons:['取消','确定']
+                    },function(ret){
+                        if(ret){
+                            dialog.alert({
+                                title:"提示",
+                                msg:"您点击了第"+ret.buttonIndex+"个按钮",
+                                buttons:['确定']
+                            });
+                        }
+                    })
+                break;
+            case "input":
+                dialog.prompt({
+                    title:"弹出提示",
+                    text:'默认内容',
+                    buttons:['取消','确定']
+                },function(ret){
+                    if(ret.buttonIndex == 2){
+                        dialog.alert({
+                            title:"提示",
+                            msg: "您输入的内容是："+ret.text,
+                            buttons:['确定']
+                        });
+                    }
+                })
+                break;
+            default:
+                break;
+
+        }
+    }
+</script>
+</html>

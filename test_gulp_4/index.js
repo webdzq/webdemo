@@ -1,5 +1,5 @@
 var $= require("jquery");
-$("#testjs").html("test jsÑ¹Ëõ");
+$("#testjs").html("test jsÑ¹ï¿½ï¿½sadfasfdaf");
 console.log("test ....js");
 
 module.exports =function(){

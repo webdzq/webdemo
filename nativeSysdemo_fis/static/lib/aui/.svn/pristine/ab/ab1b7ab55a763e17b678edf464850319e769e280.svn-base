@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/aui-pull-refresh.css" />
+	</head>
+	<body>
+		<section class="aui-refresh-content">
+			<div class="aui-content">
+				<div id="demo">
+			        <div class="aui-card-list">
+			            <div class="aui-card-list-header">
+			                卡片布局头部区域
+			            </div>
+			            <div class="aui-card-list-content-padded">
+			                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+			            </div>
+			            <div class="aui-card-list-footer">
+			                底部区域
+			            </div>
+			        </div>
+			        <div class="aui-card-list">
+			            <div class="aui-card-list-header">
+			                卡片布局头部区域
+			            </div>
+			            <div class="aui-card-list-content-padded">
+			                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+			            </div>
+			            <div class="aui-card-list-footer">
+			                底部区域
+			            </div>
+			        </div>
+			        <div class="aui-card-list">
+			            <div class="aui-card-list-header">
+			                卡片布局头部区域
+			            </div>
+			            <div class="aui-card-list-content-padded">
+			                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+			            </div>
+			            <div class="aui-card-list-footer">
+			                底部区域
+			            </div>
+			        </div>
+			        <div class="aui-card-list">
+			            <div class="aui-card-list-header">
+			                卡片布局头部区域
+			            </div>
+			            <div class="aui-card-list-content-padded">
+			                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+			            </div>
+			            <div class="aui-card-list-footer">
+			                底部区域
+			            </div>
+			        </div>
+			        <div class="aui-card-list">
+			            <div class="aui-card-list-header">
+			                卡片布局头部区域
+			            </div>
+			            <div class="aui-card-list-content-padded">
+			                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+			            </div>
+			            <div class="aui-card-list-footer">
+			                底部区域
+			            </div>
+			        </div>
+			        <div class="aui-card-list">
+			            <div class="aui-card-list-header">
+			                卡片布局头部区域
+			            </div>
+			            <div class="aui-card-list-content-padded">
+			                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+			            </div>
+			            <div class="aui-card-list-footer">
+			                底部区域
+			            </div>
+			        </div>
+			        <div class="aui-card-list">
+			            <div class="aui-card-list-header">
+			                卡片布局头部区域
+			            </div>
+			            <div class="aui-card-list-content-padded">
+			                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+			            </div>
+			            <div class="aui-card-list-footer">
+			                底部区域
+			            </div>
+			        </div>
+		        </div>
+	        </div>
+	    </section>
+	</body>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/2.0/aui-pull-refresh.js"></script>
+	<script type="text/javascript">
+		var pullRefresh = new auiPullToRefresh({
+			container: document.querySelector('.aui-refresh-content'),
+			triggerDistance: 100
+		},function(ret){
+			if(ret.status=="success"){
+				setTimeout(function(){
+					var wrap = document.getElementById("demo")
+					var lis = wrap.querySelectorAll('.aui-card-list');
+					for (var i = lis.length, length = i + 10; i < length; i++) {
+						var html = '<div class="aui-card-list">'+
+					            '<div class="aui-card-list-header">'+
+					                '卡片布局头部区域'+(i+1)+''+
+					            '</div>'+
+					            '<div class="aui-card-list-content-padded">'+
+					                '内容区域，卡片列表布局样式可以实现APP中常见的各类样式'+
+					            '</div>'+
+					            '<div class="aui-card-list-footer">'+
+					                '底部区域'+
+					            '</div>'+
+					        '</div>';
+						wrap.insertAdjacentHTML('afterbegin', html);
+					}
+					pullRefresh.cancelLoading(); //刷新成功后调用此方法隐藏
+				},1500)
+			}
+		})
+	</script>
+</html>
