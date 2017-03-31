@@ -73,7 +73,13 @@ fis.match('widget/**.js', {
         fis.plugin('translate-es3ify', null, 'append')
     ]
 });
-
+//FIS3 会读取全部项目目录下的资源，如果有些资源不想被构建，通过以下方式排除。
+fis.set('project.ignore', [
+    'output/**',
+    'node_modules/**',
+    '.git/**',
+    '.svn/**'
+]);
 
 // 非模块文件
 fis.match('static/**.js', {
