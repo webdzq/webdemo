@@ -1,5 +1,5 @@
 {
-    "name": "yanxiu2.0",
+    "name": "fis3vue",
     "version": "1.0.1",
     "description": "",
     "main": "null",
@@ -9,13 +9,11 @@
         "build-release": "fis3 release production -c",
         "build": "fis3 release production -cd output"
     },
-    "author": "fanxinqi",
+    "author": "...",
     "license": "ISC",
     "dependencies": {
         "element-ui": "^1.2.5",
-
         "fis3-parser-vueify": "^0.1.3",
-
         "vue": "^2.1.4",
         "vueify-insert-css": "^1.0.0",
         "vuex": "^2.2.1"

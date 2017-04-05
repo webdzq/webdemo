@@ -18,6 +18,11 @@ fis.hook('commonjs', {
 // 禁用components，启用node_modules
 fis.unhook('components');
 fis.hook('node_modules');
+//前端模板tmpl的使用
+fis.match('**.tmpl', {
+    parser: fis.plugin('utc'), // invoke `fis-parser-utc`
+    isJsLike: true
+});
 
 // 所有js文件
 fis.match('**.js', {
@@ -36,7 +41,7 @@ fis.match('widget/**.vue', {
         }) //parserVuePlugin
 });
 
-
+//.vue中的js处理
 fis.match('widget/**.vue:js', {
     parser: [
         fis.plugin('babel-6.x', {
@@ -47,13 +52,13 @@ fis.match('widget/**.vue:js', {
     ]
 })
 
-fis.match('widget/**.vue:jade', {
-    parser: [
-        fis.plugin('jade', {
-            //
-        })
-    ]
-})
+// fis.match('widget/**.vue:jade', {
+//     parser: [
+//         fis.plugin('jade', {
+//             //
+//         })
+//     ]
+// })
 
 fis.match('widget/{**.vue:less,**.less}', {
     rExt: 'css',
@@ -86,7 +91,12 @@ fis.match('static/**.js', {
     parser: null,
     isMod: false
 });
-
+//调试环境不加md5
+fis.media('debug').match('*.{js,css,png}', {
+    useHash: false,
+    useSprite: false,
+    optimizer: null
+})
 
 //发布到测试环境
 fis.media('dev').match('*.vm', {
