@@ -120,7 +120,7 @@ fis.media('debug').match('*.{js,css,png}', {
 })
 
 //发布到测试环境
-fis.media('test').match('*.vm', {
+fis.media('QA').match('*.vm', {
         deploy: fis.plugin('http-push', {
             receiver: 'http://main.zgjiaoyan.com/ebook/upload',
             to: '/App/src/SRT/sanke/frontend/target/sanke-frontend/jello'
@@ -174,7 +174,8 @@ fis.match('*', {
 fis.match('*.vm', {
     domain: false
 }, 100);
-fis.media('publish').match('*', DOMAIN_STATIC).match('**', {
+
+fis.media('sever').match('*', DOMAIN_STATIC).match('**', {
     deploy: [
         fis.plugin('http-push', {
             receiver: 'http://127.0.0.1:8999/receiver',
