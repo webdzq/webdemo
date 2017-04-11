@@ -1,0 +1,30 @@
+<div class="pop confirm record-audio">
+
+    <div class="top">
+        <span class="name">开始录音（</span><span class="audio-tips">提示：录音不得超过3分钟</span>）
+    </div>
+    <div class="center">
+        <p class="audio-icon" data-flag='1'>
+
+        </p>
+        <p class="audio-msg" data-flag='1'>
+            开始录音
+        </p>
+
+        <div class="recordingslist">
+
+            <p class="audio-file">
+
+            </p>
+            <p class="record-info">
+                正在初始化，请选择左上角“共享选中设备”
+            </p>
+        </div>
+    </div>
+    <div class="bottom">
+        <span class="btncancel close-btn">取消</span>
+        <span class="btnUpload" data-disable='0'>上传</span>
+    </div>
+
+</div>
+

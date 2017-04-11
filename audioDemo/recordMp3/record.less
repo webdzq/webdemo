@@ -1,0 +1,97 @@
+.record-audio {
+    position: absolute;
+    width: 500px;
+    height: 370px;
+    background-color: #fff;
+    z-index: 8000;
+    border-radius: 3px;
+    border: 2px solid #999;
+
+    .top {
+        margin: 30px;
+        height: 50px;
+        color: #000;
+
+        .audio-tips {
+            color: #666;
+        }
+    }
+
+    .center {
+        margin: 20px 0;
+        background-color: #fff;
+        text-align: center;
+        height: 190px;
+        .record-info{
+          color: red;
+        }
+        .audio-msg {
+            padding: 10px 0;
+            width: 140px;
+            line-height: 50px;
+            display: inline-block;
+            background-color: #0052cc;
+            color: #fff;
+            cursor: pointer;
+            margin: 10px 0;
+            line-height: 20px;
+            border-radius: 3px;
+        }
+
+        .audio-icon {
+            cursor: pointer;
+            background: url("imgs/start.png") no-repeat;
+            width: 90px;
+            height: 90px;
+            margin: auto;
+        }
+
+        .start {
+            background: url("imgs/start.png") no-repeat;
+            width: 90px;
+            height: 90px;
+        }
+
+        .audioing {
+            background: url("imgs/audio.gif") no-repeat;
+            width: 90px;
+            height: 90px;
+        }
+
+        .stop {
+            background: url("imgs/stop.png") no-repeat;
+            width: 90px;
+            height: 90px;
+        }
+    }
+
+    .bottom {
+        //padding: 20px 0;
+        //background-color: green;
+        height: 50px;
+        text-align: center;
+        cursor: pointer;
+
+        .btncancel {
+            width: 240px;
+            cursor: pointer;
+            line-height: 50px;
+            display: inline-block;
+        }
+
+        .btnUpload {
+            width: 240px;
+            line-height: 50px;
+            display: inline-block;
+            //background-color: #0052cc;
+            float: right;
+            //color: #fff;
+            //cursor: pointer;
+        }
+
+        .uploadcur {
+            color: #fff;
+            background-color: #0052cc;
+        }
+    }
+}

@@ -1,0 +1,46 @@
+<div class="pop confirm record-audio">
+
+    <div class="top">
+        <span class="name">开始录音（</span><span class="audio-tips">提示：录音不得超过3分钟</span>）
+    </div>
+    <div class="center">
+        <p class="audio-icon" data-flag='1'>
+
+        </p>
+        <p class="audio-msg" data-flag='1'>
+            开始录音
+        </p>
+        <div class="recordingslist hide">
+            <div class="playback-block">
+                <span class="playback" data-playflag='1'>试听</span>
+                <div class="preloader_1">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flashPlayer-container initcls">
+            <p id="flashcontent_<%=this.args.options.uid%>" class="flashPlayer">
+                <span>请安装Adobe Flash Player.</span>
+            </p>
+        </div>
+
+    </div>
+    <div class="bottom">
+        <span class="btncancel close-btn">取消</span>
+        <!-- <span class=" play-btn">试听</span> -->
+        <span class="btnUpload" data-disable='0'>上传</span>
+    </div>
+    <form id="uploadForm_<%=this.args.options.uid%>" name="uploadForm" method="POST" action="/pc/q/addAudioComment.do">
+        <input name="authenticity_token" value="xxxxx" type="hidden">
+        <input name="upload_file[parent_id]" value="1" type="hidden">
+        <input name="format" value="json" type="hidden">
+        <input name="requeststr" value='<%=JSON.stringify(this.args.options)%> ' type="hidden">
+
+    </form>
+</div>
