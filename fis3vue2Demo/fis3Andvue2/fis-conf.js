@@ -110,6 +110,7 @@ fis.match('static/**.js', {
 // fis.match('exclude.js', {
 //     optimizer: null
 // });
+//fis.match('widget/ueditor/**/{ueditor.css, codemirror.{js, css}}', {useHash: false}, 101);
 
 //调试环境不加md5
 fis.media('debug').match('*.{js,css,png}', {
@@ -170,6 +171,9 @@ fis.match('*', {
  * 4，对于3中需求，我们只能修改接收端的server.js。做目录的过滤和定向。
  * 5,来源的接收端，可以从fis3官网下载。修改后的文件详见 receiver/server_update.js
  */
+fis.match('*.vm', {
+    domain: false
+}, 100);
 fis.media('publish').match('*', DOMAIN_STATIC).match('**', {
     deploy: [
         fis.plugin('http-push', {
@@ -188,3 +192,104 @@ fis.media('publish').match('*', DOMAIN_STATIC).match('**', {
         })
     ]
 });
+
+
+
+
+/**
+ * 
+ * 参考代码
+ 'use strict';
+
+fis.require('jello')(fis);
+fis.config.set("namespace", "harmony");
+
+let QA = 'qa',
+	PRODUCTION = 'production',
+	DOMAIN_STATIC = {
+		domain: [
+			
+		]
+	},
+	USE_HASH = {
+		useHash: true
+	};
+let Plugin = function(key, plugin, option) {
+	return {
+		[key]: plugin ? fis.plugin(plugin, option) : false
+	};
+};
+let Optimizer = function(plugin) {
+	return Plugin('optimizer', plugin);
+};
+let Parser = function(plugin, option, rExt) {
+	let props = rExt ? {
+		rExt
+	} : {};
+	Object.assign(props, Plugin('parser', plugin, option));
+	return props;
+};
+
+//权重设计：默认1(0?),同节点之内的提升用10,节点之间的提升用100
+
+//dev(通用)
+fis.match('*.{js,css,less}', USE_HASH);
+fis.match('*.vm', {
+	domain: false
+}, 100);
+
+fis.match('*.js',
+	Parser('babel-5.x', {
+		blacklist: ['regenerator'],
+		sourceMaps: true,
+		compact: false,
+		stage: 3
+	}, 'js'));
+fis.match('widget/es5/**.js',
+	Parser(false), 10);
+
+fis.match('widget/es5/ueditor/
+{ ueditor.css, codemirror. { js, css } }
+', {useHash: false}, 101);
+//qa
+fis.media(QA).match('*', DOMAIN_STATIC);
+
+//production
+fis.media(PRODUCTION).match('*', DOMAIN_STATIC);
+fis.media(PRODUCTION).match('*.{js,css,less}', USE_HASH);
+fis.media(PRODUCTION).match('::image', USE_HASH);
+fis.media(PRODUCTION).match('*.js', Optimizer('uglify-js'));
+fis.media(PRODUCTION).match('*.css', Optimizer('clean-css'));
+fis.media(PRODUCTION).match('*.png', Optimizer('png-compressor'));
+
+/*fis.media('dev')
+	.match('*', {
+		useHash: false,
+		optimizer: null
+	});*/
+
+/*fis.config.set('roadmap.path', [{
+	reg: /^\/components\/.*\.(?:less|md)$/i,
+	release: false
+}, {
+	reg: /(package|component)\.json$/,
+	release: false
+}, {
+	reg: '**.md',
+	release: false
+}].concat(fis.config.get('roadmap.path', [])));*/
+
+/*fis.media('dev').match('/static', {
+	deploy: fis.plugin('http-push', {
+		receiver: 'http://pingbi_local_backend.yanxiu.com/upload',
+		to: '/opt/yanxiu/static/harmony'
+	})
+});
+
+fis.media('dev').match('/WEB-INF', {
+	deploy: fis.plugin('http-push', {
+		receiver: 'http://pingbi_local_backend.yanxiu.com/upload',
+		to: '/opt/yanxiu/workselect/trunk/backend/src/main/webapp'
+	})
+});
+*/
