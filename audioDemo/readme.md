@@ -38,6 +38,10 @@ if (navigator.userAgent.toLowerCase().indexOf("firefox") > 0) { //如果是火�
 项目截图：
 
 </p>
+chrome下的效果图：<br/>
+
 ![image](https://github.com/webdzq/webdemo/raw/master/audioDemo/flashwav.png)<br/>
+
+firefox下的效果图：<br/>
 
 ![image](https://github.com/webdzq/webdemo/raw/master/audioDemo/webrtcmp3.png)<br/>
