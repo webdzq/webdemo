@@ -3,8 +3,16 @@ var path = require('path');
 fis.require('jello')(fis)
 fis.config.set("namespace", "fisvue");
 var vueify = require("fis3-parser-vueify");
-// 模块化支持插件
-// https://github.com/fex-team/fis3-hook-commonjs (forwardDeclaration: true)
+
+
+const DOMAIN_STATIC = {
+        domain: [
+            'http://s1.abc.cn/res', 'http://s2.abc.cn/res', 'http://s3.abc.cn/res', 'http://s4.abc.cn/res',
+
+        ]
+    }
+    // 模块化支持插件
+    // https://github.com/fex-team/fis3-hook-commonjs (forwardDeclaration: true)
 fis.hook('commonjs', {
     extList: [
         '.js', '.coffee', '.es6', '.jsx', '.vue',
@@ -152,7 +160,7 @@ fis.match('*', {
 });
 * 
  */
-
+//fis.media(QA).match('*', DOMAIN_STATIC);//添加cdn
 /**
  * 扩展：fis3与fis2不同的地方就是：1，fis3没有from，只有to，可以通过data来拓展参数。
  * 
@@ -162,7 +170,7 @@ fis.match('*', {
  * 4，对于3中需求，我们只能修改接收端的server.js。做目录的过滤和定向。
  * 5,来源的接收端，可以从fis3官网下载。修改后的文件详见 receiver/server_update.js
  */
-fis.media('publish').match('**', {
+fis.media('publish').match('*', DOMAIN_STATIC).match('**', {
     deploy: [
         fis.plugin('http-push', {
             receiver: 'http://127.0.0.1:8999/receiver',
