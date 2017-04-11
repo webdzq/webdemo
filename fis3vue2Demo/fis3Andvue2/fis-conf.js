@@ -140,3 +140,31 @@ fis.match('*', {
 });
 * 
  */
+
+/**
+ * 扩展：fis3与fis2不同的地方就是：1，fis3没有from，只有to，可以通过data来拓展参数。
+ * 
+ * 2，match匹配的是开发路径下的目录和文件，fis2使用了发布后的目录和文件
+ * 3，如果我们使用jello，fis3却很难实现发布后的目录与fis2一样。可以根据from来指定static和WEB-INF的目录，发布
+ * 到指定的服务器。(from是jello发布后的目录，to是开发工程的目录)
+ * 4，对于3中需求，我们只能修改接收端的server.js。做目录的过滤和定向。
+ * 5,来源的接收端，可以从fis3官网下载。修改后的文件详见 receiver/server_update.js
+ */
+fis.media('publish').match('**', {
+    deploy: [
+        fis.plugin('http-push', {
+            receiver: 'http://127.0.0.1:8999/receiver',
+            to: '/Users/srt/receiver/webb',
+            data: {
+                from: '/static'
+            }
+        }),
+        fis.plugin('http-push', {
+            receiver: 'http://127.0.0.1:8999/receiver',
+            to: '/Users/srt/receiver/weba',
+            data: {
+                from: '/WEB-INF'
+            }
+        })
+    ]
+});
