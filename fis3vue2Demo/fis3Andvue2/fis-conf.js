@@ -79,11 +79,14 @@ fis.match('widget/**.js', {
     ]
 });
 //FIS3 会读取全部项目目录下的资源，如果有些资源不想被构建，通过以下方式排除。
+//有些第三方库不期望打包
 fis.set('project.ignore', [
     'output/**',
     'node_modules/**',
     '.git/**',
-    '.svn/**'
+    '.svn/**',
+    'lib/**'
+
 ]);
 
 // 非模块文件
@@ -91,6 +94,15 @@ fis.match('static/**.js', {
     parser: null,
     isMod: false
 });
+// //需要混淆的文件
+// fis.match('*.js', {
+//     optimizer: fis.plugin('uglify-js')
+// });
+// //不期望混淆的文件
+// fis.match('exclude.js', {
+//     optimizer: null
+// });
+
 //调试环境不加md5
 fis.media('debug').match('*.{js,css,png}', {
     useHash: false,
