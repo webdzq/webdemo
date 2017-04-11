@@ -99,7 +99,7 @@ fis.media('debug').match('*.{js,css,png}', {
 })
 
 //发布到测试环境
-fis.media('dev').match('*.vm', {
+fis.media('test').match('*.vm', {
         deploy: fis.plugin('http-push', {
             receiver: 'http://main.zgjiaoyan.com/ebook/upload',
             to: '/App/src/SRT/sanke/frontend/target/sanke-frontend/jello'
