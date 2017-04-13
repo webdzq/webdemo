@@ -31,7 +31,9 @@ fis.match('**.tmpl', {
     parser: fis.plugin('utc'), // invoke `fis-parser-utc`
     isJsLike: true
 });
-
+fis.match('*.{html,js,vm,less,css}', {
+    useSameNameRequire: true
+});
 // 所有js文件
 fis.match('**.js', {
     isMod: true,
