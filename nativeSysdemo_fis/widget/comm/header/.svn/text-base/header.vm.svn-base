@@ -1,4 +1,0 @@
-<div class="header">
-  <i class="logo"></i>
-</div>
-#require("/header.less")

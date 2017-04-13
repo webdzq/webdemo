@@ -7,7 +7,9 @@
 2，项目nativeSysDemo,使用了webpack+react+es6＋antd
 3，项目canvas_demo,使用canvas做了图片批注功能
 4，buildTools，包括了webpack和gulp打包的demo
-5，audioDemo，包括flash语音和浏览器webrtc实现的录音和上传功能
-6，这些项目都是半成品，还需要多方面优化的。
-7，这些都是开发功能的实现，没有在测试，部署等方面完善。
+5，项目fis3vue2Demo，使用fis3来构建，用vue2做开发框架。
+6，audioDemo，包括flash语音和浏览器webrtc实现的录音和上传功能
+ps：
+1，这些项目还需要多方面优化的，都是针对前端的使用架构，没有涉及自动化测试，后端的配合，运维的部署等方面。
+
 </pre>

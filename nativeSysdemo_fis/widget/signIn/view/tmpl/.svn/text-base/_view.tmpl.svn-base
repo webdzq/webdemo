@@ -1,3 +1,0 @@
-<div>
-  hello tmpl<%=name%>
-</div>
