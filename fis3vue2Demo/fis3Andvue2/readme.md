@@ -8,5 +8,5 @@
 6，访问 http://127.0.0.1:8081/fisvue/page/home/hellovue.vm
 7, 发布测试服务器：fis3 release dev
 8, 上线部署： ./build.sh 产出 output目录
-
+9,fis3原发布插件http-push有缺陷，没有from参数。所以开发了http-push-strong，deploy功能类似fis2。
 </pre>

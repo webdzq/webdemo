@@ -172,6 +172,8 @@ fis.match('*', {
  * 到指定的服务器。(from是jello发布后的目录，to是开发工程的目录)
  * 4，对于3中需求，我们只能修改接收端的server.js。做目录的过滤和定向。
  * 5,来源的接收端，可以从fis3官网下载。修改后的文件详见 receiver/server_update.js
+ * 6,以上这种方案并非最好，所以添加了fis3新插件fis3-deploy-http-push-strong（：https://www.npmjs.com/package/fis3-deploy-http-push-strong）
+ *  
  */
 fis.match('*.vm', {
     domain: false
@@ -195,7 +197,26 @@ fis.media('sever').match('*', DOMAIN_STATIC).match('**', {
         })
     ]
 });
-
+//fis3-deploy-http-push-strong示例代码：(与fis2的deploy类似的)
+fis.media('strong').match('*', {
+    deploy: [
+        fis.plugin("http-push-strong", [{
+                receiver: 'http://cq.01.p.p.baidu.com:8888/receiver.php',
+                to: '/home/work/htdocs/static',
+                from: "/static"
+            }, {
+                receiver: 'http://cq.01.p.p.baidu.com:8888/receiver.php',
+                to: '/home/work/jello',
+                from: "/WEB-INF"
+            },
+            {
+                receiver: 'http://cq.01.p.p.baidu.com:8888/receiver.php',
+                to: '/home/work/img',
+                from: "/img"
+            }
+        ])
+    ]
+})
 
 
 
