@@ -9,6 +9,7 @@
 4，buildTools，包括了webpack和gulp打包的demo
 5，项目fis3vue2Demo，使用fis3来构建，用vue2做开发框架。
 6，audioDemo，包括flash语音和浏览器webrtc实现的录音和上传功能
+7，weui-wepyDemo，微信小程序版本weui的wpy实现的示例
 ps：
 1，这些项目还需要多方面优化的，都是针对前端的使用架构，没有涉及自动化测试，后端的配合，运维的部署等方面。
 
