@@ -1,0 +1,113 @@
+<style lang="less">
+  @import "../../../common/lib/weui.wxss";
+  .page-body-info {
+    display: flex;
+    margin-top: 40rpx;
+    padding: 0;
+    height: 360rpx;
+    border-top: 1rpx solid #D9D9D9;
+    border-bottom: 1rpx solid #D9D9D9;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'chooseVideo'}}" />
+    <view class="page-body">
+      <view class="page-section">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">视频来源</view>
+            </view>
+            <view class="weui-cell__bd">
+              <picker range="{{sourceType}}" bindchange="sourceTypeChange" value="{{sourceTypeIndex}}">
+                <view class="weui-input">{{sourceType[sourceTypeIndex]}}</view>
+              </picker>
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">摄像头</view>
+            </view>
+            <view class="weui-cell__bd">
+              <picker range="{{camera}}" bindchange="cameraChange" value="{{cameraIndex}}">
+                <view class="weui-input">{{camera[cameraIndex]}}</view>
+              </picker>
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">拍摄长度</view>
+            </view>
+            <view class="weui-cell__bd">
+              <picker range="{{duration}}" bindchange="durationChange" value="{{durationIndex}}">
+                <view class="weui-input">{{duration[durationIndex]}}</view>
+              </picker>
+            </view>
+          </view>
+        </view>
+        <view class="page-body-info">
+          <block wx:if="{{src === ''}}">
+            <view class="image-plus image-plus-nb" bindtap="chooseVideo">
+              <view class="image-plus-horizontal"></view>
+              <view class="image-plus-vertical"></view>
+            </view>
+            <view class="image-plus-text">添加视频</view>
+          </block>
+          <block wx:if="{{src != ''}}">
+            <video src="{{src}}" class="video"></video>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Video extends wepy.page {
+    config = {
+      navigationBarTitleText: '拍摄/选择视频'
+    }
+    data = {
+      sourceTypeIndex: 2,
+      sourceType: ['拍摄', '相册', '拍摄或相册'],
+      cameraIndex: 2,
+      camera: ['前置', '后置', '前置或后置'],
+      durationIndex: 59,
+      duration: Array.apply(null, {
+        length: 60
+      }).map(function(n, i) {
+        return i + 1
+      }),
+      src: ''
+    }
+    methods = {
+      sourceTypeChange: function(e) {
+        this.sourceTypeIndex = e.detail.value
+      },
+      cameraChange: function(e) {
+        this.cameraIndex = e.detail.value
+      },
+      durationChange: function(e) {
+        this.durationIndex = e.detail.value
+      },
+      chooseVideo: function() {
+        let that = this
+        wx.chooseVideo({
+          sourceType: this.sourceType[this.sourceTypeIndex],
+          camera: this.camera[this.cameraIndex],
+          maxDuration: this.duration[this.durationIndex],
+          success: function(res) {
+            that.src = res.tempFilePath
+          }
+        })
+      }
+    }
+  }
+</script>

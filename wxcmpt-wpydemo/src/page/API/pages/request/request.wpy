@@ -1,0 +1,63 @@
+<style lang="less">
+
+</style>
+
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'request'}}" />
+    <view class="page-body">
+      <view class="page-body-wording">
+        <text class="page-body-text">
+                      点击向服务器发起请求
+                    </text>
+      </view>
+      <view class="btn-area">
+        <button bindtap="makeRequest" type="primary" disabled="{{buttonDisabled}}" loading="{{loading}}">request</button>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Config from '../../../../config'
+  export default class Request extends wepy.page {
+    config = {
+      navigationBarTitleText: '网络请求'
+    }
+    methods = {
+      makeRequest() {
+        let self = this
+        const duration = 2000
+        const requestUrl = Config.requestUrl
+        self.loading = true
+        wx.request({
+          url: requestUrl,
+          data: {
+            noncestr: Date.now()
+          },
+          success: function(result) {
+            wx.showToast({
+              title: '请求成功',
+              icon: 'success',
+              mask: true,
+              duration: duration
+            })
+            self.loading = false
+            console.log('request success', result)
+          },
+          fail: function({
+            errMsg
+          }) {
+            console.log('request fail', errMsg)
+            self.loading = false
+          }
+        })
+      }
+    }
+  }
+</script>

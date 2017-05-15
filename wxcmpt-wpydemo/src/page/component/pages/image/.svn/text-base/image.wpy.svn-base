@@ -1,0 +1,42 @@
+<style lang="less">
+  .page-section-ctn {
+    text-align: center;
+  }
+  .image {
+    margin-top: 30rpx;
+    width: 580rpx;
+    height: 208rpx;
+  }
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'image'}}" />
+    <view class="page-body">
+      <view class="page-section page-section-gap">
+        <view class="page-section-title">Local Image</view>
+        <view class="page-section-ctn">
+          <image class="image" src="../../resources/pic/1.jpg" />
+        </view>
+      </view>
+      <view class="page-section page-section-gap">
+        <view class="page-section-title">Internet Image</view>
+        <view class="page-section-ctn">
+          <image class="image" src="../../resources/pic/2.jpg" />
+        </view>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Image extends wepy.page {
+    config = {
+      navigationBarTitleText: 'image'
+    }
+  }
+</script>

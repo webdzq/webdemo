@@ -1,0 +1,27 @@
+<style lang="less">
+
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: '当前页'}}" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class RedirectPage extends wepy.page {
+    config = {
+      navigationBarTitleText: 'redirectPage'
+    }
+    data = {
+      title: ''
+    }
+    onLoad(options) {
+      console.log(options)
+      this.title = options.title
+    }
+  }
+</script>

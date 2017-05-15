@@ -1,0 +1,28 @@
+<style lang="less">
+
+</style>
+
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: '新建的页面'}}" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class NavigatePage extends wepy.page {
+    config = {
+      navigationBarTitleText: 'navigatePage'
+    }
+    data = {
+      title: ''
+    }
+    onLoad(options) {
+      console.log(options)
+      this.title = options.title
+    }
+  }
+</script>

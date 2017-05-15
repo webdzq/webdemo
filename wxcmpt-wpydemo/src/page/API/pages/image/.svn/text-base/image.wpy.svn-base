@@ -1,0 +1,122 @@
+<style lang="less">
+  @import "../../../common/lib/weui.wxss";
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'choose/previewImage'}}" />
+    <view class="page-body">
+      <form>
+        <view class="page-section">
+          <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">图片来源</view>
+              </view>
+              <view class="weui-cell__bd">
+                <picker range="{{sourceType}}" bindchange="sourceTypeChange" value="{{sourceTypeIndex}}" mode="selector">
+                  <view class="weui-input">{{sourceType[sourceTypeIndex]}}</view>
+                </picker>
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">图片质量</view>
+              </view>
+              <view class="weui-cell__bd">
+                <picker range="{{sizeType}}" bindchange="sizeTypeChange" value="{{sizeTypeIndex}}" mode="selector">
+                  <view class="weui-input">{{sizeType[sizeTypeIndex]}}</view>
+                </picker>
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">数量限制</view>
+              </view>
+              <view class="weui-cell__bd">
+                <picker range="{{count}}" bindchange="countChange" value="{{countIndex}}" mode="selector">
+                  <view class="weui-input">{{count[countIndex]}}</view>
+                </picker>
+              </view>
+            </view>
+          </view>
+          <view class="weui-cells">
+            <view class="weui-cell">
+              <view class="weui-cell__bd">
+                <view class="weui-uploader">
+                  <view class="weui-uploader__hd">
+                    <view class="weui-uploader__title">点击可预览选好的图片</view>
+                    <view class="weui-uploader__info">{{imageList.length}}/{{count[countIndex]}}</view>
+                  </view>
+                  <view class="weui-uploader__bd">
+                    <view class="weui-uploader__files">
+                      <block wx:for="{{imageList}}" wx:for-item="image" wx:key="*this">
+                        <view class="weui-uploader__file">
+                          <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                        </view>
+                      </block>
+                    </view>
+                    <view class="weui-uploader__input-box">
+                      <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </form>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Image extends wepy.page {
+    config = {
+      navigationBarTitleText: '图片'
+    }
+    data = {
+      imageList: [],
+      sourceTypeIndex: 2,
+      sourceType: ['拍照', '相册', '拍照或相册'],
+      sizeTypeIndex: 2,
+      sizeType: ['压缩', '原图', '压缩或原图'],
+      countIndex: 8,
+      count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    }
+    methods = {
+      sourceTypeChange(e) {
+        this.sourceTypeIndex = e.detail.value
+      },
+      sizeTypeChange(e) {
+        this.sizeTypeIndex = e.detail.value
+      },
+      countChange(e) {
+        this.countIndex = e.detail.value
+      },
+      chooseImage() {
+        let that = this
+        wx.chooseImage({
+          sourceType: that.sourceType[this.sourceTypeIndex],
+          sizeType: that.sizeType[this.data.sizeTypeIndex],
+          count: this.data.count[this.data.countIndex],
+          success: function(res) {
+            console.log(res)
+            that.imageList = res.tempFilePaths
+          }
+        })
+      },
+      previewImage(e) {
+        let current = e.target.dataset.src
+        wx.previewImage({
+          current: current,
+          urls: this.data.imageList
+        })
+      }
+    }
+  }
+</script>

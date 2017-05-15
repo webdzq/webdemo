@@ -1,0 +1,81 @@
+<style lang="less">
+  @import "../../../common/lib/weui.wxss";
+  .radio {
+    margin-right: 20rpx;
+  }
+</style>
+
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'radio'}}" />
+    <view class="page-body">
+      <view class="page-section page-section-gap">
+        <view class="page-section-title">默认样式</view>
+        <label class="radio">
+                    <radio value="r1" checked="true"/>选中
+                  </label>
+        <label class="radio">
+                    <radio value="r2" />未选中
+                  </label>
+      </view>
+      <view class="page-section">
+        <view class="page-section-title">推荐展示样式</view>
+        <view class="weui-cells weui-cells_after-title">
+          <radio-group bindchange="radioChange">
+            <label class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="{{item.value}}">
+                <view class="weui-cell__hd">
+                  <radio value="{{item.value}}" checked="true"/>
+                </view>
+                <view class="weui-cell__bd">{{item.name}}</view>
+              </label>
+          </radio-group>
+        </view>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Radio extends wepy.page {
+    config = {
+      navigationBarTitleText: 'radio'
+    }
+    data = {
+      items: [{
+        value: 'USA',
+        name: '美国'
+      }, {
+        value: 'CHN',
+        name: '中国',
+        checked: 'true'
+      }, {
+        value: 'BRA',
+        name: '巴西'
+      }, {
+        value: 'JPN',
+        name: '日本'
+      }, {
+        value: 'ENG',
+        name: '英国'
+      }, {
+        value: 'FRA',
+        name: '法国'
+      }]
+    }
+    methods = {
+      radioChange: function(e) {
+        console.log('radio发生change事件，携带value值为：', e.detail.value)
+        let items = this.items
+        for (let i = 0, len = items.length; i < len; ++i) {
+          items[i].checked = items[i].value === e.detail.value
+        }
+        this.items = items
+      }
+    }
+  }
+</script>

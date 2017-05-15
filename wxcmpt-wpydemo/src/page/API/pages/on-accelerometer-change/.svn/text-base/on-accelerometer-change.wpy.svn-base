@@ -1,0 +1,138 @@
+<style lang="less">
+  .page-body-xyz {
+    display: flex;
+    justify-content: space-between;
+    width: 700rpx;
+    margin-top: 90rpx;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .page-body-canvas {
+    margin-top: 30rpx;
+    width: 302px;
+    height: 302px;
+    position: relative;
+  }
+  .page-body-ball {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 302px;
+    height: 302px;
+  }
+  .page-body-title {
+    margin-bottom: 0;
+    font-size: 32rpx;
+    width: 250rpx;
+  }
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'onAccelerometerChange'}}" />
+    <view class="page-body">
+      <view class="page-section page-section_center">
+        <text class="page-body-text">倾斜手机即可移动下方小球</text>
+        <view class="page-body-canvas">
+          <canvas class="page-body-ball" show="{{true}}" canvas-id="big-ball"></canvas>
+          <canvas class="page-body-ball" show="{{true}}" canvas-id="small-ball"></canvas>
+        </view>
+        <view class="page-body-xyz">
+          <text class="page-body-title">X: {{x}}</text>
+          <text class="page-body-title">Y: {{y}}</text>
+          <text class="page-body-title">Z: {{z}}</text>
+        </view>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class OnAccelerometerChange extends wepy.page {
+    config = {
+      navigationBarTitleText: '监听重力感应数据'
+    }
+    onReady() {
+      this.drawBigBall()
+      var that = this
+      this.position = {
+        x: 151,
+        y: 151,
+        vx: 0,
+        vy: 0,
+        ax: 0,
+        ay: 0
+      }
+      wx.onAccelerometerChange(function(res) {
+        this.x = res.x.toFixed(2)
+        this.y = res.y.toFixed(2)
+        this.z = res.z.toFixed(2)
+        that.position.ax = Math.sin(res.x * Math.PI / 2)
+        that.position.ay = -Math.sin(res.y * Math.PI / 2)
+        // that.drawSmallBall()
+      })
+      this.interval = setInterval(function() {
+        that.drawSmallBall()
+      }, 17)
+    }
+    drawBigBall() {
+      var context = wx.createContext()
+      context.beginPath(0)
+      context.arc(151, 151, 140, 0, Math.PI * 2)
+      context.setFillStyle('#ffffff')
+      context.setStrokeStyle('#aaaaaa')
+      context.fill()
+      // context.stroke()
+      wx.drawCanvas({
+        canvasId: 'big-ball',
+        actions: context.getActions()
+      })
+    }
+    drawSmallBall() {
+      var p = this.position
+      var strokeStyle = 'rgba(1,1,1,0)'
+      p.x = p.x + p.vx
+      p.y = p.y + p.vy
+      p.vx = p.vx + p.ax
+      p.vy = p.vy + p.ay
+      if (Math.sqrt(Math.pow(Math.abs(p.x) - 151, 2) + Math.pow(Math.abs(p.y) - 151, 2)) >= 115) {
+        if (p.x > 151 && p.vx > 0) {
+          p.vx = 0
+        }
+        if (p.x < 151 && p.vx < 0) {
+          p.vx = 0
+        }
+        if (p.y > 151 && p.vy > 0) {
+          p.vy = 0
+        }
+        if (p.y < 151 && p.vy < 0) {
+          p.vy = 0
+        }
+        strokeStyle = '#ff0000'
+      }
+      var context = wx.createContext()
+      context.beginPath(0)
+      context.arc(p.x, p.y, 15, 0, Math.PI * 2)
+      context.setFillStyle('#1aad19')
+      context.setStrokeStyle(strokeStyle)
+      context.fill()
+      // context.stroke()
+      wx.drawCanvas({
+        canvasId: 'small-ball',
+        actions: context.getActions()
+      })
+    }
+    data = {
+      x: 0,
+      y: 0,
+      z: 0
+    }
+    onUnload() {
+      clearInterval(this.interval)
+    }
+  }
+</script>

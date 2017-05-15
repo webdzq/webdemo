@@ -1,0 +1,27 @@
+<style lang="less">
+
+</style>
+
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'scanCode'}}" />
+    <view class="page-body">
+      <view class="btn-area">
+        <button type="primary">联系客服</button>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class CustomService extends wepy.page {
+    config = {
+      navigationBarTitleText: '客服消息'
+    }
+  }
+</script>

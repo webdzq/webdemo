@@ -1,0 +1,75 @@
+<style lang="less">
+  .page-body-info {
+    height: 250rpx;
+  }
+  .page-body-text-small {
+    font-size: 24rpx;
+    color: #000;
+    margin-bottom: 100rpx;
+  }
+  .page-body-text-location {
+    display: flex;
+    font-size: 50rpx;
+  }
+  .page-body-text-location text {
+    margin: 10rpx;
+  }
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'getLocation'}}" />
+    <view class="page-body">
+      <view class="page-section">
+        <view class="page-body-info">
+          <text class="page-body-text-small">当前位置经纬度</text>
+          <block wx:if="{{hasLocation === false}}">
+            <text class="page-body-text">未获取</text>
+          </block>
+          <block wx:if="{{hasLocation === true}}">
+            <view class="page-body-text-location">
+              <text>E: {{location.longitude[0]}}°{{location.longitude[1]}}′</text>
+              <text>N: {{location.latitude[0]}}°{{location.latitude[1]}}′</text>
+            </view>
+          </block>
+        </view>
+        <view class="btn-area">
+          <button type="primary" bindtap="getLocation">获取位置</button>
+          <button bindtap="clear">清空</button>
+        </view>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Util from '../../../../util/util'
+  export default class GetLocation extends wepy.page {
+    config = {
+      navigationBarTitleText: '获取位置'
+    }
+    data = {
+      hasLocation: false
+    }
+    methods = {
+      getLocation: function() {
+        let that = this
+        const formatLocation = Util.formatLocation
+        wx.getLocation({
+          success: function(res) {
+            console.log(res)
+            that.hasLocation = true
+            that.location = formatLocation(res.longitude, res.latitude)
+          }
+        })
+      },
+      clear: function() {
+        this.hasLocation = false
+      }
+    }
+  }
+</script>

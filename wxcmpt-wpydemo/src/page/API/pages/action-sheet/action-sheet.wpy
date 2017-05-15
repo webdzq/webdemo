@@ -1,0 +1,45 @@
+<style lang="less">
+  /*
+      .cancel {
+        color: white;
+        background: #303F9F;
+      }
+      .item {
+        color: black;
+        background: #C5CAE9;
+      }*/
+</style>
+
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'action-sheet'}}" />
+    <view class="page-body">
+      <view class="btn-area">
+        <button type="default" bindtap="actionSheetTap">弹出action sheet</button>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class ActionSheet extends wepy.page {
+    config = {
+      navigationBarTitleText: '操作菜单'
+    }
+    methods = {
+      actionSheetTap() {
+        wx.showActionSheet({
+          itemList: ['item1', 'item2', 'item3', 'item4'],
+          success: function(e) {
+            console.log(e.tapIndex)
+          }
+        })
+      }
+    }
+  }
+</script>

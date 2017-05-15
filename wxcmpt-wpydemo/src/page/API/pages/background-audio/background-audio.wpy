@@ -1,0 +1,166 @@
+<style lang="less">
+  image {
+    width: 150rpx;
+    height: 150rpx;
+  }
+  .page-body-wrapper {
+    margin-top: 0;
+  }
+  .page-body-info {
+    padding-bottom: 50rpx;
+  }
+  .time-big {
+    font-size: 60rpx;
+    margin: 20rpx;
+  }
+  .slider {
+    width: 650rpx;
+  }
+  .play-time {
+    font-size: 28rpx;
+    width: 700rpx;
+    padding: 20rpx 0;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  .page-body-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 100rpx;
+  }
+  .page-body-button {
+    width: 250rpx;
+    text-align: center;
+  }
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'backgroundAudio'}}" />
+    <view class="page-section">
+      <view class="page-body-info">
+        <text class="time-big">{{formatedPlayTime}}</text>
+        <slider class="slider" min="0" max="269" step="1" value="{{playTime}}" bindchange="seek"></slider>
+        <view class="play-time">
+          <text>00:00</text>
+          <text>04:29</text>
+        </view>
+      </view>
+      <view class="page-body-text tc">注意：离开当前页面后背景音乐将保持播放，但退出小程序将停止</view>
+      <view class="page-body-buttons">
+        <block wx:if="{{playing === true}}">
+          <view class="page-body-button" bindtap="stop">
+            <image src="/image/stop.png"></image>
+          </view>
+          <view class="page-body-button" bindtap="pause">
+            <image src="/image/pause.png"></image>
+          </view>
+        </block>
+        <block wx:if="{{playing === false}}">
+          <view class="page-body-button"></view>
+          <view class="page-body-button" bindtap="play">
+            <image src="/image/play.png"></image>
+          </view>
+        </block>
+        <view class="page-body-button"></view>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Util from '../../../../util/util'
+  export default class BackgroudAudio extends wepy.page {
+    config = {
+      navigationBarTitleText: '背景音乐'
+    }
+    onLoad() {
+      const app = this.$wxapp.$app
+      this._enableInterval()
+      if (app.globalData.backgroundAudioPlaying) {
+        this.playing = true
+      }
+    }
+    data = {
+      playing: false,
+      playTime: 0,
+      formatedPlayTime: '00:00:00',
+      dataUrl: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E061FF02C31F716658E5C81F5594D561F2E88B854E81CAAB7806D5E4F103E55D33C16F3FAC506D1AB172DE8600B37E43FAD&fromtag=46'
+    }
+    methods = {
+      play(res) {
+        let that = this
+        const app = this.$wxapp.$app
+        wx.playBackgroundAudio({
+          dataUrl: that.dataUrl,
+          title: '此时此刻',
+          coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
+          complete: function(res) {
+            that.playing = true
+          }
+        })
+        this._enableInterval()
+        app.globalData.backgroundAudioPlaying = true
+      },
+      seek(e) {
+        clearInterval(this.updateInterval)
+        let that = this
+        wx.seekBackgroundAudio({
+          position: e.detail.value,
+          complete: function() {
+            // 实际会延迟两秒左右才跳过去
+            setTimeout(function() {
+              that._enableInterval()
+            }, 2000)
+          }
+        })
+      },
+      pause: function() {
+        let that = this
+        const app = this.$wxapp.$app
+        wx.pauseBackgroundAudio({
+          dataUrl: that.dataUrl,
+          success: function() {
+            that.playing = false
+          }
+        })
+        app.globalData.backgroundAudioPlaying = false
+      },
+      stop: function() {
+        let that = this
+        const app = this.$wxapp.$app
+        wx.stopBackgroundAudio({
+          dataUrl: that.dataUrl,
+          success: function(res) {
+            that.playing = false
+            that.playTime = 0
+            that.formatedPlayTime = Util.formatTime(0)
+          }
+        })
+        app.globalData.backgroundAudioPlaying = false
+      }
+    }
+    _enableInterval() {
+      let that = this
+      update()
+      this.updateInterval = setInterval(update, 500)
+      function update() {
+        wx.getBackgroundAudioPlayerState({
+          success: function(res) {
+            let currentPosition = res.currentPosition || 0
+            that.playTime = currentPosition
+            that.formatedPlayTime = Util.formatTime(currentPosition + 1)
+          }
+        })
+      }
+    }
+    onUnload() {
+      clearInterval(this.updateInterval)
+    }
+  }
+</script>

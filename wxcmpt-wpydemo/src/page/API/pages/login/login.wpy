@@ -1,0 +1,77 @@
+<style lang="less">
+  .page-section {
+    margin-top: 200rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 50rpx;
+    box-sizing: border-box;
+  }
+  .page-body-title {
+    font-size: 60rpx;
+    line-height: 200rpx;
+  }
+  .page-body-text {
+    color: #bbb;
+    font-size: 28rpx;
+    line-height: 40rpx;
+    margin: 0 0 100rpx 0;
+    text-align: center;
+  }
+  .page-body-button {
+    width: 100%;
+  }
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'Login'}}" />
+    <view class="page-body">
+      <view class="page-section">
+        <block wx:if="{{hasLogin === true}}">
+          <text class="page-body-title">已登录</text>
+          <text class="page-body-text">每个微信号中仅需登录 1 次，后续每次进入页面即可根据微信 id 自动拉取用户信息</text>
+        </block>
+        <block wx:if="{{hasLogin === false}}">
+          <text class="page-body-text">每个微信号中仅需登录一次</text>
+          <button class="page-body-button" type="primary" bindtap="login">微信登录</button>
+        </block>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Login extends wepy.page {
+    config = {
+      navigationBarTitleText: '微信登录'
+    }
+    data = {
+      hasLogin: false
+    }
+    onLoad() {
+      // console.log(this.$wxapp.$app.globalData.hasLogin)
+      const app = this.$wxapp.$app
+      this.hasLogin = app.globalData.hasLogin
+    }
+    methods = {
+      login() {
+        let that = this
+        const app = this.$wxapp.$app
+        wx.login({
+          success(res) {
+            app.globalData.hasLogin = true
+            that.hasLogin = true
+            // that.update()
+          }
+        })
+      }
+    }
+  }
+</script>

@@ -1,0 +1,135 @@
+<style lang="less">
+  @import "../../../common/lib/weui.wxss";
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'WebSocket'}}" />
+    <view class="page-body">
+      <view class="page-section">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_switch">
+            <view class="weui-cell__bd">Socket状态</view>
+            <view class="weui-cell__ft">
+              <switch bindchange="toggleSocket" disabled="{{!hasLogin}}" />
+            </view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">消息</view>
+            <view class="weui-cell__ft">
+              Hello, 小程序!
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="btn-area">
+        <button type="primary" size="40" bindtap="sendMessage" disabled="{{socketStatus != 'connected'}}" loading="{{loading}}">点我发送</button>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Qcloud from '../../../../vendor/qcloud-weapp-client-sdk/index'
+  import Config from '../../../../config'
+  export default class WebSocket extends wepy.page {
+    config = {
+      navigationBarTitleText: 'Web Socket'
+    }
+    data = {
+      socketStatus: 'closed',
+      loginUrl: Config.loginUrl,
+      tunnelUrl: Config.tunnelUrl
+    }
+    onLoad() {
+      let self = this
+      Qcloud.setLoginUrl(this.loginUrl)
+      Qcloud.login({
+        success: function(result) {
+          console.log('登录成功', result)
+          self.hasLogin = true
+        },
+        fail: function(error) {
+          console.log('登录失败', error)
+        }
+      })
+    }
+    onUnload() {
+      this.closeSocket()
+    }
+    methods = {
+      toggleSocket: function(e) {
+        const turnedOn = e.detail.value
+        if (turnedOn && this.data.socketStatus === 'closed') {
+          this.openSocket()
+        } else if (!turnedOn && this.data.socketStatus === 'connected') {
+          var showSuccess = true
+          this.closeSocket(showSuccess)
+        }
+      },
+      sendMessage: function() {
+        if (this.socket && this.socket.isActive()) {
+          this.socket.emit('message', {
+            'content': 'Hello, 小程序!'
+          })
+          this.loading = true
+        }
+      }
+    }
+    openSocket() {
+      let socket = this.socket = new Qcloud.Tunnel(this.tunnelUrl)
+      socket.on('connect', () => {
+        console.log('WebSocket 已连接')
+        this.showSuccess('Socket已连接')
+        this.setData({
+          socketStatus: 'connected',
+          waitingResponse: false
+        })
+      })
+      socket.on('close', () => {
+        console.log('WebSocket 已断开')
+        this.setData({
+          socketStatus: 'closed'
+        })
+      })
+      socket.on('error', error => {
+        this.showModal('发生错误', JSON.stringify(error))
+        console.error('socket error:', error)
+        this.loading = false
+      })
+      // 监听服务器推送消息
+      socket.on('message', message => {
+        this.showSuccess('收到信道消息')
+        console.log('socket message:', message)
+        this.loading = false
+      })
+      // 打开信道
+      socket.open()
+    }
+    closeSocket(showSuccessToast) {
+      if (this.socket) {
+        this.socket.close()
+      }
+      if (showSuccessToast) this.showSuccess('Socket已断开')
+      this.socketStatus = 'closed'
+    }
+    showModal(title, content) {
+      wx.showModal({
+        title,
+        content,
+        showCancel: false
+      })
+    }
+    showSuccess(title) {
+      wx.showToast({
+        title,
+        icon: 'success',
+        duration: 1000
+      })
+    }
+  }
+</script>

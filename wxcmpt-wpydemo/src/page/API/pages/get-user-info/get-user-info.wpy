@@ -1,0 +1,81 @@
+<style lang="less">
+  .page-body-info {
+    padding-bottom: 0;
+    height: 230px;
+  }
+  .userinfo-avatar {
+    border-radius: 128rpx;
+    width: 128rpx;
+    height: 128rpx;
+  }
+  .userinfo-nickname {
+    margin-top: 20rpx;
+    font-size: 38rpx;
+  }
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'getUserInfo'}}" />
+    <view class="page-body">
+      <view class="page-section">
+        <view class="page-body-info">
+          <view class="page-body-title">用户信息</view>
+          <block wx:if="{{hasUserInfo === false}}">
+            <text class="page-body-text">未获取</text>
+            <text class="page-body-text">点击绿色按钮可获取用户头像及昵称</text>
+          </block>
+          <block wx:if="{{hasUserInfo === true}}">
+            <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
+            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+          </block>
+        </view>
+        <view class="btn-area">
+          <button type="primary" bindtap="getUserInfo">获取用户信息</button>
+          <button bindtap="clear">清空</button>
+        </view>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class GetUserInfo extends wepy.page {
+    config = {
+      navigationBarTitleText: '获取用户信息'
+    }
+    data = {
+      hasUserInfo: false
+    }
+    methods = {
+      getUserInfo() {
+        var that = this
+        let app = this.$wxapp.$app
+        if (app.globalData.hasLogin === false) {
+          wx.login({
+            success: _getUserInfo
+          })
+        } else {
+          _getUserInfo()
+        }
+        function _getUserInfo() {
+          wx.getUserInfo({
+            success: function(res) {
+              that.hasUserInfo = true
+              that.userInfo = res.userInfo
+              // that.update()
+            }
+          })
+        }
+      },
+      clear() {
+        this.hasUserInfo = false
+        this.userInfo = {}
+      }
+    }
+  }
+</script>

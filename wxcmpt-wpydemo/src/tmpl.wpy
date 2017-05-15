@@ -1,0 +1,34 @@
+<style lang="less">
+
+</style>
+
+
+<template>
+  <view class="container">
+    hello Index
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'index'
+    }
+    components = {
+    }
+    mixins = []
+    data = {
+    }
+    computed = {
+      now() {
+        return +new Date()
+      }
+    }
+    methods = {}
+    events = {
+    }
+    onLoad() {
+    }
+  }
+</script>

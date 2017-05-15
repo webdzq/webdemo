@@ -1,0 +1,109 @@
+<style lang='less'>
+  @import '../../../common/lib/weui.wxss';
+  button {
+    margin-bottom: 30rpx;
+  }
+  button:last-child {
+    margin-bottom: 0;
+  }
+  .page-section-title {
+    padding: 0;
+  }
+  .swiper-item {
+    display: block;
+    height: 150px;
+  }
+  .page-section-title {
+    margin-top: 60rpx;
+    position: relative;
+  }
+  .info {
+    position: absolute;
+    right: 0;
+    color: #353535;
+    font-size: 30rpx;
+  }
+  .page-foot {
+    margin-top: 50rpx;
+  }
+</style>
+
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'swiper'}}" />
+    <view class="page-body">
+      <view class="page-section page-section-spacing swiper">
+        <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+          <block wx:for="{{background}}" wx:key="*this">
+            <swiper-item>
+              <view class="swiper-item {{item}}"></view>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+      <view class="page-section" style="margin-top: 40rpx;margin-bottom: 0;">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_switch">
+            <view class="weui-cell__bd">指示点</view>
+            <view class="weui-cell__ft">
+              <switch checked="{{indicatorDots}}" bindchange="changeIndicatorDots" />
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_switch">
+            <view class="weui-cell__bd">自动播放</view>
+            <view class="weui-cell__ft">
+              <switch checked="{{autoplay}}" bindchange="changeAutoplay" />
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="page-section page-section-spacing">
+        <view class="page-section-title">
+          <text>幻灯片切换时长(ms)</text>
+          <text class="info">{{duration}}</text>
+        </view>
+        <slider bindchange="durationChange" value="{{duration}}" min="500" max="2000" />
+        <view class="page-section-title">
+          <text>自动播放间隔时长(ms)</text>
+          <text class="info">{{interval}}</text>
+        </view>
+        <slider bindchange="intervalChange" value="{{interval}}" min="2000" max="10000" />
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Swiper extends wepy.page {
+    config = {
+      navigationBarTitleText: 'swiper'
+    }
+    data = {
+      background: ['demo-text-1', 'demo-text-2', 'demo-text-3'],
+      indicatorDots: true,
+      vertical: false,
+      autoplay: false,
+      interval: 2000,
+      duration: 500
+    }
+    methods = {
+      changeIndicatorDots: function(e) {
+        this.indicatorDots = !this.indicatorDots
+      },
+      changeAutoplay: function(e) {
+        this.autoplay = !this.autoplay
+      },
+      intervalChange: function(e) {
+        this.interval = e.detail.value
+      },
+      durationChange: function(e) {
+        this.duration = e.detail.value
+      }
+    }
+  }
+</script>

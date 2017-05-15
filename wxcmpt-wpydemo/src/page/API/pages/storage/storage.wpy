@@ -1,0 +1,137 @@
+<style lang="less">
+  @import "../../../common/lib/weui.wxss";
+</style>
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'get/set/clearStorage'}}" />
+    <view class="page-body">
+      <view class="page-section">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">key</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" type="text" placeholder="请输入key" name="key" value="{{key}}" bindinput="keyChange"></input>
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">value</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" type="text" placeholder="请输入value" name="data" value="{{dataval}}" bindinput="dataChange"></input>
+            </view>
+          </view>
+        </view>
+        <view class="btn-area">
+          <button type="primary" bindtap="setStorage">存储数据</button>
+          <button bindtap="getStorage">读取数据</button>
+          <button bindtap="clearStorage">清理数据</button>
+        </view>
+      </view>
+    </view>
+    <modal title="{{dialog.title}}" hidden="{{dialog.hidden}}" no-cancel bindconfirm="confirm">{{dialog.content}}</modal>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Storage extends wepy.page {
+    config = {
+      navigationBarTitleText: '数据存储'
+    }
+    data = {
+      key: '',
+      dataval: '',
+      dialog: {
+        title: '',
+        content: '',
+        hidden: true
+      }
+    }
+    methods = {
+      keyChange: function(e) {
+        this.key = e.detail.value
+      },
+      dataChange: function(e) {
+        this.dataval = e.detail.value
+      },
+      getStorage: function() {
+        let key = this.key
+        let dataval = this.dataval
+        let storageData
+        if (key.length === 0) {
+          this.setData({
+            key: key,
+            dataval: dataval,
+            'dialog.hidden': false,
+            'dialog.title': '读取数据失败',
+            'dialog.content': 'key 不能为空'
+          })
+        } else {
+          storageData = wx.getStorageSync(key)
+          if (storageData === '') {
+            this.setData({
+              key: key,
+              dataval: dataval,
+              'dialog.hidden': false,
+              'dialog.title': '读取数据失败',
+              'dialog.content': '找不到 key 对应的数据'
+            })
+          } else {
+            this.setData({
+              key: key,
+              dataval: dataval,
+              'dialog.hidden': false,
+              'dialog.title': '读取数据成功',
+              'dialog.content': "data: '" + storageData + "'"
+            })
+          }
+        }
+      },
+      setStorage: function() {
+        let key = this.key
+        let dataval = this.dataval
+        if (key.length === 0) {
+          this.setData({
+            key: key,
+            dataval: dataval,
+            'dialog.hidden': false,
+            'dialog.title': '保存数据失败',
+            'dialog.content': 'key 不能为空'
+          })
+        } else {
+          wx.setStorageSync(key, dataval)
+          this.setData({
+            key: key,
+            dataval: dataval,
+            'dialog.hidden': false,
+            'dialog.title': '存储数据成功'
+          })
+        }
+      },
+      clearStorage: function() {
+        wx.clearStorageSync()
+        this.setData({
+          key: '',
+          dataval: '',
+          'dialog.hidden': false,
+          'dialog.title': '清除数据成功',
+          'dialog.content': ''
+        })
+      },
+      confirm: function() {
+        this.setData({
+          'dialog.hidden': true,
+          'dialog.title': '',
+          'dialog.content': ''
+        })
+      }
+    }
+  }
+</script>

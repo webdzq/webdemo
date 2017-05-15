@@ -1,0 +1,229 @@
+<style lang="less">
+  image {
+    width: 150rpx;
+    height: 150rpx;
+  }
+  .page-body-wrapper {
+    justify-content: space-between;
+    flex-grow: 1;
+    margin-bottom: 300rpx;
+  }
+  .page-body-time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .time-big {
+    font-size: 60rpx;
+    margin: 20rpx;
+  }
+  .time-small {
+    font-size: 30rpx;
+  }
+  .page-body-buttons {
+    margin-top: 60rpx;
+    display: flex;
+    justify-content: space-around;
+  }
+  .page-body-button {
+    width: 250rpx;
+    text-align: center;
+  }
+  .button-stop-record {
+    width: 110rpx;
+    height: 110rpx;
+    border: 20rpx solid #fff;
+    background-color: #f55c23;
+    border-radius: 130rpx;
+    margin: 0 auto;
+  }
+</style>
+
+
+<template>
+  <import src="../../../common/head.wxml" />
+  <import src="../../../common/foot.wxml" />
+  <view class="container">
+    <template is="head" data="{{title: 'start/stopRecord、play/stopVoice'}}" />
+    <view class="page-body">
+      <view class="page-section">
+        <block wx:if="{{recording === false && playing === false && hasRecord === false}}">
+          <view class="page-body-time">
+            <text class="time-big">{{formatedRecordTime}}</text>
+          </view>
+          <view class="page-body-buttons">
+            <view class="page-body-button"></view>
+            <view class="page-body-button" bindtap="startRecord">
+              <image src="/image/record.png"></image>
+            </view>
+            <view class="page-body-button"></view>
+          </view>
+        </block>
+        <block wx:if="{{recording === true}}">
+          <view class="page-body-time">
+            <text class="time-big">{{formatedRecordTime}}</text>
+          </view>
+          <view class="page-body-buttons">
+            <view class="page-body-button"></view>
+            <view class="page-body-button" bindtap="stopRecord">
+              <view class="button-stop-record"></view>
+            </view>
+            <view class="page-body-button"></view>
+          </view>
+        </block>
+        <block wx:if="{{hasRecord === true && playing === false}}">
+          <view class="page-body-time">
+            <text class="time-big">{{formatedPlayTime}}</text>
+            <text class="time-small">{{formatedRecordTime}}</text>
+          </view>
+          <view class="page-body-buttons">
+            <view class="page-body-button"></view>
+            <view class="page-body-button" bindtap="playVoice">
+              <image src="/image/play.png"></image>
+            </view>
+            <view class="page-body-button" bindtap="clear">
+              <image src="/image/trash.png"></image>
+            </view>
+          </view>
+        </block>
+        <block wx:if="{{hasRecord === true && playing === true}}">
+          <view class="page-body-time">
+            <text class="time-big">{{formatedPlayTime}}</text>
+            <text class="time-small">{{formatedRecordTime}}</text>
+          </view>
+          <view class="page-body-buttons">
+            <view class="page-body-button" bindtap="stopVoice">
+              <image src="/image/stop.png"></image>
+            </view>
+            <view class="page-body-button" bindtap="pauseVoice">
+              <image src="/image/pause.png"></image>
+            </view> 
+            <view class="page-body-button" bindtap="clear">
+              <image src="/image/trash.png"></image>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+    <template is="foot" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Util from '../../../../util/util'
+  export default class Voice extends wepy.page {
+    config = {
+      navigationBarTitleText: '录音'
+    }
+    data = {
+      recording: false,
+      playing: false,
+      hasRecord: false,
+      recordTime: 0,
+      playTime: 0,
+      formatedRecordTime: '00:00:00',
+      formatedPlayTime: '00:00:00',
+      recordTimeInterval: '',
+      playTimeInterval: '',
+      tempFilePath: ''
+    }
+    onHide() {
+      if (this.playing) {
+        this.stopVoice()
+      } else if (this.recording) {
+        this.stopRecordUnexpectedly()
+      }
+    }
+    stopVoice() {
+      console.log('stopVoice..')
+      clearInterval(this.playTimeInterval)
+      this.playing = false
+      this.formatedPlayTime = Util.formatTime(0)
+      this.playTime = 0
+      wx.stopVoice()
+    }
+    methods = {
+      startRecord: function() {
+        this.recording = true
+        let that = this
+        this.recordTimeInterval = setInterval(function() {
+          let recordTime = that.recordTime += 1
+          that.formatedRecordTime = Util.formatTime(that.recordTime)
+          that.recordTime = recordTime
+        }, 1000)
+        wx.startRecord({
+          success: function(res) {
+            that.hasRecord = true
+            that.tempFilePath = res.tempFilePath
+            that.formatedPlayTime = Util.formatTime(that.playTime)
+          },
+          complete: function() {
+            that.recording = false
+            clearInterval(that.recordTimeInterval)
+          }
+        })
+      },
+      stopRecord: function() {
+        wx.stopRecord()
+      },
+      playVoice: function() {
+        let that = this
+        this.playTimeInterval = setInterval(function() {
+          let playTime = that.playTime + 1
+          console.log('update playTime', playTime)
+          that.playing = true
+          that.formatedPlayTime = Util.formatTime(playTime)
+          that.playTime = playTime
+        }, 1000)
+        wx.playVoice({
+          filePath: this.tempFilePath,
+          success: function() {
+            clearInterval(that.playTimeInterval)
+            let playTime = 0
+            console.log('play voice finished')
+            that.playing = false
+            that.formatedPlayTime = Util.formatTime(playTime)
+            that.playTime = playTime
+          }
+        })
+      },
+      pauseVoice: function() {
+        clearInterval(this.playTimeInterval)
+        wx.pauseVoice()
+        this.playing = false
+      },
+      stopVoice: function() {
+        console.log('methods...stopVoice..')
+        clearInterval(this.playTimeInterval)
+        this.playing = false
+        this.formatedPlayTime = Util.formatTime(0)
+        this.playTime = 0
+        wx.stopVoice()
+      },
+      clear: function() {
+        clearInterval(this.playTimeInterval)
+        wx.stopVoice()
+        this.playing = false
+        this.hasRecord = false
+        this.tempFilePath = ''
+        this.formatedRecordTime = Util.formatTime(0)
+        this.recordTime = 0
+        this.playTime = 0
+      }
+    }
+    stopRecordUnexpectedly() {
+      let that = this
+      wx.stopRecord({
+        success: function() {
+          console.log('stop record success')
+          clearInterval(that.recordTimeInterval)
+          that.recording = false
+          that.hasRecord = false
+          that.recordTime = 0
+          that.formatedRecordTime = Util.formatTime(0)
+        }
+      })
+    }
+  }
+</script>
