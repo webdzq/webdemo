@@ -1,6 +1,7 @@
-说明：
+# 说明：
 支持fis3+es6+vue2+vue-router+mint-ui+muse-ui
-
+## 安装说明：
+<pre>
 1，安装fis3
 npm i fis3 -g
 2，npm i
@@ -24,3 +25,4 @@ ps:
 4，fis3：http://fis.baidu.com/fis3/docs/beginning/intro.html
 5，webstrom远程部署：http://www.jianshu.com/p/a60f9040d146
 6，muse-ui：http://www.muse-ui.org/#/index
+</pre>
